@@ -1,0 +1,7 @@
+.price {
+    display: flex;
+    justify-content: center;
+}
+.text-center .price {
+    justify-content: center;
+}

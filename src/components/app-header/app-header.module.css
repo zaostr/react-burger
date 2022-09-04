@@ -1,0 +1,53 @@
+header {
+    background: var(--c-bg-modal);
+}
+header > div {
+    max-width: var(--w-content);
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: 1fr 300px 1fr;
+}
+
+header > div > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header nav {
+    display: flex;
+    grid-gap: 8px;
+}
+
+.headerRight {
+    display: flex;
+    justify-content: end;
+}
+
+.headerBtn button {
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+    grid-gap: 8px;
+    color: var(--c-text-light);
+}
+.headerBtn > svg {
+    fill: var(--c-text-light);
+}
+
+.headerBtnInactive > button {
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+    grid-gap: 8px;
+    color: var(--c-text-dark);
+}
+
+.headerBtnInactive > button:hover {
+    color: var(--c-text-dark);
+    opacity: 1;
+}
+.headerBtnInactive > svg {
+    fill: var(--c-text-dark);
+}
