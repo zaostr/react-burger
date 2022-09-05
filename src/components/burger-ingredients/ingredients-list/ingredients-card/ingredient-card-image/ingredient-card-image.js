@@ -12,5 +12,5 @@ const IngredientCardImage = ({img, imgSmall, imgLarge}) => {
 export default IngredientCardImage
 
 IngredientCardImage.propTypes = {
-  price: PropTypes.string.isRequired
+  img: PropTypes.string.isRequired
 }

@@ -5,10 +5,12 @@ import PropTypes from 'prop-types';
 import BurgerConstructorElementsStyles from './burger-constructor-elements.module.css'
 import './burger-constructor-elements.css'
 
+import { ingredientType } from '../../../utils/types';
+
 const BurgerConstructorElements = ({list}) => {
   return (
     <div>
-      <div className={BurgerConstructorElementsStyles.ConstructorElement} style={{paddingRight: '16px'}}>
+      <div className={BurgerConstructorElementsStyles.ConstructorElementTop}>
         <span></span>
         <ConstructorElement
           type='top'
@@ -18,7 +20,7 @@ const BurgerConstructorElements = ({list}) => {
           thumbnail={list[0].image}
         />
       </div>
-      <div className={BurgerConstructorElementsStyles.wrap} style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '10px', marginTop: '10px', paddingRight: '8px' }}>
+      <div className={BurgerConstructorElementsStyles.wrap}>
         { list.map((i,k) => (
           (k!==0 && k!==list.length-1)
           ? ( <div className={BurgerConstructorElementsStyles.ConstructorElement} key={k}>
@@ -33,7 +35,7 @@ const BurgerConstructorElements = ({list}) => {
           : ''
         )) }
       </div>
-      <div className={BurgerConstructorElementsStyles.ConstructorElement} style={{paddingRight: '16px'}}>
+      <div className={BurgerConstructorElementsStyles.ConstructorElementBottom}>
         <span></span>
         <ConstructorElement
           type='bottom'
@@ -51,18 +53,5 @@ export default BurgerConstructorElements
 
 
 BurgerConstructorElements.propTypes = {
-  list: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number
-  }).isRequired
+  list: PropTypes.arrayOf(ingredientType).isRequired
 }

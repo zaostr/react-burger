@@ -3,13 +3,15 @@ import {Button} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import BurgerConstructorTotal from '../burger-constructor-total/burger-constructor-total'
 
+import './burger-constructor-footer.css'
+
 const BurgerConstructorFooter = () => {
   return (
-    <div className='mt-10 pb-15' style={{ display: 'flex', justifyContent: 'end', gap: '48px' }}>
+    <div className='burgerConstructorFooter mt-10 pb-15'>
 
         <BurgerConstructorTotal value={610} />
 
-        <Button type="primary" size="large" onClick={()=>console.log(1)}>
+        <Button type="primary" size="large">
             Оформить заказ
         </Button>
     </div>

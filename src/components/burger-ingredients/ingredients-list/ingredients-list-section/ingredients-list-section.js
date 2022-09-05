@@ -4,23 +4,30 @@ import PropTypes from 'prop-types';
 
 import IngredientsListStyles from './ingredients-list-section.module.css'
 
+import { ingredientType } from '../../../../utils/types';
+
 
 export const IngredientsListSection = ({type, ingredients}) => {
   let sectionTitle = '';
-  if (type === 'bun') {
-    sectionTitle = 'Булки';
-  } else if (type === 'sauce') {
-    sectionTitle = 'Соусы';
-  } else if (type === 'main') {
-    sectionTitle = 'Начинки';
+  switch(type) {
+    case 'bun':
+      sectionTitle = 'Булки';
+      break;
+  
+    case 'sauce':
+      sectionTitle = 'Соусы';
+      break;
+  
+    case 'main':
+      sectionTitle = 'Начинки';
+      break;
   }
-  console.log(sectionTitle);
     return (
       <>
         <p className="text text_type_main-medium m-0">{sectionTitle}</p>
         <div className='p-6 pb-10'>
           <div className={IngredientsListStyles.grid}>
-          { ingredients.map((i,k) => (<IngredientCard key={k} info={i} />)) }
+          { ingredients.map((igredient,key) => (<IngredientCard key={key} info={igredient} />)) }
           </div>
         </div>
       </>
@@ -29,19 +36,6 @@ export const IngredientsListSection = ({type, ingredients}) => {
 
 
 IngredientsListSection.propTypes = {
-  type: PropTypes.string,
-  ingredients: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number
-  }).isRequired
+  type: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired
 }

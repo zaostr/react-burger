@@ -3,5 +3,6 @@
         height: 756px;
         overflow-x: hidden;
         overflow-y: auto;
+        margin-bottom: 48px;
     }
 }

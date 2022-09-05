@@ -1,7 +1,7 @@
-import { Button, BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 import React, { Component } from 'react'
+import { Button, BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components'
+
 import appHeaderStyles from './app-header.module.css'
-//import './app-header.css'
 
 export class AppHeader extends Component {
   render() {
@@ -10,16 +10,20 @@ export class AppHeader extends Component {
         <div>
           <nav className='headerLeft'>
             <div className={appHeaderStyles.headerBtn}>
-              <Button type='secondary' onClick={(e)=>console.log('click',e.target)}>
-                <BurgerIcon />
-                Конструктор
-              </Button>
+              <a href="#">
+                <Button type='secondary'>
+                  <BurgerIcon />
+                  Конструктор
+                </Button>
+              </a>
             </div>
             <div className={appHeaderStyles.headerBtnInactive}>
-              <Button type='secondary' onClick={(e)=>console.log('click',e.target)}>
-                <ListIcon type="secondary" />
-                Лента заказов
-              </Button>
+              <a href='#'>
+                <Button type='secondary'>
+                    <ListIcon type="secondary" />
+                    Лента заказов
+                </Button>
+              </a>
             </div>
           </nav>
           <a href='/'>
@@ -27,10 +31,12 @@ export class AppHeader extends Component {
           </a>
           <div className={appHeaderStyles.headerRight}>
             <div className={appHeaderStyles.headerBtnInactive}>
-              <Button type='secondary' onClick={(e)=>console.log('click',e.target)}>
-                <ProfileIcon type="secondary" />
-                Личный кабинет
-              </Button>
+              <a href='#'>
+                <Button type='secondary'>
+                  <ProfileIcon type="secondary" />
+                  Личный кабинет
+                </Button>
+              </a>
             </div>
           </div>
         </div>

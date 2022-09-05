@@ -8,7 +8,7 @@ const IngredientCardPrice = ({price}) => {
   return (
     <span className={IngredientCardPriceStyles.price}>
         <span className='text text_type_digits-default mr-2'>
-          { Number(price).toLocaleString('ru-RU') }
+          { price }
         </span>
         <CurrencyIcon type="primary" />
     </span>

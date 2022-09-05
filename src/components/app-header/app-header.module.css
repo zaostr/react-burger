@@ -19,10 +19,13 @@ header nav {
     display: flex;
     grid-gap: 8px;
 }
+.headerBtn a {
+    text-decoration: none;
+}
 
 .headerRight {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .headerBtn button {
@@ -32,22 +35,21 @@ header nav {
     grid-gap: 8px;
     color: var(--c-text-light);
 }
-.headerBtn > svg {
+.headerBtn svg {
     fill: var(--c-text-light);
 }
 
-.headerBtnInactive > button {
-    display: flex;
-    padding-left: 20px;
-    padding-right: 20px;
-    grid-gap: 8px;
+.headerBtnInactive {
+    composes: headerBtn
+}
+.headerBtnInactive button {
     color: var(--c-text-dark);
 }
 
-.headerBtnInactive > button:hover {
+.headerBtnInactive button:hover {
     color: var(--c-text-dark);
     opacity: 1;
 }
-.headerBtnInactive > svg {
+.headerBtnInactive svg {
     fill: var(--c-text-dark);
 }
