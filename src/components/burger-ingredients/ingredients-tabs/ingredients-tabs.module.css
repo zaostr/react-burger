@@ -1,0 +1,7 @@
+.wrap {
+    display: flex;
+}
+
+.wrap > * {
+    width: calc(100% / 3);
+}

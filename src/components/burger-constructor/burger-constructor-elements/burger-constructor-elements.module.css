@@ -1,0 +1,33 @@
+.ConstructorElement {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    grid-gap: 8px;
+    align-content: center;
+}
+.ConstructorElement > svg {
+    height: 100%;
+}
+
+.ConstructorElementTop,
+.ConstructorElementBottom {
+    composes: ConstructorElement;
+    padding-right: 16px;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-right: 8px
+}
+
+
+@media screen and (min-width: 1280px) {
+    .wrap {
+        height: 525px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}

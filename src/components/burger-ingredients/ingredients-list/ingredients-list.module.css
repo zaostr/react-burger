@@ -1,0 +1,8 @@
+@media screen and (min-width: 1280px) {
+    .wrap {
+        height: 756px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin-bottom: 48px;
+    }
+}

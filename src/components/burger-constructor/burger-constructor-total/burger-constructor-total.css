@@ -1,0 +1,9 @@
+.total svg {
+    width: 36px;
+    height: 36px;
+}
+.total {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
