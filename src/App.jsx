@@ -1,10 +1,16 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import './App.css';
 import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
+import { useModalControls } from './hooks/useModalControls';
+
+const modalsElement = document.querySelector('#modals');
 
 function App() {
+  const modalControls = useModalControls({isModalOpen:true,disableOverlayClose: true});
+
   return (
     <div className="App">
       <AppHeader />
@@ -16,8 +22,17 @@ function App() {
           <BurgerConstructor />
         </div>
       </main>
+      <Modal {...modalControls} />
     </div>
   );
+}
+
+function Modal(props) {
+  console.log(props);
+  return createPortal(
+    (props.modalProps.isModalOpen) && <div className='modal-window'>MODAL</div>,
+    modalsElement
+  )
 }
 
 export default App;
