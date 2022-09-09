@@ -1,38 +1,32 @@
-import React from 'react';
-import { createPortal } from 'react-dom';
+import { useState, useEffect } from 'react';
 import './App.css';
 import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
-import { useModalControls } from './hooks/useModalControls';
-
-const modalsElement = document.querySelector('#modals');
 
 function App() {
-  const modalControls = useModalControls({isModalOpen:true,disableOverlayClose: true});
+  const [ingredientsList, setIngredientsList] = useState([]);
+
+  useEffect(() => {
+    fetch('https://norma.nomoreparties.space/api/ingredients')
+    .then(res => res.json())
+    .then(dataJson => setIngredientsList(dataJson.data));
+
+  }, []);
 
   return (
     <div className="App">
       <AppHeader />
       <main className='main pl-5 pr-5'>
         <div>
-          <BurgerIngredients />
+          <BurgerIngredients data={ingredientsList} />
         </div>
         <div>
-          <BurgerConstructor />
+          <BurgerConstructor data={ingredientsList} />
         </div>
       </main>
-      <Modal {...modalControls} />
     </div>
   );
-}
-
-function Modal(props) {
-  console.log(props);
-  return createPortal(
-    (props.modalProps.isModalOpen) && <div className='modal-window'>MODAL</div>,
-    modalsElement
-  )
 }
 
 export default App;

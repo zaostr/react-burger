@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const IngredientCardImage = ({img, imgSmall, imgLarge}) => {
   return (
     <>
-        <img src={img ? img : '/no-image.png'} />
+        <img src={img ? img : '/no-image.png'} alt="ingredient" />
     </>
   )
 }

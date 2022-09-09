@@ -4,14 +4,17 @@ import BurgerConstructorElements from './burger-constructor-elements/burger-cons
 
 import burgerConstructorStyles from './burger-constructor.module.css'
 
-import { ingredients } from '../../utils/data'
 
 export class BurgerConstructor extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <div className='mt-25'>
 
-        <BurgerConstructorElements list={ingredients} />
+        <BurgerConstructorElements data={this.props.data} />
         
         <BurgerConstructorFooter />
       </div>

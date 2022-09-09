@@ -21,6 +21,9 @@ export const IngredientsListSection = ({type, ingredients}) => {
     case 'main':
       sectionTitle = 'Начинки';
       break;
+
+    default:
+      return;
   }
     return (
       <>

@@ -5,3 +5,14 @@
   max-width: var(--w-content);
   margin: 0 auto;
 }
+
+
+
+@media screen and (max-width: 1200px) {
+  :root {
+    --w-content: 720px
+  }
+  .main {
+    grid-template-columns: 1fr;
+  }
+}

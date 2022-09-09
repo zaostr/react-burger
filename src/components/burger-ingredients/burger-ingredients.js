@@ -4,10 +4,13 @@ import {IngredientsList} from './ingredients-list/ingredients-list'
 
 import burgerIngredientsStyles from './burger-ingredients.css'
 
-import {ingredients} from '../../utils/data'
 
 
 export class BurgerIngredients extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <>
@@ -16,7 +19,7 @@ export class BurgerIngredients extends Component {
         </p>
         <IngredientsTabs />
         
-        <IngredientsList data={ingredients} />
+        <IngredientsList data={this.props.data} />
       </>
     )
   }
