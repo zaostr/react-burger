@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import { modalType } from '../utils/types'
 
 export const useModalControls = ({
         isOpen = false, 
@@ -29,3 +30,5 @@ export const useModalControls = ({
     }
   }
 }
+
+useModalControls.propTypes = modalType

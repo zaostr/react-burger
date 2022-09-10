@@ -8,9 +8,6 @@ p.ingredientDetailsHeading {
     margin-left: auto;
     margin-right: auto;
 }
-.ingredientDetailsInfo img {
-    min-height: 240px;
-}
   
 .ingredientDetailsList {
     display: grid;

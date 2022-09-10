@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 import './order-details.css'
 import done from '../../../assets/icons/done.svg'
@@ -13,4 +14,8 @@ export const OrderDetails = (props) => {
         <p className='text text_type_main-default text_color_inactive'>Дождитесь готовности на орбитальной станции</p>
     </div>
   )
+}
+
+OrderDetails.propTypes = {
+  id: PropTypes.string.isRequired
 }

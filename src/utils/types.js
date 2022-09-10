@@ -14,3 +14,10 @@ export const ingredientType = PropTypes.shape({
     image_large: PropTypes.string,
     __v: PropTypes.number
 })
+
+export const modalType = {
+    isOpen: PropTypes.bool, 
+    disableCloseButton: PropTypes.bool,
+    disableCloseOverlay: PropTypes.bool,
+    disableOverlay: PropTypes.bool
+}

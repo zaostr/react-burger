@@ -1,8 +1,10 @@
 import React from 'react'
+import { ingredientType } from '../../../utils/types'
 
 import './ingredient-details.css'
 
 export const IngredientDetails = (props) => {
+    console.log(ingredientType);
   return (
     <div className={'mb-5'}>
         <p className='ingredientDetailsHeading text text_type_main-large'>Детали ингредиента</p>
@@ -31,3 +33,5 @@ export const IngredientDetails = (props) => {
     </div>
   )
 }
+
+IngredientDetails.propTypes = ingredientType.isRequired
