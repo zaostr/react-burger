@@ -8,7 +8,7 @@ import './burger-constructor-elements.css'
 import { ingredientType } from '../../../utils/types';
 
 const BurgerConstructorElements = ({data}) => {
-  const [selectedBun, setSelectedBun] = useState((data[0] !== undefined) ? data[0] : false);
+  const [selectedBun, setSelectedBun] = useState(data[0] || false);
   
   useEffect(() => {
     setSelectedBun(data[0]);
@@ -16,7 +16,7 @@ const BurgerConstructorElements = ({data}) => {
   
   return (
     <div>
-      { selectedBun ? (
+      { selectedBun && (
         <div className={BurgerConstructorElementsStyles.ConstructorElementTop}>
           <span></span>
           <ConstructorElement
@@ -27,24 +27,23 @@ const BurgerConstructorElements = ({data}) => {
             thumbnail={selectedBun.image}
           />
         </div>
-      ) : '' }  
+      ) }  
       
       <div className={BurgerConstructorElementsStyles.wrap}>
-        { data.map((i,k) => (
-          (k!==0 && k!==data.length-1)
-          ? ( <div className={BurgerConstructorElementsStyles.ConstructorElement} key={k}>
+        { data.map((igredient,key) => (
+          (key!==0 && key!==data.length-1)
+          && ( <div className={BurgerConstructorElementsStyles.ConstructorElement} key={key}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   isLocked={false}
-                  text={i.name}
-                  price={i.price}
-                  thumbnail={i.image}
+                  text={igredient.name}
+                  price={igredient.price}
+                  thumbnail={igredient.image}
                 />
               </div> )
-          : ''
         )) }
       </div>
-      { selectedBun ? (
+      { selectedBun && (
       <div className={BurgerConstructorElementsStyles.ConstructorElementBottom}>
         <span></span>
         <ConstructorElement
@@ -55,7 +54,7 @@ const BurgerConstructorElements = ({data}) => {
           thumbnail={selectedBun.image}
         />
       </div>
-      ) : '' }  
+      ) }  
     </div>
   )
 }

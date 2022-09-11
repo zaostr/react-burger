@@ -1,9 +1,11 @@
 import {useEffect} from 'react'
 import { createPortal } from 'react-dom';
-import ModalStyles from './modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { modalsElement } from '../../utils/constants'
+import { modalsElement, ESC_KEYCODE } from '../../utils/constants'
 import { modalType } from '../../utils/types'
+import { ModalOverlay } from './modal-overlay/modal-overlay';
+
+import ModalStyles from './modal.module.css'
 
 export const Modal = (props) => {
     const handleCloseModalByOverlay = () => {
@@ -14,7 +16,7 @@ export const Modal = (props) => {
     }
 
     const handleCloseModalByEsc = e => {
-        if ( e.which === 27 ) props.close();
+        if ( e.which === ESC_KEYCODE ) props.close();
     }
 
     useEffect(() => {
@@ -29,7 +31,7 @@ export const Modal = (props) => {
     return createPortal(
       (props.modalProps.isOpen) && (
         <div className={ModalStyles.modalWrap}>
-            { (!props.modalProps.disableOverlay) && <div className={ModalStyles.modalOverlay} onClick={handleCloseModalByOverlay}></div> }
+            { (!props.modalProps.disableOverlay) && <ModalOverlay onClick={handleCloseModalByOverlay} /> }
             <div className={ModalStyles.modalBox}>
                 { (!props.modalProps.disableCloseButton) && (
                     <button className={ModalStyles.modalClsoeButton} onClick={props.close}>

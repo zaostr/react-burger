@@ -4,15 +4,15 @@ import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 import { ErrorHandler } from './components/error-handler/error-handler';
-import { baseUrl } from './utils/constants';
+import { getIngredients } from './utils/burger-api';
 
 function App() {
   const [ingredientsList, setIngredientsList] = useState([]);
   const [requestErrorText, setRequestErrorText] = useState(false);
 
+
   useEffect(() => {
-    fetch(`${baseUrl}/api/ingredients`)
-    .then(res => res.json())
+    getIngredients()
     .then(dataJson => {
       setIngredientsList(dataJson.data);
       setRequestErrorText(false);
