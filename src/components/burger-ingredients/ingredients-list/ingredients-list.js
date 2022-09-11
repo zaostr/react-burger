@@ -14,7 +14,7 @@ export const IngredientsList = ({data}) => {
 
 
     return (
-      <div className={IngredientsListStyles.wrap}>
+      <div id='IngredientsListSectionWrapper' className={IngredientsListStyles.wrap}>
         { ['bun','sauce','main'].map((igredient,key) => (
           <IngredientsListSection key={key} type={igredient} ingredients={ getIngredientsByType(data, igredient) } /> 
         )) }

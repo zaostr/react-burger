@@ -48,3 +48,7 @@ body {
 .position-absolute {
   position: absolute;
 }
+
+body.overflow-hidden {
+  overflow: hidden!important;
+}

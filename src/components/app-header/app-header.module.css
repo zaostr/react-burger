@@ -53,3 +53,11 @@ header nav {
 .headerBtnInactive svg {
     fill: var(--c-text-dark);
 }
+
+@media screen and (max-width: 1200px) {
+    header > div {
+        max-width: unset;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

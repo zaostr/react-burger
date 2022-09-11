@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 import {IngredientsTabs} from './ingredients-tabs/ingredients-tabs'
 import {IngredientsList} from './ingredients-list/ingredients-list'
 
 import burgerIngredientsStyles from './burger-ingredients.css'
 
-import {ingredients} from '../../utils/data'
+import { ingredientType } from '../../utils/types';
 
 
 export class BurgerIngredients extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <>
@@ -16,10 +21,13 @@ export class BurgerIngredients extends Component {
         </p>
         <IngredientsTabs />
         
-        <IngredientsList data={ingredients} />
+        <IngredientsList data={this.props.data} />
       </>
     )
   }
+}
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientType).isRequired
 }
 
 export default BurgerIngredients

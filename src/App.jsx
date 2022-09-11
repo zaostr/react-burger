@@ -1,21 +1,37 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
+import { ErrorHandler } from './components/error-handler/error-handler';
+import { getIngredients } from './utils/burger-api';
 
 function App() {
+  const [ingredientsList, setIngredientsList] = useState([]);
+  const [requestErrorText, setRequestErrorText] = useState(false);
+
+
+  useEffect(() => {
+    getIngredients()
+    .then(dataJson => {
+      setIngredientsList(dataJson.data);
+      setRequestErrorText(false);
+    })
+    .catch(err => setRequestErrorText(err.message));
+  }, []);
+
   return (
     <div className="App">
       <AppHeader />
       <main className='main pl-5 pr-5'>
         <div>
-          <BurgerIngredients />
+          <BurgerIngredients data={ingredientsList} />
         </div>
         <div>
-          <BurgerConstructor />
+          <BurgerConstructor data={ingredientsList} />
         </div>
       </main>
+      <ErrorHandler errorMessage={requestErrorText} />
     </div>
   );
 }

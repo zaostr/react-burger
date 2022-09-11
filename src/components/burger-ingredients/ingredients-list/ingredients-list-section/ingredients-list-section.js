@@ -21,16 +21,19 @@ export const IngredientsListSection = ({type, ingredients}) => {
     case 'main':
       sectionTitle = 'Начинки';
       break;
+
+    default:
+      return;
   }
     return (
-      <>
+      <div id={`section-${type}`}>
         <p className="text text_type_main-medium m-0">{sectionTitle}</p>
         <div className='p-6 pb-10'>
           <div className={IngredientsListStyles.grid}>
           { ingredients.map((igredient,key) => (<IngredientCard key={key} info={igredient} />)) }
           </div>
         </div>
-      </>
+      </div>
     )
 }
 
