@@ -8,12 +8,6 @@ import { ModalOverlay } from './modal-overlay/modal-overlay';
 import ModalStyles from './modal.module.css'
 
 export const Modal = (props) => {
-    const handleCloseModalByOverlay = () => {
-        if (props.modalProps.disableCloseOverlay) {
-            return;
-        }
-        props.close();
-    }
 
     const handleCloseModalByEsc = e => {
         if ( e.which === ESC_KEYCODE ) props.close();
@@ -31,7 +25,7 @@ export const Modal = (props) => {
     return createPortal(
       (props.modalProps.isOpen) && (
         <div className={ModalStyles.modalWrap}>
-            { (!props.modalProps.disableOverlay) && <ModalOverlay onClick={handleCloseModalByOverlay} /> }
+            { (!props.modalProps.disableOverlay) && <ModalOverlay {...props} /> }
             <div className={ModalStyles.modalBox}>
                 { (!props.modalProps.disableCloseButton) && (
                     <button className={ModalStyles.modalClsoeButton} onClick={props.close}>
