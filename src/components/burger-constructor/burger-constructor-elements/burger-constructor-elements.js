@@ -17,7 +17,8 @@ const BurgerConstructorElements = ({data}) => {
     setSelectedBun(orderState.ingredients.filter(x => x.type === 'bun')[0] || false);
   },[orderState])
 
-  const removeConstructorElement = (ingredient) => {
+  function removeConstructorElement(ingredient) {
+    console.log(ingredient);
     dispatchOrderState({type:'removeIngredient',payload:ingredient})
   }
   
@@ -61,7 +62,7 @@ const BurgerConstructorElements = ({data}) => {
                     text={igredient.name}
                     price={igredient.price}
                     thumbnail={igredient.image}
-                    handleClose={()=>console.log(1)}
+                    handleClose={()=>removeConstructorElement(igredient)}
                   />
                 </div>
               )
