@@ -13,19 +13,19 @@ import './burger-constructor-footer.css'
 const constructorTotalReducer = (state, ingredients) => {
   if (!ingredients.length) return 0;
   let total = 0;
-  ingredients.forEach(ingredient => total+=ingredient.price*ingredient.count)
+  ingredients.forEach(ingredient => ingredient.type === 'bun' ? total+=ingredient.price*2 : total+=ingredient.price)
   return total;
 }
 
 const BurgerConstructorFooter = () => {
-  const {orderState, dispatchOrderState} = useContext(ConstructorContext);
+  const {cartState, setCartState} = useContext(ConstructorContext);
   const [constructorTotal, dispatchConstructorTotal] = useReducer(constructorTotalReducer, 0);
   const modalControls = useModalControls();
 
   useEffect(() => {
-    dispatchConstructorTotal(orderState.ingredients);
+    dispatchConstructorTotal(cartState.ingredients);
     console.log(constructorTotal);
-  },[orderState])
+  },[JSON.stringify(cartState)])
 
   const BurgerConstructorTotal = useMemo(() => {
     return (

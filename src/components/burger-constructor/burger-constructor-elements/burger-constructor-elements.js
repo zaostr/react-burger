@@ -8,18 +8,17 @@ import './burger-constructor-elements.css'
 
 import { ingredientType } from '../../../utils/types';
 
-const BurgerConstructorElements = ({data}) => {
+const BurgerConstructorElements = () => {
   const [selectedBun, setSelectedBun] = useState(false);
-  const {orderState, dispatchOrderState} = useContext(ConstructorContext);
+  const {cartState, dispatchCartState} = useContext(ConstructorContext);
   
   useEffect(() => {
-    console.log(orderState);
-    setSelectedBun(orderState.ingredients.filter(x => x.type === 'bun')[0] || false);
-  },[orderState])
+    console.log(cartState.ingredients);
+    setSelectedBun(cartState.ingredients.filter(x => x.type === 'bun')[0] || false);
+  },[JSON.stringify(cartState)])
 
-  function removeConstructorElement(ingredient) {
-    console.log(ingredient);
-    dispatchOrderState({type:'removeIngredient',payload:ingredient})
+  function removeConstructorElement(key) {
+    dispatchCartState({type:'removeIngredient',payload:{index:key}});
   }
   
   return (
@@ -45,24 +44,24 @@ const BurgerConstructorElements = ({data}) => {
       ) }  
       
       <div className={BurgerConstructorElementsStyles.wrap}>
-        { orderState.ingredients.length === 0 ?
+        { cartState.ingredients.filter(x => x.type !== 'bun').length === 0 ?
           (
             <div className='constructor-element' style={{margin: '0 8px 0 32px', width: 'auto'}}>
               <div>Выберите начинку</div>
             </div>
           ) :
           (
-            orderState.ingredients.map((igredient,key) => (
-            (igredient.type !== 'bun')
+            cartState.ingredients.map((ingredient,key) => (
+            (ingredient.type !== 'bun')
             && (
                 <div className={BurgerConstructorElementsStyles.ConstructorElement} key={key}>
                   <DragIcon type="primary" />
                   <ConstructorElement
                     isLocked={false}
-                    text={igredient.name}
-                    price={igredient.price}
-                    thumbnail={igredient.image}
-                    handleClose={()=>removeConstructorElement(igredient)}
+                    text={ingredient.name}
+                    price={ingredient.price}
+                    thumbnail={ingredient.image}
+                    handleClose={()=>removeConstructorElement(key)}
                   />
                 </div>
               )
@@ -96,6 +95,6 @@ const BurgerConstructorElements = ({data}) => {
 export default BurgerConstructorElements
 
 
-BurgerConstructorElements.propTypes = {
+/*BurgerConstructorElements.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired
-}
+}*/

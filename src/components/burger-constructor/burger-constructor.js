@@ -7,19 +7,19 @@ import burgerConstructorStyles from './burger-constructor.module.css'
 
 import { ingredientType } from '../../utils/types';
 
-export const BurgerConstructor = ({data}) => {
+export const BurgerConstructor = () => {
   return (
     <div className='mt-25'>
 
-      <BurgerConstructorElements data={data} />
+      <BurgerConstructorElements />
       
       <BurgerConstructorFooter />
     </div>
   )
 }
 
-BurgerConstructor.propTypes = {
+/*BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired
-}
+}*/
 
 export default BurgerConstructor
