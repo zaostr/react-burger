@@ -24,7 +24,6 @@ const BurgerConstructorFooter = () => {
 
   useEffect(() => {
     dispatchConstructorTotal(cartState.ingredients);
-    console.log(constructorTotal);
   },[JSON.stringify(cartState)])
 
   const BurgerConstructorTotal = useMemo(() => {

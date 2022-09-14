@@ -13,7 +13,6 @@ const BurgerConstructorElements = () => {
   const {cartState, dispatchCartState} = useContext(ConstructorContext);
   
   useEffect(() => {
-    console.log(cartState.ingredients);
     setSelectedBun(cartState.ingredients.filter(x => x.type === 'bun')[0] || false);
   },[JSON.stringify(cartState)])
 
