@@ -1,6 +1,7 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useContext} from 'react'
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
+import { ConstructorContext } from '../../../services/constructorContext';
 
 import BurgerConstructorElementsStyles from './burger-constructor-elements.module.css'
 import './burger-constructor-elements.css'
@@ -8,15 +9,21 @@ import './burger-constructor-elements.css'
 import { ingredientType } from '../../../utils/types';
 
 const BurgerConstructorElements = ({data}) => {
-  const [selectedBun, setSelectedBun] = useState(data[0] || false);
+  const [selectedBun, setSelectedBun] = useState(false);
+  const {orderState, dispatchOrderState} = useContext(ConstructorContext);
   
   useEffect(() => {
-    setSelectedBun(data[0]);
-  },[data])
+    console.log(orderState);
+    setSelectedBun(orderState.ingredients.filter(x => x.type === 'bun')[0] || false);
+  },[orderState])
+
+  const removeConstructorElement = (ingredient) => {
+    dispatchOrderState({type:'removeIngredient',payload:ingredient})
+  }
   
   return (
     <div>
-      { selectedBun && (
+      { selectedBun ? (
         <div className={BurgerConstructorElementsStyles.ConstructorElementTop}>
           <span></span>
           <ConstructorElement
@@ -27,23 +34,42 @@ const BurgerConstructorElements = ({data}) => {
             thumbnail={selectedBun.image}
           />
         </div>
+      ) : (
+        <div className={BurgerConstructorElementsStyles.ConstructorElementTop}>
+          <span></span>
+          <div className='constructor-element constructor-element_pos_top'>
+            <div style={{height: '48px'}}>Выберите булки</div>
+          </div>
+        </div>
       ) }  
       
       <div className={BurgerConstructorElementsStyles.wrap}>
-        { data.map((igredient,key) => (
-          (key!==0 && key!==data.length-1)
-          && ( <div className={BurgerConstructorElementsStyles.ConstructorElement} key={key}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  isLocked={false}
-                  text={igredient.name}
-                  price={igredient.price}
-                  thumbnail={igredient.image}
-                />
-              </div> )
-        )) }
+        { orderState.ingredients.length === 0 ?
+          (
+            <div className='constructor-element' style={{margin: '0 8px 0 32px', width: 'auto'}}>
+              <div>Выберите начинку</div>
+            </div>
+          ) :
+          (
+            orderState.ingredients.map((igredient,key) => (
+            (igredient.type !== 'bun')
+            && (
+                <div className={BurgerConstructorElementsStyles.ConstructorElement} key={key}>
+                  <DragIcon type="primary" />
+                  <ConstructorElement
+                    isLocked={false}
+                    text={igredient.name}
+                    price={igredient.price}
+                    thumbnail={igredient.image}
+                    handleClose={()=>console.log(1)}
+                  />
+                </div>
+              )
+            ))
+          )
+        }
       </div>
-      { selectedBun && (
+      { selectedBun ? (
       <div className={BurgerConstructorElementsStyles.ConstructorElementBottom}>
         <span></span>
         <ConstructorElement
@@ -54,6 +80,13 @@ const BurgerConstructorElements = ({data}) => {
           thumbnail={selectedBun.image}
         />
       </div>
+      ) : (
+        <div className={BurgerConstructorElementsStyles.ConstructorElementBottom}>
+          <span></span>
+          <div className='constructor-element constructor-element_pos_bottom'>
+            <div style={{height: '48px'}}>Выберите булки</div>
+          </div>
+        </div>
       ) }  
     </div>
   )
