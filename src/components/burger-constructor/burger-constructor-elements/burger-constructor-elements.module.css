@@ -1,20 +1,47 @@
-.ConstructorElement {
+
+
+    
+.contentCenter {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+}
+
+.ConstructorElementWrapper {
+    /*composes: constructor-element from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';*/
     display: grid;
     grid-template-columns: 24px 1fr;
     grid-gap: 8px;
     align-content: center;
 }
-.ConstructorElement > svg {
-    height: 100%;
-}
-
-.ConstructorElementTop,
-.ConstructorElementBottom {
-    composes: ConstructorElement;
+.ConstructorTopElementWrapper,
+.ConstructorBottomElementWrapper {
+    composes: ConstructorElementWrapper;
     padding-right: 16px;
 }
+.ConstructorEmptyTopElementWrapper,
+.ConstructorEmptyBottomElementWrapper {
+    composes: ConstructorTopElementWrapper;
+}
+.ConstructorElement {
+    composes: constructor-element from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
+    max-width: unset;
+    width: 100%;
+}
+.ConstructorEmptyTopElement,
+.ConstructorEmptyBottomElement {
+    composes: ConstructorElement;
+    composes: constructor-element_pos_top from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
+    composes: contentCenter;
+    height: 80px;
+    border: dashed 2px var(--c-text-light);
+}
+.ConstructorEmptyBottomElement {
+    composes: constructor-element_pos_bottom from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
+}
 
-.wrap {
+
+.ListWrapper {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -22,10 +49,35 @@
     margin-top: 10px;
     padding-right: 8px
 }
+.ConstructorElementWrapper > div {
+    max-width: unset;
+    width: 100%;
+}
+.EmptyListWrapper {
+    margin: 0 8px 0 32px;
+    width: auto;
+    height: 100%;
+}
+.EmptyListWrapper > div {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    height: 100%;
+    max-width:unset;
+    border: dashed 2px var(--c-text-light);
+}
+.EmptyList {
+    composes: constructor-element from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
+}
+
+.ConstructorElementWrapper > svg {
+    height: 100%;
+}
+
 
 
 @media screen and (min-width: 1200px) {
-    .wrap {
+    .ListWrapper {
         height: 525px;
         overflow-x: hidden;
         overflow-y: auto;

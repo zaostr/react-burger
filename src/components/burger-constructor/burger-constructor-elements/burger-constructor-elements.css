@@ -2,3 +2,14 @@
     max-width: unset;
     width: 100%;
 }
+.constructor-element.empty {
+    margin: 0 8px 0 32px;
+    width: auto;
+    border: dashed 2px var(--c-text-light);
+}
+.constructor-element.empty > div {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    height: 100%;
+}

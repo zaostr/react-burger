@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState,useEffect,useContext} from 'react'
 import {Counter} from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientCardImage from './ingredient-card-image/ingredient-card-image'
 import IngredientCardPrice from './ingredient-card-price/ingredient-card-price'
@@ -10,14 +10,26 @@ import { Modal } from '../../../modal/modal'
 import IngredientCardStyles from './ingredients-card.module.css'
 
 import { ingredientType } from '../../../../utils/types';
+import { ConstructorContext } from '../../../../services/constructorContext';
 
 const IngredientCard = ({info}) => {
   const modalControls = useModalControls();
+  const {cartState} = useContext(ConstructorContext);
+  const [counterState, setCounterState] = useState(0);
+  
+  useEffect(() => {
+    setCounterState( cartState.ingredients.filter(x => x._id === info._id).length );
+  },[JSON.stringify(cartState)])
+
+
   return (
     <>
       <div className={IngredientCardStyles.card} onClick={modalControls.open}>
         <div className='pl-4 pr-4 position-relative'>
-            <Counter count={1} size="default" />
+            { 
+              counterState > 0 &&
+              ( <Counter count={counterState} size="default" /> )
+            }
 
             <IngredientCardImage img={info.image} />
 

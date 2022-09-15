@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { ConstructorContext } from '../../../services/constructorContext';
 
 import BurgerConstructorElementsStyles from './burger-constructor-elements.module.css'
-import './burger-constructor-elements.css'
 
 import { ingredientType } from '../../../utils/types';
 
@@ -23,7 +22,7 @@ const BurgerConstructorElements = () => {
   return (
     <div>
       { selectedBun ? (
-        <div className={BurgerConstructorElementsStyles.ConstructorElementTop}>
+        <div className={BurgerConstructorElementsStyles.ConstructorTopElementWrapper}>
           <span></span>
           <ConstructorElement
             type='top'
@@ -34,26 +33,26 @@ const BurgerConstructorElements = () => {
           />
         </div>
       ) : (
-        <div className={BurgerConstructorElementsStyles.ConstructorElementTop}>
+        <div className={BurgerConstructorElementsStyles.ConstructorEmptyTopElementWrapper}>
           <span></span>
-          <div className='constructor-element constructor-element_pos_top'>
-            <div style={{height: '48px'}}>Выберите булки</div>
+          <div className={BurgerConstructorElementsStyles.ConstructorEmptyTopElement}>
+            <div>Выберите булки</div>
           </div>
         </div>
       ) }  
       
-      <div className={BurgerConstructorElementsStyles.wrap}>
+      <div className={BurgerConstructorElementsStyles.ListWrapper}>
         { cartState.ingredients.filter(x => x.type !== 'bun').length === 0 ?
           (
-            <div className='constructor-element' style={{margin: '0 8px 0 32px', width: 'auto'}}>
-              <div>Выберите начинку</div>
+            <div className={BurgerConstructorElementsStyles.EmptyListWrapper}>
+              <div className={BurgerConstructorElementsStyles.EmptyList}>Выберите начинку</div>
             </div>
           ) :
           (
             cartState.ingredients.map((ingredient,key) => (
             (ingredient.type !== 'bun')
             && (
-                <div className={BurgerConstructorElementsStyles.ConstructorElement} key={key}>
+                <div className={BurgerConstructorElementsStyles.ConstructorElementWrapper} key={key}>
                   <DragIcon type="primary" />
                   <ConstructorElement
                     isLocked={false}
@@ -69,7 +68,7 @@ const BurgerConstructorElements = () => {
         }
       </div>
       { selectedBun ? (
-      <div className={BurgerConstructorElementsStyles.ConstructorElementBottom}>
+      <div className={BurgerConstructorElementsStyles.ConstructorBottomElementWrapper}>
         <span></span>
         <ConstructorElement
           type='bottom'
@@ -80,10 +79,10 @@ const BurgerConstructorElements = () => {
         />
       </div>
       ) : (
-        <div className={BurgerConstructorElementsStyles.ConstructorElementBottom}>
+        <div className={BurgerConstructorElementsStyles.ConstructorEmptyBottomElementWrapper}>
           <span></span>
-          <div className='constructor-element constructor-element_pos_bottom'>
-            <div style={{height: '48px'}}>Выберите булки</div>
+          <div className={BurgerConstructorElementsStyles.ConstructorEmptyBottomElement}>
+            <div>Выберите булки</div>
           </div>
         </div>
       ) }  
