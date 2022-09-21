@@ -6,6 +6,7 @@ import BurgerIngredients from './components/burger-ingredients/burger-ingredient
 import { ErrorHandler } from './components/error-handler/error-handler';
 import { getIngredients } from './utils/burger-api';
 import { ConstructorContext } from './services/constructorContext'
+import { useSelector, useDispatch } from 'react-redux'
 import { ingredients } from './utils/data';
 
 
@@ -47,7 +48,7 @@ function cartReducer(state, action) {
         }
 
       default:
-        throw new Error(`Wrong type of action: ${action.type}`);
+        return state;
   }
 }
 
@@ -57,6 +58,19 @@ function App() {
   const [ingredientsList, setIngredientsList] = useState([]);
   const [requestErrorText, setRequestErrorText] = useState(false);
   const [cartState, dispatchCartState] = useReducer(cartReducer, orderInitialState);
+
+  /*const ingredientsList = useSelector(store => store.ingredients.list);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const list = getIngredients()
+    .then(dataJson => dataJson.data)
+    .catch(err => setRequestErrorText(err.message));
+
+    dispatch({
+      type: 'INGREDIENTS_SET_LIST',
+      list
+    })
+  }, []);*/
 
 
   useEffect(() => {
