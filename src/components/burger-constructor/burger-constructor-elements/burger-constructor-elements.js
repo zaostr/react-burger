@@ -1,22 +1,34 @@
 import {useEffect, useState, useContext} from 'react'
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
-import { ConstructorContext } from '../../../services/constructorContext';
+//import PropTypes from 'prop-types';
+//import { ConstructorContext } from '../../../services/constructorContext';
 
 import BurgerConstructorElementsStyles from './burger-constructor-elements.module.css'
 
-import { ingredientType } from '../../../utils/types';
+//import { ingredientType } from '../../../utils/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartRemoveItem } from '../../../services/actions/cart'
 
 const BurgerConstructorElements = () => {
   const [selectedBun, setSelectedBun] = useState(false);
-  const {cartState, dispatchCartState} = useContext(ConstructorContext);
+  const dispatch = useDispatch();
+  //const {cartState, dispatchCartState} = useContext(ConstructorContext);
+
+  const cartList = useSelector(store => store.cart.list);
   
   useEffect(() => {
-    setSelectedBun(cartState.ingredients.filter(x => x.type === 'bun')[0] || false);
-  },[JSON.stringify(cartState)])
+    setSelectedBun(cartList.filter(x => x.type === 'bun')[0] || false);
+  },[JSON.stringify(cartList)])
 
   function removeConstructorElement(key) {
-    dispatchCartState({type:'removeIngredient',payload:{index:key}});
+    dispatch(cartRemoveItem(key))
+    /*dispatch({
+      type: CART_REMOVE_ITEM,
+      payload: {
+        index: key
+      }
+    })*/
+    //dispatchCartState({type:'removeIngredient',payload:{index:key}});
   }
   
   return (
@@ -42,14 +54,14 @@ const BurgerConstructorElements = () => {
       ) }  
       
       <div className={BurgerConstructorElementsStyles.ListWrapper}>
-        { cartState.ingredients.filter(x => x.type !== 'bun').length === 0 ?
+        { cartList.filter(x => x.type !== 'bun').length === 0 ?
           (
             <div className={BurgerConstructorElementsStyles.EmptyListWrapper}>
               <div className={BurgerConstructorElementsStyles.EmptyList}>Выберите начинку</div>
             </div>
           ) :
           (
-            cartState.ingredients.map((ingredient,key) => (
+            cartList.map((ingredient,key) => (
             (ingredient.type !== 'bun')
             && (
                 <div className={BurgerConstructorElementsStyles.ConstructorElementWrapper} key={key}>

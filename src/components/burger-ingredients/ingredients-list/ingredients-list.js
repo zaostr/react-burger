@@ -1,16 +1,20 @@
 import {useEffect} from 'react'
 import { IngredientsListSection } from './ingredients-list-section/ingredients-list-section'
+import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types';
+import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import IngredientsListStyles from './ingredients-list.module.css'
 
 import { ingredientType } from '../../../utils/types';
 
 export const IngredientsList = ({data, currentTab, setCurrentTab}) => {
+  const showLoader = useSelector(store => store.ingredients.ingredientsRequest);
 
   const getIngredientsByType = (allIngredients, searchableType) => {
     return allIngredients.filter(x => x.type === searchableType)
   }
+
   
 
 
@@ -20,7 +24,10 @@ export const IngredientsList = ({data, currentTab, setCurrentTab}) => {
       let sections = e.target.childNodes;
       for (let index = sections.length; index > 0; index--) {
         const element = sections[index - 1];
-        if ( (element.offsetHeight + (element.offsetTop - wrapper.offsetTop) - wrapper.scrollTop) > 0 ) {
+        /*if ( (element.offsetHeight + (element.offsetTop - wrapper.offsetTop) - wrapper.scrollTop) > 0 ) {
+          setCurrentTab(element.dataset.type);
+        }*/
+        if ( (element.offsetHeight + (element.offsetTop) - wrapper.scrollTop) > 0 ) {
           setCurrentTab(element.dataset.type);
         }
       }
@@ -33,11 +40,20 @@ export const IngredientsList = ({data, currentTab, setCurrentTab}) => {
   }, [])
 
   return (
-    <div id='IngredientsListSectionWrapper' className={IngredientsListStyles.wrap}>
-      { ['bun','sauce','main'].map((igredient,key) => (
-        <IngredientsListSection key={key} type={igredient} ingredients={ getIngredientsByType(data, igredient) } /> 
-      )) }
-    </div>
+    <>
+      <div id='IngredientsListSectionWrapper' className={IngredientsListStyles.wrap}>
+        { showLoader && (
+          <div className={IngredientsListStyles.loader_wrapper}>
+            <span className={IngredientsListStyles.loader}>
+              <BurgerIcon type="primary" />
+            </span>
+          </div>)
+        }
+        { ['bun','sauce','main'].map((igredient,key) => (
+          <IngredientsListSection key={key} type={igredient} ingredients={ getIngredientsByType(data, igredient) } /> 
+        )) }
+      </div>
+    </>
   )
 }
 

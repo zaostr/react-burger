@@ -11,6 +11,8 @@ import BurgerConstructorTotal from '../burger-constructor-total/burger-construct
 import { OrderDetails } from '../../order/order-details/order-details';
 
 import './burger-constructor-footer.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { cartClear } from '../../../services/actions/cart';
 
 const constructorTotalReducer = (state, ingredients) => {
   if (!ingredients.length) return 0;
@@ -20,22 +22,25 @@ const constructorTotalReducer = (state, ingredients) => {
 }
 
 const BurgerConstructorFooter = () => {
-  const {cartState, dispatchCartState} = useContext(ConstructorContext);
+  //const {cartState, dispatchCartState} = useContext(ConstructorContext);
+  const cartState = useSelector(store => store.cart);
+  const dispatch = useDispatch();
   const modalControls = useModalControls();
   const [requestErrorText, setRequestErrorText] = useState(false);
   const [orderId, setOrderId] = useState(0);
 
+
   
   const handleMakeOrder = () => {
-    if (cartState.ingredients.length === 0) {
+    if (cartState.list.length === 0) {
       return false
     };
     makeOrder(cartState)
     .then(dataJson => {
-      console.log(dataJson);
       modalControls.open();
       setOrderId(dataJson.order.number);
-      dispatchCartState({type:'clear'});
+      dispatch(cartClear());
+      //dispatchCartState({type:'clear'});
     })
     .catch(err => setRequestErrorText(err.message));
 

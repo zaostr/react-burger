@@ -4,6 +4,7 @@ import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import { ConstructorContext } from '../../../services/constructorContext';
 
 import './burger-constructor-total.css'
+import { useSelector } from 'react-redux';
 
 const constructorTotalReducer = (state, ingredients) => {
   if (!ingredients.length) return 0;
@@ -13,16 +14,20 @@ const constructorTotalReducer = (state, ingredients) => {
 }
 
 const BurgerConstructorTotal = () => {
-  const {cartState, dispatchCartState} = useContext(ConstructorContext);
+  //const {cartState, dispatchCartState} = useContext(ConstructorContext);
   const [constructorTotal, dispatchConstructorTotal] = useReducer(constructorTotalReducer, 0);
+  const cartState = {
+    ingredients: []
+  };
+  const total = useSelector(store => store.cart.total);
 
   useEffect(() => {
-    dispatchConstructorTotal(cartState.ingredients);
+    //dispatchConstructorTotal(cartState.ingredients);
   },[JSON.stringify(cartState)])
 
   return (
     <p className='total text text_type_digits-medium'>
-      { constructorTotal }
+      { total }
       <CurrencyIcon />
     </p>
   )

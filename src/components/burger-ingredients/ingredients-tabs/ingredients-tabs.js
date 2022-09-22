@@ -11,7 +11,8 @@ export const IngredientsTabs = ({currentTab, setCurrentTab}) => {
       const section = document.getElementById(`section-${sectionId}`) || false;
       if (!section) return;
       wrapper.scroll({
-        top: section.offsetTop - section.parentNode.offsetTop, 
+        top: section.offsetTop, 
+        /* top: section.offsetTop - section.parentNode.offsetTop, */
         left: 0, 
         behavior: 'smooth'
       });

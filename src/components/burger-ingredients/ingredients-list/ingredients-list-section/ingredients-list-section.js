@@ -26,14 +26,16 @@ export const IngredientsListSection = ({type, ingredients}) => {
       return;
   }
     return (
-      <div id={`section-${type}`} data-type={type}>
-        <p className="text text_type_main-medium m-0">{sectionTitle}</p>
-        <div className='p-6 pb-10'>
-          <div className={IngredientsListStyles.grid}>
-          { ingredients.map((igredient,key) => (<IngredientCard key={key} info={igredient} />)) }
+      (ingredients.length !== 0) && (
+        <div id={`section-${type}`} data-type={type}>
+          <p className="text text_type_main-medium m-0">{sectionTitle}</p>
+          <div className='p-6 pb-10'>
+            <div className={IngredientsListStyles.grid}>
+            { ingredients.map((igredient,key) => (<IngredientCard key={key} info={igredient} />)) }
+            </div>
           </div>
         </div>
-      </div>
+      )
     )
 }
 

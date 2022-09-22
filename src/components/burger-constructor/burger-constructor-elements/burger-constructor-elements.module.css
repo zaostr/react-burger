@@ -34,7 +34,7 @@
     composes: constructor-element_pos_top from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
     composes: contentCenter;
     height: 80px;
-    border: dashed 2px var(--c-text-light);
+    border: dashed 2px #888;
 }
 .ConstructorEmptyBottomElement {
     composes: constructor-element_pos_bottom from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
@@ -64,7 +64,7 @@
     justify-content: center;
     height: 100%;
     max-width:unset;
-    border: dashed 2px var(--c-text-light);
+    border: dashed 2px #888;
 }
 .EmptyList {
     composes: constructor-element from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';

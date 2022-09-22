@@ -10,16 +10,18 @@ import { Modal } from '../../../modal/modal'
 import IngredientCardStyles from './ingredients-card.module.css'
 
 import { ingredientType } from '../../../../utils/types';
-import { ConstructorContext } from '../../../../services/constructorContext';
+import { useSelector } from 'react-redux';
+//import { ConstructorContext } from '../../../../services/constructorContext';
 
 const IngredientCard = ({info}) => {
   const modalControls = useModalControls();
-  const {cartState} = useContext(ConstructorContext);
+  const cartList = useSelector(store => store.cart.list);
+  //const {cartState} = useContext(ConstructorContext);
   const [counterState, setCounterState] = useState(0);
   
   useEffect(() => {
-    setCounterState( cartState.ingredients.filter(x => x._id === info._id).length );
-  },[JSON.stringify(cartState)])
+    setCounterState( cartList.filter(x => x._id === info._id).length );
+  },[JSON.stringify(cartList)])
 
 
   return (
