@@ -3,6 +3,7 @@ import {Counter} from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientCardImage from './ingredient-card-image/ingredient-card-image'
 import IngredientCardPrice from './ingredient-card-price/ingredient-card-price'
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
+import { useDrag } from 'react-dnd/dist/hooks';
 
 import { useModalControls } from '../../../../hooks/useModalControls';
 import { Modal } from '../../../modal/modal'
@@ -23,10 +24,18 @@ const IngredientCard = ({info}) => {
     setCounterState( cartList.filter(x => x._id === info._id).length );
   },[JSON.stringify(cartList)])
 
+  const [{ opacity }, ref] = useDrag({
+    type: info.type === 'bun' ? 'bun-item' : 'ingredients-item',
+    item: { ...info },
+    collect: monitor => ({
+      isDrag: monitor.isDragging(),
+      opacity: monitor.isDragging() ? 0.5 : 1
+    })
+  })
 
   return (
     <>
-      <div className={IngredientCardStyles.card} onClick={modalControls.open}>
+      <div ref={ref} className={IngredientCardStyles.card} onClick={modalControls.open} style={{ opacity }}>
         <div className='pl-4 pr-4 position-relative'>
             { 
               counterState > 0 &&

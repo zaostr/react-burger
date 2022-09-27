@@ -1,0 +1,14 @@
+.ConstructorElementWrapper {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    grid-gap: 8px;
+    align-content: center;
+}
+
+.ConstructorElementWrapper > div {
+    max-width: unset;
+    width: 100%;
+}
+.ConstructorElementWrapper > svg {
+    height: 100%;
+}

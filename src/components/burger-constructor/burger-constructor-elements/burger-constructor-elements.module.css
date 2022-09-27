@@ -7,16 +7,15 @@
     justify-content: center;
 }
 
-.ConstructorElementWrapper {
-    /*composes: constructor-element from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';*/
+/*.ConstructorElementWrapper {
     display: grid;
     grid-template-columns: 24px 1fr;
     grid-gap: 8px;
     align-content: center;
-}
+}*/
 .ConstructorTopElementWrapper,
 .ConstructorBottomElementWrapper {
-    composes: ConstructorElementWrapper;
+    composes: ConstructorElementWrapper from './burger-constructor-element/burger-constructor-element.module.css';
     padding-right: 16px;
 }
 .ConstructorEmptyTopElementWrapper,
@@ -40,23 +39,38 @@
     composes: constructor-element_pos_bottom from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
 }
 
-
 .ListWrapper {
+    position: relative;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.ListWrapper .List {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    padding-right: 8px
+    padding-right: 8px;
 }
-.ConstructorElementWrapper > div {
-    max-width: unset;
-    width: 100%;
+.ListWrapperWithOverlay {
+    composes: ListWrapper;
+    overflow: hidden!important;
+    padding-right: 16px;
 }
 .EmptyListWrapper {
-    margin: 0 8px 0 32px;
+    display: none;
+    padding: 0 8px 0 32px;
+    position: absolute;
+    left: 0;
+    right: 8px;
+    top: 0;
+    bottom: 0;
+    background-color: var(--background-alt);
     width: auto;
     height: 100%;
+    z-index: 99
+}
+.ListWrapperWithOverlay .EmptyListWrapper {
+    display: block;
 }
 .EmptyListWrapper > div {
     display: grid;
@@ -69,15 +83,19 @@
 .EmptyList {
     composes: constructor-element from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
 }
-
+/*
+.ConstructorElementWrapper > div {
+    max-width: unset;
+    width: 100%;
+}
 .ConstructorElementWrapper > svg {
     height: 100%;
-}
+}*/
 
 
 
 @media screen and (min-width: 1200px) {
-    .ListWrapper {
+    .List {
         height: 525px;
         overflow-x: hidden;
         overflow-y: auto;

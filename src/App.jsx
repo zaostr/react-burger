@@ -1,85 +1,22 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState } from 'react';
 import './App.css';
 import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 import { ErrorHandler } from './components/error-handler/error-handler';
-//import { ingredients } from './utils/data';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 
-/*function cartReducer(state, action) {
-  switch (action.type) {
-    case 'addIngredient':
-      if ( action.payload.type == 'bun' ) {
-        let ingredientsWithoutBun = state.ingredients.filter(x => x.type !== 'bun');
-        let newIngredients = [
-          ...ingredientsWithoutBun,
-          action.payload
-        ];
-        return {
-          ...state,
-          ingredients: newIngredients
-        }
-      } else {
-        let newIngredients = [
-          ...state.ingredients,
-          action.payload
-        ];
-        return {
-          ...state,
-          ingredients: newIngredients
-        }
-      }
-      case 'removeIngredient':
-        if ( action.payload.type !== 'bun' ) {
-          let newIngredients = state.ingredients.filter((x,key) => key !== action.payload.index);
-          return {
-            ...state,
-            ingredients: newIngredients
-          }
-        }
-      case 'clear':
-        return {
-          ...state,
-          ingredients: []
-        }
-
-      default:
-        return state;
-  }
-}
-
-const orderInitialState = {ingredients: []};*/
 
 function App() {
-  //const [ingredientsList, setIngredientsList] = useState([]);
   const [requestErrorText, setRequestErrorText] = useState(false);
-  //const [cartState, dispatchCartState] = useReducer(cartReducer, orderInitialState);
-  /*useEffect(() => {
-    ingredientsList.map(item => dispatch({
-      type: 'CART_INSERT_ITEM',
-      item
-    }));
-  }, [JSON.stringify(ingredientsList)]);*/
-
-
-  /*useEffect(() => {
-    getIngredientsRequest()
-    .then(dataJson => {
-      setIngredientsList(dataJson.data);
-      setRequestErrorText(false);
-    })
-    .catch(err => setRequestErrorText(err.message));
-  }, []);
-
-  useEffect(() => {
-    ingredientsList.map(item => dispatchCartState({type: 'addIngredient', payload: item}));
-  }, [JSON.stringify(ingredientsList)]);*/
 
   return (
     <div className="App">
       <AppHeader />
       <main className='main pl-5 pr-5'>
+        <DndProvider backend={HTML5Backend}>
           <div>
               {/* <button onClick={() =>{dispatchCartState({type: 'removeIngredient', payload: ingredients[Math.floor(Math.random() * 5)]});console.log(cartState)}}>minus</button>
               <strong>{cartState.ingredients.length}</strong>
@@ -90,6 +27,7 @@ function App() {
           <div>
               <BurgerConstructor />
           </div>
+        </DndProvider>
       </main>
       <ErrorHandler errorMessage={requestErrorText} />
     </div>

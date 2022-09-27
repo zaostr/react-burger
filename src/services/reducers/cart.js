@@ -2,7 +2,8 @@ import {
     CART_INSERT_ITEM,
     CART_REMOVE_ITEM,
     CART_CLEAR,
-    CART_TOTAL
+    CART_TOTAL,
+    CART_SORT_LIST
 } from '../actions/cart'
 
 
@@ -60,6 +61,14 @@ export const cartReducer = (state = cartState, action) => {
                          return prev + next.price
                     }
                 }, 0)
+            }
+
+        case CART_SORT_LIST:
+            let newList = [...state.list].filter((x,key) => key !== action.payload.oldIndex);
+            newList.splice(action.payload.newIndex, 0, action.payload.item );
+            return {
+                ...state,
+                list: newList
             }
         
         default:
