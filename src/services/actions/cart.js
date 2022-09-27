@@ -5,6 +5,10 @@ export const CART_REMOVE_ITEM = 'CART_REMOVE_ITEM';
 export const CART_CLEAR       = 'CART_CLEAR';
 export const CART_TOTAL       = 'CART_TOTAL';
 export const CART_SORT_LIST   = 'CART_SORT_LIST';
+export const CART_ORDER_REQUEST  = 'CART_ORDER_REQUEST';
+export const CART_ORDER_SUCCESS  = 'CART_ORDER_SUCCESS';
+export const CART_ORDER_FAIL  = 'CART_ORDER_FAIL';
+export const CART_SAVE_ORDER  = 'CART_SAVE_ORDER';
 
 
 export function cartInsertItem(item) {

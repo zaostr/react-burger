@@ -3,6 +3,8 @@ import { ingredientsReducer } from "./ingredients";
 import { cartReducer } from './cart';
 
 
+
+
 const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
     cart: cartReducer

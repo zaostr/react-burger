@@ -14,47 +14,43 @@ import { useDrop } from 'react-dnd';
 const BurgerConstructorElements = () => {
   const [selectedBun, setSelectedBun] = useState(false);
   const dispatch = useDispatch();
-  const [activeItemIndex, setActiveItemIndex] = useState(null);
-  //const {cartState, dispatchCartState} = useContext(ConstructorContext);
 
   const cartList = useSelector(store => store.cart.list);
 
-  const [{ isBunTopAreaHover }, dropBunTop] = useDrop({
+  const [{ isBunTopAreaHover, canDropBunTop }, dropBunTop] = useDrop({
     accept: 'bun-item',
     collect: monitor => ({
-      isBunTopAreaHover: monitor.isOver()
+      isBunTopAreaHover: monitor.isOver(),
+      canDropBunTop: monitor.canDrop()
     }),
     drop(item) {
-      console.log(1,item);
       dispatch(cartInsertItem(item));
     }
   })
-  const [{ isBunBottomAreaHover }, dropBunBottom] = useDrop({
+  const [{ isBunBottomAreaHover, canDropBunBottom }, dropBunBottom] = useDrop({
     accept: 'bun-item',
     collect: monitor => ({
-      isBunBottomAreaHover: monitor.isOver()
+      isBunBottomAreaHover: monitor.isOver(),
+      canDropBunBottom: monitor.canDrop()
     }),
     drop(item) {
-      console.log(2,item);
       dispatch(cartInsertItem(item));
     }
   })
 
-  const [{ isIngredientAreaHover }, dropIngredient] = useDrop({
-    accept: ['ingredients-item','cart--item'],
+  const [{ isIngredientAreaHover, canDropIngredient }, dropIngredient] = useDrop({
+    accept: 'ingredients-item',
     collect: monitor => ({
-      isIngredientAreaHover: monitor.isOver() && monitor.getItemType() === 'ingredients-item'
+      isIngredientAreaHover: monitor.isOver(),
+      canDropIngredient: monitor.canDrop()
     }),
-    drop(item, monitor) {
-      console.log(3,item, monitor.getItemType());
-      if ( monitor.getItemType() === 'ingredients-item' ) {
-        dispatch(cartInsertItem(item));
-      } else {
-        console.log(4);
-      }
+    drop(item) {
+      dispatch(cartInsertItem(item));
     }
   })
-  
+
+ 
+
   useEffect(() => {
     setSelectedBun(cartList.filter(x => x.type === 'bun')[0] || false);
   },[JSON.stringify(cartList)])
@@ -62,8 +58,10 @@ const BurgerConstructorElements = () => {
   return (
     <div>
       <div ref={dropBunTop}>
-        { (selectedBun && !(isBunTopAreaHover || isBunBottomAreaHover)) ? (
-          <div className={BurgerConstructorElementsStyles.ConstructorTopElementWrapper}>
+        { (selectedBun && !(canDropBunTop || canDropBunBottom)) ? (
+          <div 
+            className={BurgerConstructorElementsStyles.ConstructorTopElementWrapper}
+          >
             <span></span>
             <ConstructorElement
               type='top'
@@ -76,7 +74,13 @@ const BurgerConstructorElements = () => {
         ) : (
           <div className={BurgerConstructorElementsStyles.ConstructorEmptyTopElementWrapper}>
             <span></span>
-            <div className={BurgerConstructorElementsStyles.ConstructorEmptyTopElement}>
+            <div 
+              className={`${BurgerConstructorElementsStyles.ConstructorEmptyTopElement}
+              ${(isBunTopAreaHover || isBunBottomAreaHover) 
+                ? BurgerConstructorElementsStyles.overlayActive 
+                : ''
+              }`}
+            >
               <div>Выберите булки</div>
             </div>
           </div>
@@ -84,9 +88,20 @@ const BurgerConstructorElements = () => {
       </div>
       
       
-      <div ref={dropIngredient} className={`${(cartList.filter(x => x.type !== 'bun').length === 0 || isIngredientAreaHover) ? BurgerConstructorElementsStyles.ListWrapperWithOverlay : BurgerConstructorElementsStyles.ListWrapper}`}>
+      <div 
+        ref={dropIngredient} 
+        className={`
+        ${(cartList.filter(x => x.type !== 'bun').length === 0 || canDropIngredient) 
+          ? BurgerConstructorElementsStyles.ListWrapperWithOverlay 
+          : BurgerConstructorElementsStyles.ListWrapper
+        }`}>
         <div className={`${BurgerConstructorElementsStyles.EmptyListWrapper}`}>
-          <div className={BurgerConstructorElementsStyles.EmptyList}>Выберите начинку</div>
+          <div
+            className={`${BurgerConstructorElementsStyles.EmptyList}
+            ${(isIngredientAreaHover) 
+              ? BurgerConstructorElementsStyles.overlayActive 
+              : ''
+            }`}>Выберите начинку</div>
         </div>
         <div className={BurgerConstructorElementsStyles.List}>
           { cartList.map((ingredient,key) => (
@@ -104,7 +119,7 @@ const BurgerConstructorElements = () => {
 
       
       <div ref={dropBunBottom}>
-        { (selectedBun && !(isBunTopAreaHover || isBunBottomAreaHover)) ? (
+        { (selectedBun && !(canDropBunTop || canDropBunBottom)) ? (
         <div className={BurgerConstructorElementsStyles.ConstructorBottomElementWrapper}>
           <span></span>
           <ConstructorElement
@@ -118,7 +133,12 @@ const BurgerConstructorElements = () => {
         ) : (
           <div className={BurgerConstructorElementsStyles.ConstructorEmptyBottomElementWrapper}>
             <span></span>
-            <div className={BurgerConstructorElementsStyles.ConstructorEmptyBottomElement}>
+            <div 
+              className={`${BurgerConstructorElementsStyles.ConstructorEmptyBottomElement} 
+              ${(isBunTopAreaHover || isBunBottomAreaHover) 
+                ? BurgerConstructorElementsStyles.overlayActive 
+                : ''
+              }`}>
               <div>Выберите булки</div>
             </div>
           </div>

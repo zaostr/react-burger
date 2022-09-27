@@ -9,13 +9,13 @@ export const ErrorHandler = ({errorMessage}) => {
   return (
     <>
         {( errorMessage ) && (
-        <Modal {...modalControls}>
+          <Modal {...modalControls}>
             <div className={'mb-5'}>
                 <p className='text text_type_main-large pt-4 mb-5'>Ошибка!</p>
                 <p className='text text_type_main-medium mb-5'>Упс! Что-то пошло не так. <br></br>Обновите страницу или зайдите позже.</p>
                 <p className='text text_type_main-default text_color_inactive'>Детали ошибки: {errorMessage}</p>
             </div>
-            </Modal>
+          </Modal>
         )}
     </>
   )

@@ -19,12 +19,6 @@ export const BurgerIngredients = () => {
     dispatch( getIngredients() );
   }, [dispatch]);
 
-  useEffect(() => {
-    list.map(i => {
-      dispatch(cartInsertItem(i));
-      //dispatch({type: CART_INSERT_ITEM, payload: i})
-    })
-  },[list])
 
   return (
     <>

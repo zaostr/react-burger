@@ -3,14 +3,22 @@ import {
     CART_REMOVE_ITEM,
     CART_CLEAR,
     CART_TOTAL,
-    CART_SORT_LIST
+    CART_SORT_LIST,
+    CART_ORDER_REQUEST,
+    CART_ORDER_SUCCESS,
+    CART_ORDER_FAIL,
+    CART_SAVE_ORDER
 } from '../actions/cart'
 
 
 
 const cartState = {
     list: [],
-    total: 0
+    total: 0,
+    orderRequest: false,
+    orderSuccess: false,
+    orderFail: false,
+    orders: []
 }
 
 export const cartReducer = (state = cartState, action) => {
@@ -69,6 +77,30 @@ export const cartReducer = (state = cartState, action) => {
             return {
                 ...state,
                 list: newList
+            }
+
+        case CART_ORDER_REQUEST:
+            return {
+                ...state,
+                orderRequest: true,
+                orderSuccess: false,
+                orderFail: false
+            }
+
+        case CART_ORDER_SUCCESS:
+            return {
+                ...state,
+                orderRequest: false,
+                orderSuccess: true,
+                orderFail: false
+            }
+
+        case CART_ORDER_FAIL:
+            return {
+                ...state,
+                orderRequest: false,
+                orderSuccess: false,
+                orderFail: true
             }
         
         default:

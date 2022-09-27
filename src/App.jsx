@@ -18,10 +18,6 @@ function App() {
       <main className='main pl-5 pr-5'>
         <DndProvider backend={HTML5Backend}>
           <div>
-              {/* <button onClick={() =>{dispatchCartState({type: 'removeIngredient', payload: ingredients[Math.floor(Math.random() * 5)]});console.log(cartState)}}>minus</button>
-              <strong>{cartState.ingredients.length}</strong>
-              <button onClick={()=>{dispatchCartState({type: 'addIngredient', payload: ingredients[Math.floor(Math.random() * 15)]});console.log(cartState)}}>plus</button>
-              <button onClick={()=>{dispatchCartState({type: 'removeIngredient', payload: ingredients[Math.floor(Math.random() * 10)]});console.log(cartState)}}>test</button> */}
             <BurgerIngredients />
           </div>
           <div>

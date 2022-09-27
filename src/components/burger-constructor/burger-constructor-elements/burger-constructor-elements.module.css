@@ -83,6 +83,12 @@
 .EmptyList {
     composes: constructor-element from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
 }
+
+
+.overlayActive {
+    border-color: #fff!important;
+}
+
 /*
 .ConstructorElementWrapper > div {
     max-width: unset;

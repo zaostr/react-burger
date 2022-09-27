@@ -12,7 +12,13 @@ import { OrderDetails } from '../../order/order-details/order-details';
 
 import './burger-constructor-footer.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { cartClear } from '../../../services/actions/cart';
+import { 
+  CART_ORDER_REQUEST,
+  CART_ORDER_SUCCESS,
+  CART_ORDER_FAIL,
+  CART_SAVE_ORDER,
+  cartClear
+} from '../../../services/actions/cart';
 
 const constructorTotalReducer = (state, ingredients) => {
   if (!ingredients.length) return 0;
@@ -25,9 +31,11 @@ const BurgerConstructorFooter = () => {
   //const {cartState, dispatchCartState} = useContext(ConstructorContext);
   const cartState = useSelector(store => store.cart);
   const dispatch = useDispatch();
-  const modalControls = useModalControls();
   const [requestErrorText, setRequestErrorText] = useState(false);
   const [orderId, setOrderId] = useState(0);
+  const modalControls = useModalControls({
+    closeCallback: () => setOrderId(0)
+  });
 
 
   
@@ -35,18 +43,26 @@ const BurgerConstructorFooter = () => {
     if (cartState.list.length === 0) {
       return false
     };
+    dispatch({type: CART_ORDER_REQUEST});
+    modalControls.open();
+
     makeOrder(cartState)
     .then(dataJson => {
-      modalControls.open();
-      setOrderId(dataJson.order.number);
-      dispatch(cartClear());
-      //dispatchCartState({type:'clear'});
+      setTimeout(() => {
+        dispatch({type: CART_ORDER_SUCCESS});
+        dispatch({type: CART_SAVE_ORDER, payload: dataJson.order});
+        setOrderId(dataJson.order.number);
+        dispatch(cartClear());
+      },2000)
+      
     })
-    .catch(err => setRequestErrorText(err.message));
+    .catch(err => {
+      dispatch({type: CART_ORDER_FAIL});
+      setRequestErrorText(err.message)
+    });
 
 
   }
-{/**/}
 
 
   return (
@@ -60,9 +76,20 @@ const BurgerConstructorFooter = () => {
       </Button>
 
       <Modal {...modalControls}>
-        <OrderDetails id={orderId} />
+        {(cartState.orderRequest) 
+          ? <h2>Loading..</h2>
+          : (
+            (cartState.orderSuccess)
+              ? <OrderDetails id={orderId} />
+              : <>
+                  <div className={'mb-5'}>
+                      <p className='text text_type_main-large pt-4 mb-5'>Ошибка!</p>
+                      <p className='text text_type_main-medium mb-5'>Упс! Что-то пошло не так. <br></br>Обновите страницу или зайдите позже.</p>
+                      <p className='text text_type_main-default text_color_inactive'>Детали ошибки: {requestErrorText}</p>
+                  </div>
+                </>
+          ) }
       </Modal>
-      <ErrorHandler errorMessage={requestErrorText} />
     </div>
   )
 }
