@@ -73,7 +73,7 @@ export const cartReducer = (state = cartState, action) => {
 
         case CART_SORT_LIST:
             let newList = [...state.list].filter((x,key) => key !== action.payload.oldIndex);
-            newList.splice(action.payload.newIndex, 0, action.payload.item );
+            newList.splice(action.payload.newIndex, 0, {...action.payload.item} );
             return {
                 ...state,
                 list: newList
