@@ -5,7 +5,8 @@ export const useModalControls = ({
         isOpen = false, 
         disableCloseButton = false,
         disableCloseOverlay = false,
-        disableOverlay = false
+        disableOverlay = false,
+        closeCallback = () => {}
     } = {}) => {
     const [isModalOpen, setIsModalOpen] = useState(isOpen);
 
@@ -17,6 +18,7 @@ export const useModalControls = ({
     const handleCloseModal = () => {
         setIsModalOpen(false);
         document.body.classList.remove('overflow-hidden');
+        closeCallback();
     }
 
   return {

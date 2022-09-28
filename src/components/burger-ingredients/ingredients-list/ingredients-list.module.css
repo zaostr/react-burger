@@ -2,7 +2,12 @@
     height: 70vh;
     overflow-x: hidden;
     overflow-y: auto;
+    position: relative;
 }
+
+
+
+
 
 @media screen and (min-width: 1200px) {
     .wrap {
