@@ -10,8 +10,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 
 function App() {
-  const [requestErrorText, setRequestErrorText] = useState(false);
-
   return (
     <div className="App">
       <AppHeader />
@@ -25,7 +23,7 @@ function App() {
           </div>
         </DndProvider>
       </main>
-      <ErrorHandler errorMessage={requestErrorText} />
+      <ErrorHandler />
     </div>
   );
 }

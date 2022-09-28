@@ -6,7 +6,7 @@ export const checkReponse = (res) => {
 
 export function getIngredientsRequest() {
     return fetch(`${baseUrl}/ingredients`)
-    .then(checkReponse)
+            .then(checkReponse)
 }
 export function makeOrder(orderState) {
     let requestBody = orderState.list.map(ingredient => ingredient._id);

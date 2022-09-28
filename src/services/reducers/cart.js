@@ -102,6 +102,15 @@ export const cartReducer = (state = cartState, action) => {
                 orderSuccess: false,
                 orderFail: true
             }
+
+        case CART_SAVE_ORDER:
+            return {
+                ...state,
+                orders: [
+                    ...state.orders,
+                    action.payload
+                ]
+            }
         
         default:
             return state

@@ -9,6 +9,7 @@ export const IngredientsTabs = ({currentTab, setCurrentTab}) => {
     const handleScrollToSection = (sectionsWrapperId, sectionId) => {
       const wrapper = document.getElementById(sectionsWrapperId) || false;
       const section = document.getElementById(`section-${sectionId}`) || false;
+      if (!wrapper) return;
       if (!section) return;
       wrapper.scroll({
         top: section.offsetTop, 

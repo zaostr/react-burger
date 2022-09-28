@@ -8,15 +8,12 @@ import IngredientsListStyles from './ingredients-list.module.css'
 
 import { ingredientType } from '../../../utils/types';
 
-export const IngredientsList = ({data, currentTab, setCurrentTab}) => {
-  const showLoader = useSelector(store => store.ingredients.ingredientsRequest);
-
+export const IngredientsList = ({data, setCurrentTab}) => {
   const getIngredientsByType = (allIngredients, searchableType) => {
     return allIngredients.filter(x => x.type === searchableType)
   }
 
   
-
 
   useEffect(() => {
     let wrapper = document.getElementById('IngredientsListSectionWrapper');
@@ -24,31 +21,21 @@ export const IngredientsList = ({data, currentTab, setCurrentTab}) => {
       let sections = e.target.childNodes;
       for (let index = sections.length; index > 0; index--) {
         const element = sections[index - 1];
-        /*if ( (element.offsetHeight + (element.offsetTop - wrapper.offsetTop) - wrapper.scrollTop) > 0 ) {
-          setCurrentTab(element.dataset.type);
-        }*/
         if ( (element.offsetHeight + (element.offsetTop) - wrapper.scrollTop) > 0 ) {
           setCurrentTab(element.dataset.type);
         }
       }
     }
     
-    wrapper.addEventListener('scroll', handleWrapperScroll,false);
+    wrapper.addEventListener('scroll', handleWrapperScroll, false);
     return () => {
-      wrapper.removeEventListener('scroll', handleWrapperScroll,false);
+      wrapper.removeEventListener('scroll', handleWrapperScroll, false);
     }
   }, [])
 
   return (
     <>
       <div id='IngredientsListSectionWrapper' className={IngredientsListStyles.wrap}>
-        { showLoader && (
-          <div className={IngredientsListStyles.loader_wrapper}>
-            <span className={IngredientsListStyles.loader}>
-              <BurgerIcon type="primary" />
-            </span>
-          </div>)
-        }
         { ['bun','sauce','main'].map((igredient,key) => (
           <IngredientsListSection key={key} type={igredient} ingredients={ getIngredientsByType(data, igredient) } /> 
         )) }
@@ -58,5 +45,6 @@ export const IngredientsList = ({data, currentTab, setCurrentTab}) => {
 }
 
 IngredientsList.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired
+  data: PropTypes.arrayOf(ingredientType).isRequired,
+  setCurrentTab: PropTypes.func.isRequired
 }

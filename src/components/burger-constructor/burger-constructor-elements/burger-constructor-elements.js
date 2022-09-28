@@ -1,5 +1,5 @@
-import {useEffect, useState, useContext} from 'react'
-import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {useEffect, useState} from 'react'
+import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
 //import PropTypes from 'prop-types';
 //import { ConstructorContext } from '../../../services/constructorContext';
 import { BurgerConstructorElement } from './burger-constructor-element/burger-constructor-element'

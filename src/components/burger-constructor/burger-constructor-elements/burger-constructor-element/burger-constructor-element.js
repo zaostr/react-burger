@@ -29,7 +29,7 @@ export const BurgerConstructorElement = ({ ingredient, index }) => {
     const [{ isCartItemHover }, drop] = useDrop({
       accept: 'cart-item',
       collect: monitor => ({
-        isCartItemHover: monitor.isOver() && monitor.getItemType() === 'cart-item'
+        isCartItemHover: monitor.isOver()
       }),
       hover: (item, monitor) => {
         if (!refCartItem.current) {

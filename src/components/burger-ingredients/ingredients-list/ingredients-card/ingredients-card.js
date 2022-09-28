@@ -11,13 +11,17 @@ import { Modal } from '../../../modal/modal'
 import IngredientCardStyles from './ingredients-card.module.css'
 
 import { ingredientType } from '../../../../utils/types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { INGREDIENTS_CLEAR_DETAILED, INGREDIENTS_SET_DETAILED } from '../../../../services/actions/ingredients';
 //import { ConstructorContext } from '../../../../services/constructorContext';
 
 const IngredientCard = ({info}) => {
-  const modalControls = useModalControls();
   const cartList = useSelector(store => store.cart.list);
-  //const {cartState} = useContext(ConstructorContext);
+  const detailed = useSelector(store => store.ingredients.detailed);
+  const dispatch = useDispatch();
+  const modalControls = useModalControls({
+    closeCallback: () => dispatch({type: INGREDIENTS_CLEAR_DETAILED})
+  });
   const [counterState, setCounterState] = useState(0);
   
   useEffect(() => {
@@ -33,9 +37,14 @@ const IngredientCard = ({info}) => {
     })
   })
 
+  const openDetails = () => {
+    dispatch({type: INGREDIENTS_SET_DETAILED, payload: info})
+    modalControls.open()
+  }
+
   return (
     <>
-      <div ref={ref} className={IngredientCardStyles.card} onClick={modalControls.open} style={{ opacity }}>
+      <div ref={ref} className={IngredientCardStyles.card} onClick={openDetails} style={{ opacity }}>
         <div className='pl-4 pr-4 position-relative'>
             { 
               counterState > 0 &&
@@ -53,7 +62,7 @@ const IngredientCard = ({info}) => {
         </p>
       </div>
       <Modal {...modalControls}>
-        <IngredientDetails {...info} />
+        <IngredientDetails />
       </Modal>
     </>
   )
