@@ -1,12 +1,9 @@
 import {useEffect, useState} from 'react'
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
-//import PropTypes from 'prop-types';
-//import { ConstructorContext } from '../../../services/constructorContext';
 import { BurgerConstructorElement } from './burger-constructor-element/burger-constructor-element'
 
 import BurgerConstructorElementsStyles from './burger-constructor-elements.module.css'
 
-//import { ingredientType } from '../../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartInsertItem } from '../../../services/actions/cart'
 import { useDrop } from 'react-dnd';
@@ -53,7 +50,7 @@ const BurgerConstructorElements = () => {
 
   useEffect(() => {
     setSelectedBun(cartList.filter(x => x.type === 'bun')[0] || false);
-  },[JSON.stringify(cartList)])
+  }, [JSON.stringify(cartList)])
   
   return (
     <div>

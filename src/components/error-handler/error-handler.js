@@ -1,6 +1,4 @@
-import React from 'react'
 import { Modal } from '../modal/modal';
-import PropTypes from 'prop-types'
 
 import { useModalControls } from '../../hooks/useModalControls';
 import { useDispatch, useSelector } from 'react-redux';

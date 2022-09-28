@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './App.css';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';

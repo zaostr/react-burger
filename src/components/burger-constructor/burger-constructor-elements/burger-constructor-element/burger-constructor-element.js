@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
 import { cartSortList } from '../../../../services/actions/cart'
@@ -6,7 +6,7 @@ import { cartSortList } from '../../../../services/actions/cart'
 import BurgerConstructorElementStyles from './burger-constructor-element.module.css'
 
 import { ingredientType } from '../../../../utils/types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { cartRemoveItem } from '../../../../services/actions/cart'
 import { useDrop,useDrag } from 'react-dnd';
 
@@ -26,7 +26,7 @@ export const BurgerConstructorElement = ({ ingredient, index }) => {
         })
     })
 
-    const [{ isCartItemHover }, drop] = useDrop({
+    const [, drop] = useDrop({
       accept: 'cart-item',
       collect: monitor => ({
         isCartItemHover: monitor.isOver()

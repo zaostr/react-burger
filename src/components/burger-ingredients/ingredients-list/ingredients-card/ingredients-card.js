@@ -1,4 +1,4 @@
-import {useState,useEffect,useContext} from 'react'
+import {useState,useEffect} from 'react'
 import {Counter} from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientCardImage from './ingredient-card-image/ingredient-card-image'
 import IngredientCardPrice from './ingredient-card-price/ingredient-card-price'
@@ -13,11 +13,9 @@ import IngredientCardStyles from './ingredients-card.module.css'
 import { ingredientType } from '../../../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { INGREDIENTS_CLEAR_DETAILED, INGREDIENTS_SET_DETAILED } from '../../../../services/actions/ingredients';
-//import { ConstructorContext } from '../../../../services/constructorContext';
 
 const IngredientCard = ({info}) => {
   const cartList = useSelector(store => store.cart.list);
-  const detailed = useSelector(store => store.ingredients.detailed);
   const dispatch = useDispatch();
   const modalControls = useModalControls({
     closeCallback: () => dispatch({type: INGREDIENTS_CLEAR_DETAILED})

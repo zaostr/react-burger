@@ -1,8 +1,6 @@
 import {useEffect} from 'react'
 import { IngredientsListSection } from './ingredients-list-section/ingredients-list-section'
-import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types';
-import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import IngredientsListStyles from './ingredients-list.module.css'
 
@@ -13,15 +11,13 @@ export const IngredientsList = ({data, setCurrentTab}) => {
     return allIngredients.filter(x => x.type === searchableType)
   }
 
-  
-
   useEffect(() => {
     let wrapper = document.getElementById('IngredientsListSectionWrapper');
     const handleWrapperScroll = (e) => {
       let sections = e.target.childNodes;
       for (let index = sections.length; index > 0; index--) {
         const element = sections[index - 1];
-        if ( (element.offsetHeight + (element.offsetTop) - wrapper.scrollTop) > 0 ) {
+        if ( (element.offsetHeight + (element.offsetTop - element.parentNode.offsetTop) - wrapper.scrollTop) > 0 ) {
           setCurrentTab(element.dataset.type);
         }
       }
@@ -31,7 +27,7 @@ export const IngredientsList = ({data, setCurrentTab}) => {
     return () => {
       wrapper.removeEventListener('scroll', handleWrapperScroll, false);
     }
-  }, [])
+  }, [setCurrentTab])
 
   return (
     <>
