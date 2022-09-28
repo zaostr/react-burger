@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './App.css';
-import AppHeader from './components/app-header/app-header';
-import BurgerConstructor from './components/burger-constructor/burger-constructor';
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
-import { ErrorHandler } from './components/error-handler/error-handler';
+import AppHeader from '../app-header/app-header';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import { ErrorHandler } from '../error-handler/error-handler';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 

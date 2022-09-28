@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 
 import './order-details.css'
-import done from '../../../assets/icons/done.svg'
+import done from '../../assets/icons/done.svg'
 
 export const OrderDetails = (props) => {
   return (

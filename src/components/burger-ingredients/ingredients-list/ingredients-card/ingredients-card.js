@@ -2,7 +2,7 @@ import {useState,useEffect,useContext} from 'react'
 import {Counter} from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientCardImage from './ingredient-card-image/ingredient-card-image'
 import IngredientCardPrice from './ingredient-card-price/ingredient-card-price'
-import { IngredientDetails } from '../../ingredient-details/ingredient-details';
+import { IngredientDetails } from '../../../ingredient-details/ingredient-details';
 import { useDrag } from 'react-dnd/dist/hooks';
 
 import { useModalControls } from '../../../../hooks/useModalControls';

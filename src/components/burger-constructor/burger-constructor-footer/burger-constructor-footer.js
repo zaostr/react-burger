@@ -5,7 +5,7 @@ import { Modal } from '../../modal/modal'
 import { makeOrder } from '../../../utils/burger-api';
 
 import BurgerConstructorTotal from '../burger-constructor-total/burger-constructor-total'
-import { OrderDetails } from '../../order/order-details/order-details';
+import { OrderDetails } from '../../order-details/order-details';
 
 import './burger-constructor-footer.css'
 import { useDispatch, useSelector } from 'react-redux';
