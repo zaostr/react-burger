@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { Button, BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import appHeaderStyles from './app-header.module.css'
 
 export class AppHeader extends Component {
   render() {
+    /* eslint-disable */
     return (
       <header className='pt-4 pb-4'>
         <div>

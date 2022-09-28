@@ -6,8 +6,6 @@ import { makeOrder } from '../../../utils/burger-api';
 
 import BurgerConstructorTotal from '../burger-constructor-total/burger-constructor-total'
 import { OrderDetails } from '../../order-details/order-details';
-
-import './burger-constructor-footer.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { 
   CART_ORDER_REQUEST,
@@ -16,6 +14,8 @@ import {
   CART_SAVE_ORDER,
   cartClear
 } from '../../../services/actions/cart';
+
+import constructorFooter from './burger-constructor-footer.module.css'
 
 
 
@@ -63,7 +63,7 @@ const BurgerConstructorFooter = () => {
 
 
   return (
-    <div className='burgerConstructorFooter mt-10 pb-15'>
+    <div className={`${constructorFooter.burgerConstructorFooter} mt-10 pb-15`}>
 
       <BurgerConstructorTotal />
 

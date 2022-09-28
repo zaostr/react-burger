@@ -47,10 +47,11 @@ const BurgerConstructorElements = () => {
   })
 
  
-
+  /* eslint-disable */
   useEffect(() => {
     setSelectedBun(cartList.filter(x => x.type === 'bun')[0] || false);
   }, [JSON.stringify(cartList)])
+  /* eslint-enable */
   
   return (
     <div>

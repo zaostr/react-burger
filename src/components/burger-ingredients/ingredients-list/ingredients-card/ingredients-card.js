@@ -22,9 +22,11 @@ const IngredientCard = ({info}) => {
   });
   const [counterState, setCounterState] = useState(0);
   
+  /* eslint-disable */
   useEffect(() => {
     setCounterState( cartList.filter(x => x._id === info._id).length );
   },[JSON.stringify(cartList)])
+  /* eslint-enable */
 
   const [{ opacity }, ref] = useDrag({
     type: info.type === 'bun' ? 'bun-item' : 'ingredients-item',

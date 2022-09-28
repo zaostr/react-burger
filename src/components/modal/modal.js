@@ -12,7 +12,7 @@ export const Modal = (props) => {
     const handleCloseModalByEsc = e => {
         if ( e.which === ESC_KEYCODE ) props.close();
     }
-
+    /* eslint-disable */
     useEffect(() => {
         document.addEventListener('keydown', handleCloseModalByEsc);
         
@@ -20,6 +20,7 @@ export const Modal = (props) => {
             document.removeEventListener('keydown', handleCloseModalByEsc);
         }
     },[]);
+    /* eslint-enable */
     
 
     return createPortal(

@@ -1,7 +1,7 @@
 import React from 'react'
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
-import './burger-constructor-total.css'
+import constructorTotal from './burger-constructor-total.module.css'
 import { useSelector } from 'react-redux';
 
 
@@ -11,7 +11,7 @@ const BurgerConstructorTotal = () => {
 
 
   return (
-    <p className='total text text_type_digits-medium'>
+    <p className={`${constructorTotal.total} text text_type_digits-medium`}>
       { total }
       <CurrencyIcon />
     </p>

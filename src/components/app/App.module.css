@@ -5,7 +5,10 @@
   max-width: var(--w-content);
   margin: 0 auto;
 }
-
+.main > div {
+  height: calc(100vh - 88px);
+  padding-bottom: 60px;
+}
 
 
 @media screen and (max-width: 1200px) {
@@ -14,5 +17,6 @@
   }
   .main {
     grid-template-columns: 1fr;
+    padding-bottom: 0;
   }
 }

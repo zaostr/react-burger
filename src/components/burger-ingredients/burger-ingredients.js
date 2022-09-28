@@ -38,10 +38,12 @@ export const BurgerIngredients = () => {
       }
 
       { (list.length > 0) && 
-        <IngredientsTabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
+        <>
+          <IngredientsTabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
+        
+          <IngredientsList data={list} setCurrentTab={setCurrentTab} />
+        </>
       }
-       
-      <IngredientsList data={list} setCurrentTab={setCurrentTab} />
     </>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 //import { ingredientType } from '../../../utils/types'
 
-import './ingredient-details.css'
+import detailsStyles from './ingredient-details.module.css'
 
 export const IngredientDetails = () => {
     const detailed = useSelector(store => store.ingredients.detailed);
@@ -11,11 +11,11 @@ export const IngredientDetails = () => {
   return (
     ( detailed ) ? (
         <div className={'mb-5'}>
-            <p className='ingredientDetailsHeading text text_type_main-large'>Детали ингредиента</p>
-            <div className='ingredientDetailsInfo'>
+            <p className={`${detailsStyles.ingredientDetailsHeading} text text_type_main-large`}>Детали ингредиента</p>
+            <div className={`${detailsStyles.ingredientDetailsInfo}`}>
                 <img className='mb-4 pl-5 pr-5' src={detailed.image_large} alt='ingredient' width='100%' />
                 <p className='text text_type_main-medium mb-8'>{detailed.name}</p>
-                <div className='ingredientDetailsList text_color_inactive'>
+                <div className={`${detailsStyles.ingredientDetailsList} text_color_inactive`}>
                 <div className=''>
                     <p className='text text_type_main-default mb-2'>Калории,ккал</p>
                     <p className='text text_type_digits-default'>{detailed.calories}</p>

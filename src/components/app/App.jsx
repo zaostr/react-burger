@@ -1,4 +1,4 @@
-import './App.css';
+import appStyles from './App.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <main className='main pl-5 pr-5'>
+      <main className={`${appStyles.main} pl-5 pr-5`}>
         <DndProvider backend={HTML5Backend}>
           <div>
             <BurgerIngredients />
