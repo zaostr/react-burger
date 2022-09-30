@@ -8,7 +8,7 @@ import BurgerConstructorElementStyles from './burger-constructor-element.module.
 import { ingredientType } from '../../../../utils/types';
 import { useDispatch } from 'react-redux';
 import { cartRemoveItem } from '../../../../services/actions/cart'
-import { useDrop,useDrag } from 'react-dnd';
+import { useDrop, useDrag } from 'react-dnd';
 
 export const BurgerConstructorElement = ({ ingredient, index }) => {
     const refCartItem = useRef(null);

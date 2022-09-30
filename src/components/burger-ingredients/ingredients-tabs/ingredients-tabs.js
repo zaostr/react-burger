@@ -13,7 +13,7 @@ export const IngredientsTabs = ({currentTab, setCurrentTab}) => {
       if (!section) return;
       wrapper.scroll({
         /*top: section.offsetTop,*/
-        top: section.offsetTop - section.parentNode.offsetTop,
+        top: section.offsetTop - section.parentNode.offsetTop + 4,
         left: 0, 
         behavior: 'smooth'
       });
