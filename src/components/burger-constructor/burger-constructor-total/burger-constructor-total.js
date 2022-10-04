@@ -1,22 +1,21 @@
 import React from 'react'
-import PropTypes from 'prop-types';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
-import './burger-constructor-total.css'
+import constructorTotal from './burger-constructor-total.module.css'
+import { useSelector } from 'react-redux';
 
-const BurgerConstructorTotal = ({value}) => {
+
+
+const BurgerConstructorTotal = () => {
+  const total = useSelector(store => store.cart.total);
+
+
   return (
-    <p className='total text text_type_digits-medium'>
-      {value}
+    <p className={`${constructorTotal.total} text text_type_digits-medium`}>
+      { total }
       <CurrencyIcon />
     </p>
   )
 }
 
 export default BurgerConstructorTotal
-
-
-
-BurgerConstructorTotal.propTypes = {
-  value: PropTypes.number.isRequired
-}

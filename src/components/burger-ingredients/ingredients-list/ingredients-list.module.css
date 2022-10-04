@@ -1,14 +1,26 @@
-.wrap {
+/*.wrap {
     height: 70vh;
     overflow-x: hidden;
     overflow-y: auto;
+}*/
+
+
+.wrap {
+    min-height: 550px;
+    height: 64vh;
+    max-height: 756px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-bottom: 48px;
 }
 
-@media screen and (min-width: 1200px) {
+
+
+/*@media screen and (min-width: 1200px) {
     .wrap {
         height: 756px;
         overflow-x: hidden;
         overflow-y: auto;
         margin-bottom: 48px;
     }
-}
+}*/

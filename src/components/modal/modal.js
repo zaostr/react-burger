@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { modalsElement, ESC_KEYCODE } from '../../utils/constants'
 import { modalType } from '../../utils/types'
-import { ModalOverlay } from './modal-overlay/modal-overlay';
+import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
 import ModalStyles from './modal.module.css'
 
@@ -12,7 +12,7 @@ export const Modal = (props) => {
     const handleCloseModalByEsc = e => {
         if ( e.which === ESC_KEYCODE ) props.close();
     }
-
+    /* eslint-disable */
     useEffect(() => {
         document.addEventListener('keydown', handleCloseModalByEsc);
         
@@ -20,6 +20,7 @@ export const Modal = (props) => {
             document.removeEventListener('keydown', handleCloseModalByEsc);
         }
     },[]);
+    /* eslint-enable */
     
 
     return createPortal(

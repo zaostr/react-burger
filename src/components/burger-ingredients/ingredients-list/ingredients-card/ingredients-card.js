@@ -1,8 +1,9 @@
-import React from 'react'
+import {useState,useEffect} from 'react'
 import {Counter} from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientCardImage from './ingredient-card-image/ingredient-card-image'
 import IngredientCardPrice from './ingredient-card-price/ingredient-card-price'
-import { IngredientDetails } from '../../ingredient-details/ingredient-details';
+import { IngredientDetails } from '../../../ingredient-details/ingredient-details';
+import { useDrag } from 'react-dnd/dist/hooks';
 
 import { useModalControls } from '../../../../hooks/useModalControls';
 import { Modal } from '../../../modal/modal'
@@ -10,14 +11,45 @@ import { Modal } from '../../../modal/modal'
 import IngredientCardStyles from './ingredients-card.module.css'
 
 import { ingredientType } from '../../../../utils/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { INGREDIENTS_CLEAR_DETAILED, INGREDIENTS_SET_DETAILED } from '../../../../services/actions/ingredients';
 
 const IngredientCard = ({info}) => {
-  const modalControls = useModalControls();
+  const cartList = useSelector(store => store.cart.list);
+  const dispatch = useDispatch();
+  const modalControls = useModalControls({
+    closeCallback: () => dispatch({type: INGREDIENTS_CLEAR_DETAILED})
+  });
+  const [counterState, setCounterState] = useState(0);
+  
+  /* eslint-disable */
+  useEffect(() => {
+    setCounterState( cartList.filter(x => x._id === info._id).length );
+  },[JSON.stringify(cartList)])
+  /* eslint-enable */
+
+  const [{ opacity }, ref] = useDrag({
+    type: info.type === 'bun' ? 'bun-item' : 'ingredients-item',
+    item: { ...info },
+    collect: monitor => ({
+      isDrag: monitor.isDragging(),
+      opacity: monitor.isDragging() ? 0.5 : 1
+    })
+  })
+
+  const openDetails = () => {
+    dispatch({type: INGREDIENTS_SET_DETAILED, payload: info})
+    modalControls.open()
+  }
+
   return (
     <>
-      <div className={IngredientCardStyles.card} onClick={modalControls.open}>
+      <div ref={ref} className={IngredientCardStyles.card} onClick={openDetails} style={{ opacity }}>
         <div className='pl-4 pr-4 position-relative'>
-            <Counter count={1} size="default" />
+            { 
+              counterState > 0 &&
+              ( <Counter count={counterState} size="default" /> )
+            }
 
             <IngredientCardImage img={info.image} />
 
@@ -30,7 +62,7 @@ const IngredientCard = ({info}) => {
         </p>
       </div>
       <Modal {...modalControls}>
-        <IngredientDetails {...info} />
+        <IngredientDetails />
       </Modal>
     </>
   )
