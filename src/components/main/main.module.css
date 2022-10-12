@@ -1,0 +1,21 @@
+.main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 40px;
+  }
+  .main > div {
+    height: calc(100vh - 88px);
+    padding-bottom: 60px;
+  }
+  
+  
+  @media screen and (max-width: 1200px) {
+    :root {
+      --w-content: 720px
+    }
+    .main {
+      grid-template-columns: 1fr;
+      padding-bottom: 0;
+    }
+  }
+  

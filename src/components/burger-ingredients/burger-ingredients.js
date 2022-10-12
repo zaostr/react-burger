@@ -37,7 +37,7 @@ export const BurgerIngredients = () => {
           </div>)
       }
 
-      { (list.length > 0) && 
+      { (list.length > 0 && !ingredientsRequest) && 
         <>
           <IngredientsTabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
         

@@ -1,29 +1,53 @@
-import appStyles from './App.module.css';
+//import appStyles from './App.module.css';
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import { ErrorHandler } from '../error-handler/error-handler';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-
+import { Main } from '../main/main';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
+import {
+  HomePage, LoginPage, RegisterPage
+} from '../../pages';
 
 
 function App() {
   return (
-    <div className="App">
-      <AppHeader />
-      <main className={`${appStyles.main} pl-5 pr-5`}>
-        <DndProvider backend={HTML5Backend}>
-          <div>
-            <BurgerIngredients />
-          </div>
-          <div>
-              <BurgerConstructor />
-          </div>
-        </DndProvider>
-      </main>
-      <ErrorHandler />
-    </div>
+    
+    <Router>
+      <div className="App">
+        <AppHeader />
+
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/login" exact>
+            <LoginPage />
+          </Route>
+          <Route path="/register" exact>
+            <RegisterPage />
+          </Route>
+          <Route path="/profile" exact>
+            <Main />
+          </Route>
+          <Route path="/forgot-password" exact>
+            <Main />
+          </Route>
+          <Route path="/reset-password" exact>
+            <Main />
+          </Route>
+          <Route path="*" exact>
+            <Main />
+          </Route>
+        </Switch>
+        
+        
+        <ErrorHandler />
+      </div>
+    </Router>
+    
   );
 }
 
