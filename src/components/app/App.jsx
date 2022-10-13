@@ -2,6 +2,7 @@
 import AppHeader from '../app-header/app-header';
 import { ErrorHandler } from '../error-handler/error-handler';
 import { Main } from '../main/main';
+import { ProtectedRoute } from '../protected-route/protected-route'
 import {
   BrowserRouter as Router,
   Switch,
@@ -29,9 +30,9 @@ function App() {
           <Route path="/register" exact>
             <RegisterPage />
           </Route>
-          <Route path="/profile" exact>
+          <ProtectedRoute role={0} path="/profile" exact>
             <Main />
-          </Route>
+          </ProtectedRoute>
           <Route path="/forgot-password" exact>
             <Main />
           </Route>

@@ -1,16 +1,31 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useAuth } from '../../hooks/useAuth'
 
 import formStyles from './register-form.module.css'
 
 export const RegisterForm = () => {
-    const [userNameValue, setUserNameValue] = useState('');
-    const [userEmailValue, setUserEmailValue] = useState('');
-    const [userPasswordValue, setUserPasswordValue] = useState('');
+    const {isAuthorized, register} = useAuth();
+    //const [userNameValue, setUserNameValue] = useState('');
+    //const [userEmailValue, setUserEmailValue] = useState('');
+    //const [userPasswordValue, setUserPasswordValue] = useState('');
     const [passwordVisibility, setPasswordVisibility] = useState(false);
     const nameInputRef = useRef(null);
     const emailInputRef = useRef(null);
     const passwordInputRef = useRef(null);
+    const [form, setFormValue] = useState({
+        name: '',
+        email: '',
+        password: ''
+    })
+
+    const userRegister = useCallback(
+        e => {
+          e.preventDefault();
+          register(form);
+        },
+        [form]
+      );
   return (
     <div className={`${formStyles.wrapper}`}>
         <form className='RegisterForm'>
@@ -18,8 +33,11 @@ export const RegisterForm = () => {
                 <Input
                     type='text'
                     placeholder='Имя'
-                    value={userNameValue}
-                    onChange={e => setUserNameValue(e.target.value)}
+                    value={form.name}
+                    onChange={e => setFormValue({
+                        ...form,
+                        name: e.target.value
+                    })}
                     ref={nameInputRef}
                     name='userName'
                     error={false}
@@ -31,8 +49,11 @@ export const RegisterForm = () => {
                 <Input
                     type='email'
                     placeholder='E-mail'
-                    value={userEmailValue}
-                    onChange={e => setUserEmailValue(e.target.value)}
+                    value={form.email}
+                    onChange={e => setFormValue({
+                        ...form,
+                        email: e.target.value
+                    })}
                     ref={emailInputRef}
                     name='userEmail'
                     error={false}
@@ -44,8 +65,11 @@ export const RegisterForm = () => {
                 <Input
                     type={passwordVisibility ? 'text' : 'password'}
                     placeholder='Password'
-                    value={userPasswordValue}
-                    onChange={e => setUserPasswordValue(e.target.value)}
+                    value={form.password}
+                    onChange={e => setFormValue({
+                        ...form,
+                        password: e.target.value
+                    })}
                     ref={passwordInputRef}
                     name='userPassword'
                     error={false}
@@ -56,7 +80,7 @@ export const RegisterForm = () => {
                 />
             </div>
             <div>
-                <Button>Зарегистрироваться</Button>
+                <Button onClick={userRegister}>Зарегистрироваться</Button>
             </div>
         </form>
     </div>

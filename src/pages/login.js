@@ -1,10 +1,27 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, Redirect } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 import { LoginForm } from '../components/login-form/login-form'
 
 import loginStyles from './css/login.module.css'
 
 export const LoginPage = () => {
+    const {isAuthorized} = useAuth();
+    const [shouldRedirect, setRedirect] = useState(isAuthorized);
+
+    useEffect(() => {
+        setRedirect(isAuthorized);
+    }, [isAuthorized])
+
+    if ( shouldRedirect ) {
+        return (
+            <Redirect to={{
+                pathname: '/'
+            }} />
+        )
+    }
+
+
   return (
     <main className={`${loginStyles.main} pl-5 pr-5`}>
         <div className={`${loginStyles.wrapper}`}>
