@@ -24,7 +24,6 @@ export const useAuth = () => {
 
     console.log(user);
 
-
     const signIn = (form) => dispatch(authorizeUser(form));
 
     const signOut = () => dispatch({type: AUTH_SIGN_OUT});

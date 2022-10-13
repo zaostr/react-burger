@@ -1,4 +1,5 @@
 import { loginRequest, registerRequest, getUserRequest } from "../../utils/burger-api";
+import { setCookie } from "../../utils/data";
 
 export const AUTH_SIGN_IN = 'AUTH_SIGN_IN';
 export const AUTH_SIGN_OUT = 'AUTH_SIGN_OUT';
@@ -14,10 +15,17 @@ export function authorizeUser(form) {
         loginRequest(form)
         .then(data => {
             console.log(data);
-            dispatch({
-                type: AUTH_SIGN_IN,
-                payload: data.user
-            });
+            if ( data.success ) {
+                let authToken = data.accessToken.replace('Bearer ', '');
+                setCookie('authToken', authToken, {path: '/', 'max-age': 1200});
+                setCookie('refreshToken', data.refreshToken, {path: '/', 'max-age': 12000});
+                dispatch({
+                    type: AUTH_SIGN_IN,
+                    payload: data.user
+                });
+            } else {
+                dispatch({type: AUTH_SIGN_OUT});
+            }
         })
         .catch(err => {
             dispatch({type: AUTH_SIGN_OUT});
@@ -28,14 +36,15 @@ export function registerUser(form) {
     return function(dispatch) {
         registerRequest(form)
         .then(data => {
-            if (data.success) {
+            console.log(data);
+            /*if (data.success) {
                 dispatch({
                     type: AUTH_SIGN_IN,
                     payload: data.user
                 });
             } else {
                 dispatch({type: AUTH_SIGN_OUT});
-            }
+            }*/
         })
         .catch(err => {
             dispatch({type: AUTH_SIGN_OUT});
