@@ -6,11 +6,15 @@ import { ProtectedRoute } from '../protected-route/protected-route'
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  useLocation
 } from 'react-router-dom';
 import {
-  HomePage, LoginPage, RegisterPage
+  ForgotPasswordPage,
+  HomePage, LoginPage, NotFound404, ProfilePage, RegisterPage, ResetPasswordPage
 } from '../../pages';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
+import { IngredientDetailsPage } from '../../pages/ingredient-details';
 
 
 function App() {
@@ -31,16 +35,19 @@ function App() {
             <RegisterPage />
           </Route>
           <ProtectedRoute role={0} path="/profile" exact>
-            <Main />
+            <ProfilePage />
           </ProtectedRoute>
           <Route path="/forgot-password" exact>
-            <Main />
+            <ForgotPasswordPage />
           </Route>
           <Route path="/reset-password" exact>
-            <Main />
+            <ResetPasswordPage />
+          </Route>
+          <Route path="/ingredients/:id" exact>
+            <IngredientDetailsPage />
           </Route>
           <Route path="*" exact>
-            <Main />
+            <NotFound404 />
           </Route>
         </Switch>
         

@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { LoginForm } from '../components/login-form/login-form'
 
 import loginStyles from './css/login.module.css'
+import { useSelector } from 'react-redux'
 
 export const LoginPage = () => {
-    const {isAuthorized} = useAuth();
+    const {isAuthorized} = useSelector(store => store.auth);
     const [shouldRedirect, setRedirect] = useState(isAuthorized);
+    const {state} = useLocation();
 
     useEffect(() => {
         setRedirect(isAuthorized);
     }, [isAuthorized])
 
+
     if ( shouldRedirect ) {
         return (
-            <Redirect to={{
-                pathname: '/'
-            }} />
+            <Redirect to={ state?.from || '/' } />
         )
     }
+
 
 
   return (
@@ -35,7 +37,7 @@ export const LoginPage = () => {
             </p>
             <p className='text text_type_main-default text_color_inactive'>
                 <span className='mr-2'>Забыли пароль?</span>
-                <Link to='/reset-password'>Восстановить пароль</Link>
+                <Link to='/forgot-password'>Восстановить пароль</Link>
             </p>
         </div>
     </main>

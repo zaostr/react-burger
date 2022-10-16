@@ -1,6 +1,7 @@
 import {
     AUTH_SIGN_IN,
     AUTH_SIGN_OUT,
+    AUTH_REQUEST
     //AUTH_REGISTER,
     //AUTH_GET_USER,
     //AUTH_FORGOT_PASSWORD,
@@ -9,7 +10,8 @@ import {
 
 const authState = {
     isAuthorized: false,
-    user: false
+    user: false,
+    request: false
 }
 /*const authState = {
     isAuthorized: true,
@@ -21,6 +23,11 @@ const authState = {
 
 export const authReducer = (state = authState, action) => {
     switch(action.type) {
+        case AUTH_REQUEST:
+            return {
+                ...state,
+                request: action.payload
+            }
         case AUTH_SIGN_IN:
             return {
                 ...state,

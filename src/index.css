@@ -70,11 +70,13 @@ main {
 }
 
 .loginForm .input__container,
-.RegisterForm .input__container {
+.RegisterForm .input__container,
+form .input__container {
   width: 100%;
 }
 .loginForm div.input,
-.RegisterForm div.input {
+.RegisterForm div.input,
+form div.input {
   max-width: 480px;
   width: 100%;
 }

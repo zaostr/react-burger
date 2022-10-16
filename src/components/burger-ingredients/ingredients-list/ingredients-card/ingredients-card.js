@@ -13,12 +13,21 @@ import IngredientCardStyles from './ingredients-card.module.css'
 import { ingredientType } from '../../../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { INGREDIENTS_CLEAR_DETAILED, INGREDIENTS_SET_DETAILED } from '../../../../services/actions/ingredients';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const IngredientCard = ({info}) => {
   const cartList = useSelector(store => store.cart.list);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
   const modalControls = useModalControls({
-    closeCallback: () => dispatch({type: INGREDIENTS_CLEAR_DETAILED})
+    closeCallback: () => {
+      history.replace({
+        pathname:'/',
+        state: { from: {pathname: '/'} }
+      });
+      dispatch({type: INGREDIENTS_CLEAR_DETAILED})
+    }
   });
   const [counterState, setCounterState] = useState(0);
   
@@ -38,6 +47,12 @@ const IngredientCard = ({info}) => {
   })
 
   const openDetails = () => {
+    //console.log(history,location);
+    history.replace({
+      pathname:'/ingredients/'+info._id,
+      state: { from: {pathname: '/'} }
+    });
+    console.log(history,location);
     dispatch({type: INGREDIENTS_SET_DETAILED, payload: info})
     modalControls.open()
   }

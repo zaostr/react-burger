@@ -1,0 +1,13 @@
+.main {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    grid-gap: 60px;
+}
+
+.fieldsWrapper {
+    max-width: 480px;
+}
+
+input {
+    width: 100%;
+}
