@@ -8,7 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import appHeaderStyles from './app-header.module.css'
-import { Link } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 export class AppHeader extends Component {
   render() {
@@ -17,34 +17,34 @@ export class AppHeader extends Component {
       <header className='pt-4 pb-4'>
         <div>
           <nav className='headerLeft'>
-            <div className={appHeaderStyles.headerBtn}>
-              <Link to="/">
+            <div>
+              <NavLink to="/" exact className={appHeaderStyles.headerBtn} activeClassName={appHeaderStyles.active}>
                 <Button type='secondary'>
                   <BurgerIcon />
                   Конструктор
                 </Button>
-              </Link>
+              </NavLink>
             </div>
-            <div className={appHeaderStyles.headerBtnInactive}>
-              <Link to="/">
+            <div>
+              <NavLink to="/feed" className={appHeaderStyles.headerBtn} activeClassName={appHeaderStyles.active}>
                 <Button type='secondary'>
                     <ListIcon type="secondary" />
                     Лента заказов
                 </Button>
-              </Link>
+              </NavLink>
             </div>
           </nav>
           <Link to="/">
             <Logo />
           </Link>
           <div className={appHeaderStyles.headerRight}>
-            <div className={appHeaderStyles.headerBtnInactive}>
-              <Link to="/profile">
+            <div>
+              <NavLink to="/profile" className={appHeaderStyles.headerBtn} activeClassName={appHeaderStyles.active}>
                 <Button type='secondary'>
                   <ProfileIcon type="secondary" />
                   Личный кабинет
                 </Button>
-              </Link>
+              </NavLink>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Redirect } from 'react-router-dom';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useModalControls } from '../../../hooks/useModalControls';
 import { Modal } from '../../modal/modal'
@@ -21,9 +22,11 @@ import constructorFooter from './burger-constructor-footer.module.css'
 
 const BurgerConstructorFooter = () => {
   const cartState = useSelector(store => store.cart);
+  const isAuthorized = useSelector(store => store.auth.isAuthorized);
   const dispatch = useDispatch();
   const [requestErrorText, setRequestErrorText] = useState(false);
   const [orderId, setOrderId] = useState(0);
+  const [processOrder, setProccessOrder] = useState(false);
   const modalControls = useModalControls({
     closeCallback: () => setOrderId(0)
   });
@@ -32,10 +35,20 @@ const BurgerConstructorFooter = () => {
   
   const handleMakeOrder = () => {
     if (cartState.list.length === 0) {
+      setRequestErrorText('Не выбрано ни одного ингредиента');
+      modalControls.open();
       return false
     }
 
     if (cartState.list.filter(x => x.type === 'bun').length === 0) {
+      setRequestErrorText('Не выбрана булка');
+      modalControls.open();
+      return false
+    }
+    
+    setProccessOrder(true);
+
+    if (!isAuthorized) {
       return false
     }
     
@@ -57,11 +70,15 @@ const BurgerConstructorFooter = () => {
       dispatch({type: CART_ORDER_FAIL});
       setRequestErrorText(err.message)
     });
-
-
   }
 
+  if (!isAuthorized && processOrder) {
+    return (
+      <Redirect to={{pathname: '/login', state: {from: '/'}}} />
+    )
+  }
 
+    
   return (
     <div className={`${constructorFooter.burgerConstructorFooter} mt-10 pb-15`}>
 

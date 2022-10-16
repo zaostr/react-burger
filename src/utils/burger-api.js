@@ -102,6 +102,47 @@ export const registerRequest = async form => {
             },
             body: JSON.stringify(form)
         }
-    )
+    ).then(checkReponse)
+}
+export const editUserDataRequest = async form => {
+    let token = await getAccessToken();
+    if (!token) {
+        return false;
+    }
+    return await fetch(
+        `${baseUrl}/auth/user`,
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(form)
+        }
+    ).then(checkReponse)
 }
 
+export const resetPasswordRequest = async form => {
+    return await fetch(
+        `${baseUrl}/password-reset`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form)
+        }
+    ).then(checkReponse)
+}
+export const changePasswordRequest = async form => {
+    return await fetch(
+        `${baseUrl}/password-reset/reset`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form)
+        }
+    ).then(checkReponse)
+}

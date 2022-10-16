@@ -8,13 +8,23 @@ import { useSelector } from 'react-redux'
 
 export const LoginPage = () => {
     const {isAuthorized} = useSelector(store => store.auth);
+    const { getUser } = useAuth();
     const [shouldRedirect, setRedirect] = useState(isAuthorized);
     const {state} = useLocation();
+
+    const init = async () => {
+        await getUser();
+    };
+
+    /* eslint-disable */
+    useEffect(() => {
+        init();
+    }, []);
+    /* eslint-enable */
 
     useEffect(() => {
         setRedirect(isAuthorized);
     }, [isAuthorized])
-
 
     if ( shouldRedirect ) {
         return (

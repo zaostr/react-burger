@@ -11,3 +11,22 @@
 input {
     width: 100%;
 }
+.profileSideMenu {
+    display: grid;
+}
+.profileSideMenu > p {
+    height: 64px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+.profileSideMenu a {
+    color: var(--c-text-dark);
+}
+.profileSideMenu .active {
+    color: var(--c-text-light);
+}
+.textDark {
+    color: var(--c-text-dark);
+    opacity: 0.4;
+}

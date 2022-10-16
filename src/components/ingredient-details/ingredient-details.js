@@ -1,32 +1,29 @@
 import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
-import { getIngredients } from '../../services/actions/ingredients';
 import { getIngredientsRequest } from '../../utils/burger-api';
-//import { ingredientType } from '../../../utils/types'
 
 import detailsStyles from './ingredient-details.module.css'
 
 export const IngredientDetails = () => {
-    let {list,detailed} = useSelector(store => store.ingredients);
+    let {detailed} = useSelector(store => store.ingredients);
     const params = useParams();
-    const dispatch = useDispatch();
     const [detailedIngedient, setDetailedIngedient] = useState(detailed);
-    const [ingedients, setIngedients] = useState(false);
   
+    /* eslint-disable */
     useEffect(() => {
         if ((detailed === undefined || detailed === false) && params?.id) {
             getIngredientsRequest()
             .then(data => {
                 if (data.success) {
-                    setIngedients(data.data);
                     setDetailedIngedient(data.data.filter(ingredient => ingredient._id === params?.id)[0])
-                } else{
-                    setIngedients(false);
+                } else {
+                    setDetailedIngedient(false);
                 }
             });
         }
     }, []);
+    /* eslint-enable */
 
 
     
@@ -60,7 +57,7 @@ export const IngredientDetails = () => {
             </div>
         </div>
     ) : (
-            <h2>Произошла ошибка!</h2>
+        <h2>Произошла ошибка!</h2>
     )}
     </>
     

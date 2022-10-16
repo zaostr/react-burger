@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { IngredientDetails } from '../components/ingredient-details/ingredient-details';
 import { HomePage } from './home';
 

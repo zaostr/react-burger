@@ -1,16 +1,14 @@
 import { useState, useRef, useCallback } from 'react'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import formStyles from './forgot-form.module.css'
-import { useAuth } from '../../hooks/useAuth'
+import formStyles from './forgot-password-form.module.css'
+import { resetPasswordRequest } from '../../../utils/burger-api'
+import { Redirect, useLocation } from 'react-router-dom'
 
 export const ForgotPasswordForm = () => {
-    const {signIn} = useAuth();
-    //const [userEmailValue, setUserEmailValue] = useState('');
-    //const [userPasswordValue, setUserPasswordValue] = useState('');
-    const [passwordVisibility, setPasswordVisibility] = useState(false);
+    const location = useLocation();
+    const [resetRequestState, setResetRequestState] = useState(false);
     const emailInputRef = useRef(null);
-    const passwordInputRef = useRef(null);
     const [form, setFormValue] = useState({
         email: ''
     })
@@ -18,14 +16,24 @@ export const ForgotPasswordForm = () => {
     const forgotPassword = useCallback(
         e => {
           e.preventDefault();
-          signIn(form);
+          resetPasswordRequest(form)
+          .then(data => {
+            setResetRequestState(true)
+          });
         },
         [form]
       );
 
+    if ( resetRequestState ) {
+        return (<Redirect to={{
+            pathname: '/reset-password',
+            state: {from: location}
+        }} />)
+    }
+
   return (
     <div className={`${formStyles.wrapper}`}>
-        <form className='loginForm'>
+        <form className='loginForm' onSubmit={forgotPassword}>
             <div className='mb-6'>
                 <Input
                     type='email'
@@ -43,7 +51,7 @@ export const ForgotPasswordForm = () => {
                 />
             </div>
             <div>
-                <Button onClick={forgotPassword}>Восстановить</Button>
+                <Button>Восстановить</Button>
             </div>
         </form>
     </div>

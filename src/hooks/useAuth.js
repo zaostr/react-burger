@@ -1,5 +1,4 @@
-//import { createContext, useContext, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
     authorizeUser,
     registerUser,
@@ -10,19 +9,7 @@ import {
 import { getUserRequest } from "../utils/burger-api";
 
 
-/*const AuthContext = createContext(undefined);
-
-export const AuthProvider = ({ children }) => {
-    const auth = useAuthProvider();
-    return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
-}
-
 export const useAuth = () => {
-    return useContext(AuthContext);
-}*/
-
-export const useAuth = () => {
-    //const {isAuthorized, user} = useSelector(store => store.auth);
     const dispatch = useDispatch();
 
     const getUser = async () => {

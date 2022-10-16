@@ -1,14 +1,12 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef } from 'react'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useAuth } from '../../hooks/useAuth'
 
 import formStyles from './register-form.module.css'
+//import { Redirect } from 'react-router-dom'
 
 export const RegisterForm = () => {
-    const {isAuthorized, register} = useAuth();
-    //const [userNameValue, setUserNameValue] = useState('');
-    //const [userEmailValue, setUserEmailValue] = useState('');
-    //const [userPasswordValue, setUserPasswordValue] = useState('');
+    const { register } = useAuth();
     const [passwordVisibility, setPasswordVisibility] = useState(false);
     const nameInputRef = useRef(null);
     const emailInputRef = useRef(null);
@@ -17,15 +15,20 @@ export const RegisterForm = () => {
         name: '',
         email: '',
         password: ''
-    })
+    });
+    const [registrationError, setRegistrationError] = useState(false);
 
-    const userRegister = useCallback(
-        e => {
-          e.preventDefault();
-          register(form);
-        },
-        [form]
-      );
+    const userRegister = async e => {
+        e.preventDefault();
+        setRegistrationError(false);
+        let test = await register(form);
+        setRegistrationError(test);
+    };
+    
+    /*if (endRegistration) {
+        <Redirect to={{pathname:'/',state:{isRegistered: true}}} />
+    }*/
+
   return (
     <div className={`${formStyles.wrapper}`}>
         <form className='RegisterForm'>
@@ -56,8 +59,8 @@ export const RegisterForm = () => {
                     })}
                     ref={emailInputRef}
                     name='userEmail'
-                    error={false}
-                    errorText='Error!'
+                    error={registrationError ? true : false }
+                    errorText={registrationError ? registrationError : 'Error!'}
                     size='default'
                 />
             </div>
@@ -82,6 +85,11 @@ export const RegisterForm = () => {
             <div>
                 <Button onClick={userRegister}>Зарегистрироваться</Button>
             </div>
+            {
+                (registrationError) && (
+                    <div className='text text_type_main-default text_color_inactive mt-4'>{ registrationError }</div>
+                )
+            }
         </form>
     </div>
   )

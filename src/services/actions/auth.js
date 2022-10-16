@@ -1,4 +1,4 @@
-import { loginRequest, registerRequest, getUserRequest } from "../../utils/burger-api";
+import { loginRequest, registerRequest } from "../../utils/burger-api";
 import { setCookie } from "../../utils/data";
 
 export const AUTH_SIGN_IN = 'AUTH_SIGN_IN';
@@ -11,8 +11,8 @@ export const AUTH_CHANGE_PASSWORD = 'AUTH_CHANGE_PASSWORD';
 //export const AUTH_SET_AUTHORIZED = 'AUTH_SET_AUTHORIZED';
 
 export function authorizeUser(form) {
-    return function(dispatch) {
-        loginRequest(form)
+    return async function(dispatch) {
+        return await loginRequest(form)
         .then(data => {
             if ( data.success ) {
                 let authToken = data.accessToken.replace('Bearer ', '');
@@ -32,21 +32,27 @@ export function authorizeUser(form) {
     }
 }
 export function registerUser(form) {
-    return function(dispatch) {
-        registerRequest(form)
+    return async function(dispatch) {
+        return await registerRequest(form)
         .then(data => {
             console.log(data);
-            /*if (data.success) {
+            if ( data.success ) {
+                let authToken = data.accessToken.replace('Bearer ', '');
+                setCookie('authToken', authToken, {path: '/', 'max-age': 1200});
+                setCookie('refreshToken', data.refreshToken, {path: '/', 'max-age': 12000});
                 dispatch({
                     type: AUTH_SIGN_IN,
                     payload: data.user
                 });
+                return true;
             } else {
                 dispatch({type: AUTH_SIGN_OUT});
-            }*/
+                return data.message;
+            }
         })
         .catch(err => {
             dispatch({type: AUTH_SIGN_OUT});
+            return err.message;
         });
     }
 }

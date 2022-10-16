@@ -13,12 +13,11 @@ import IngredientCardStyles from './ingredients-card.module.css'
 import { ingredientType } from '../../../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { INGREDIENTS_CLEAR_DETAILED, INGREDIENTS_SET_DETAILED } from '../../../../services/actions/ingredients';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const IngredientCard = ({info}) => {
   const cartList = useSelector(store => store.cart.list);
   const dispatch = useDispatch();
-  const location = useLocation();
   const history = useHistory();
   const params = useParams();
   const modalControls = useModalControls({

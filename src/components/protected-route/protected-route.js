@@ -3,9 +3,10 @@ import { Redirect, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth'
 import { getCookie } from '../../utils/data';
+import { NotFound404 } from '../../pages';
 
 export const ProtectedRoute = ({children, role, ...rest}) => {
-    let {user, isAuthorized } = useSelector(store => store.auth);
+    let { user, isAuthorized } = useSelector(store => store.auth);
     const {getUser} = useAuth();
     const [cookieState, setCookieState] = useState({
         access: getCookie('authToken'),
@@ -16,9 +17,11 @@ export const ProtectedRoute = ({children, role, ...rest}) => {
         await getUser();
     };
 
+    /* eslint-disable */
     useEffect(() => {
         init();
     }, []);
+    /* eslint-enable */
 
 
     useEffect(() => {
@@ -37,8 +40,8 @@ export const ProtectedRoute = ({children, role, ...rest}) => {
         <Route 
             {...rest}
             render={({location}) => 
-                (isAuthorized && user.role >= role) 
-                ? (children)
+                ( isAuthorized ) 
+                ? (user.role >= role ? (children) : <NotFound404 />)
                 : (<Redirect
                     to={{
                         pathname: '/login',

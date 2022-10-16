@@ -2,6 +2,8 @@ import React from 'react'
 
 export const NotFound404 = () => {
   return (
-    <div>NotFound404</div>
+    <main>
+      <h1>Page Not Found. 404</h1>
+    </main>
   )
 }

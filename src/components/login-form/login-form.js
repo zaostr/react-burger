@@ -6,8 +6,6 @@ import { useAuth } from '../../hooks/useAuth'
 
 export const LoginForm = () => {
     const {signIn} = useAuth();
-    //const [userEmailValue, setUserEmailValue] = useState('');
-    //const [userPasswordValue, setUserPasswordValue] = useState('');
     const [passwordVisibility, setPasswordVisibility] = useState(false);
     const emailInputRef = useRef(null);
     const passwordInputRef = useRef(null);
@@ -21,12 +19,12 @@ export const LoginForm = () => {
           e.preventDefault();
           signIn(form);
         },
-        [form]
+        [form, signIn]
       );
 
   return (
     <div className={`${formStyles.wrapper}`}>
-        <form className='loginForm'>
+        <form className='loginForm' onSubmit={login}>
             <div className='mb-6'>
                 <Input
                     type='email'
@@ -63,7 +61,7 @@ export const LoginForm = () => {
                 />
             </div>
             <div>
-                <Button onClick={login}>Войти</Button>
+                <Button>Войти</Button>
             </div>
         </form>
     </div>

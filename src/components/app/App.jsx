@@ -7,15 +7,13 @@ import { ProtectedRoute } from '../protected-route/protected-route'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  useLocation
+  Route
 } from 'react-router-dom';
 import {
   ForgotPasswordPage,
-  HomePage, LoginPage, NotFound404, ProfilePage, RegisterPage, ResetPasswordPage
+  LoginPage, NotFound404, ProfilePage, RegisterPage, ResetPasswordPage,
+  IngredientDetailsPage
 } from '../../pages';
-import { IngredientDetails } from '../ingredient-details/ingredient-details';
-import { IngredientDetailsPage } from '../../pages/ingredient-details';
 import { useDispatch } from 'react-redux';
 
 
@@ -32,16 +30,13 @@ function App() {
         <AppHeader />
 
         <Switch>
-          {/* <Route path="/" exact>
-            <HomePage />
-          </Route> */}
           <Route path="/login" exact>
             <LoginPage />
           </Route>
           <Route path="/register" exact>
             <RegisterPage />
           </Route>
-          <ProtectedRoute role={0} path="/profile" exact>
+          <ProtectedRoute role={0} path={["/profile","/profile/*"]} exact>
             <ProfilePage />
           </ProtectedRoute>
           <Route path="/forgot-password" exact>
