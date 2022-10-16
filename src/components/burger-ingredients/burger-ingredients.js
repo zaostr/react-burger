@@ -11,13 +11,13 @@ import burgerIngredientsStyles from './burger-ingredients.module.css'
 
 export const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun');
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const {list, ingredientsRequest} = useSelector(store => store.ingredients);
+   const {list, ingredientsRequest} = useSelector(store => store.ingredients);
 
-  useEffect(() => {
-    dispatch( getIngredients() );
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch( getIngredients() );
+  // }, [dispatch]);
 
 
   return (

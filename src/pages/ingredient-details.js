@@ -1,14 +1,18 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { IngredientDetails } from '../components/ingredient-details/ingredient-details';
 import { HomePage } from './home';
 
+import styles from './css/ingredient.module.css'
+
 export const IngredientDetailsPage = () => {
-    const location = useLocation();
+    const {state, pathname} = useLocation();
     
   return (
-    location?.from == '/' 
-        ? (<HomePage />)
-        : (<HomePage />)
+    state?.from?.pathname === '/' || pathname === '/'
+      ? (<HomePage />)
+      : (<div className={`${styles.wrapper} pt-30`}>
+          <IngredientDetails />
+        </div>)
   )
 }

@@ -1,7 +1,8 @@
 //import appStyles from './App.module.css';
+import { useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
 import { ErrorHandler } from '../error-handler/error-handler';
-import { Main } from '../main/main';
+import { getIngredients } from '../../services/actions/ingredients';
 import { ProtectedRoute } from '../protected-route/protected-route'
 import {
   BrowserRouter as Router,
@@ -15,19 +16,25 @@ import {
 } from '../../pages';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { IngredientDetailsPage } from '../../pages/ingredient-details';
+import { useDispatch } from 'react-redux';
 
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch( getIngredients() );
+  }, [dispatch]);
+
   return (
-    
     <Router>
       <div className="App">
         <AppHeader />
 
         <Switch>
-          <Route path="/" exact>
+          {/* <Route path="/" exact>
             <HomePage />
-          </Route>
+          </Route> */}
           <Route path="/login" exact>
             <LoginPage />
           </Route>
@@ -43,19 +50,16 @@ function App() {
           <Route path="/reset-password" exact>
             <ResetPasswordPage />
           </Route>
-          <Route path="/ingredients/:id" exact>
+          <Route path={["/", "/ingredients/:id"]} exact>
             <IngredientDetailsPage />
           </Route>
           <Route path="*" exact>
             <NotFound404 />
           </Route>
         </Switch>
-        
-        
         <ErrorHandler />
       </div>
     </Router>
-    
   );
 }
 

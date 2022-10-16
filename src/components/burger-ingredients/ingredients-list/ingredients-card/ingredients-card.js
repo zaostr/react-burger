@@ -13,14 +13,16 @@ import IngredientCardStyles from './ingredients-card.module.css'
 import { ingredientType } from '../../../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { INGREDIENTS_CLEAR_DETAILED, INGREDIENTS_SET_DETAILED } from '../../../../services/actions/ingredients';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 const IngredientCard = ({info}) => {
   const cartList = useSelector(store => store.cart.list);
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
+  const params = useParams();
   const modalControls = useModalControls({
+    isOpen: params?.id === info._id ? true : false,
     closeCallback: () => {
       history.replace({
         pathname:'/',
@@ -47,12 +49,10 @@ const IngredientCard = ({info}) => {
   })
 
   const openDetails = () => {
-    //console.log(history,location);
     history.replace({
       pathname:'/ingredients/'+info._id,
       state: { from: {pathname: '/'} }
     });
-    console.log(history,location);
     dispatch({type: INGREDIENTS_SET_DETAILED, payload: info})
     modalControls.open()
   }
