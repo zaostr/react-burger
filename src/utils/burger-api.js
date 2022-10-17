@@ -10,7 +10,7 @@ export function getIngredientsRequest() {
             .then(checkReponse)
 }
 export async function makeOrder(orderState) {
-    let requestBody = orderState.list.map(ingredient => ingredient._id);
+    const requestBody = orderState.list.map(ingredient => ingredient._id);
     return await fetch(
         `${baseUrl}/orders`,
         {
@@ -41,7 +41,7 @@ export const refreshAccessToken = async (refreshToken) => {
 }
 export const getAccessToken = async () => {
     let token = getCookie('authToken');
-    let refreshToken = getCookie('refreshToken');
+    const refreshToken = getCookie('refreshToken');
 
     if ( refreshToken === undefined ) {
         return false
@@ -51,7 +51,7 @@ export const getAccessToken = async () => {
         token = await refreshAccessToken(refreshToken)
             .then(checkReponse)
             .then(data => {
-                let authToken = data.accessToken.replace('Bearer ', '');
+                const authToken = data.accessToken.replace('Bearer ', '');
                 setCookie('authToken', authToken, {path: '/', 'max-age': 1200});
                 setCookie('refreshToken', data.refreshToken, {path: '/', 'max-age': 12000});
                 return authToken;
@@ -63,7 +63,7 @@ export const getAccessToken = async () => {
 }
 
 export const getUserRequest = async () => {
-    let token = await getAccessToken();
+    const token = await getAccessToken();
     if (!token) {
         return false;
     }
@@ -105,7 +105,7 @@ export const registerRequest = async form => {
     ).then(checkReponse)
 }
 export const editUserDataRequest = async form => {
-    let token = await getAccessToken();
+    const token = await getAccessToken();
     if (!token) {
         return false;
     }

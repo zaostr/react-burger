@@ -35,7 +35,6 @@ export const EditDataForm = () => {
     
     const editUserData = async e => {
         e.preventDefault();
-        console.log(e);
         setEditResult(false);
         editUserDataRequest(editFormState)
         .then(data => {

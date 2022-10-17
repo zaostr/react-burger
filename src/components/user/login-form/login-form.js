@@ -2,14 +2,15 @@ import { useState, useRef, useCallback } from 'react'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import formStyles from './login-form.module.css'
-import { useAuth } from '../../hooks/useAuth'
+import { useAuth } from '../../../hooks/useAuth'
+import { useForm } from '../../../hooks/useForm'
 
 export const LoginForm = () => {
     const {signIn} = useAuth();
     const [passwordVisibility, setPasswordVisibility] = useState(false);
     const emailInputRef = useRef(null);
     const passwordInputRef = useRef(null);
-    const [form, setFormValue] = useState({
+    const {form, handleChange} = useForm({
         email: '',
         password: ''
     })
@@ -30,12 +31,9 @@ export const LoginForm = () => {
                     type='email'
                     placeholder='E-mail'
                     value={form.email}
-                    onChange={e => setFormValue({
-                        ...form,
-                        email: e.target.value
-                    })}
+                    onChange={handleChange}
                     ref={emailInputRef}
-                    name='userEmail'
+                    name='email'
                     error={false}
                     errorText='Error!'
                     size='default'
@@ -47,16 +45,16 @@ export const LoginForm = () => {
                     type={passwordVisibility ? 'text' : 'password'}
                     placeholder='Password'
                     value={form.password}
-                    onChange={e => setFormValue({
-                        ...form,
-                        password: e.target.value
-                    })}
+                    onChange={handleChange}
                     ref={passwordInputRef}
-                    name='userPassword'
+                    name='password'
                     error={false}
                     errorText='Error!'
                     size='default'
-                    onIconClick={()=>setPasswordVisibility(!passwordVisibility)}
+                    onIconClick={()=>{
+                        passwordInputRef.current.focus();
+                        setPasswordVisibility(!passwordVisibility)
+                    }}
                     icon={passwordVisibility ? 'HideIcon' : 'ShowIcon'}
                 />
             </div>

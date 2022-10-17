@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import {IngredientsTabs} from './ingredients-tabs/ingredients-tabs'
 import {IngredientsList} from './ingredients-list/ingredients-list'
-import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector } from 'react-redux'
 
-import burgerIngredientsStyles from './burger-ingredients.module.css'
+//import burgerIngredientsStyles from './burger-ingredients.module.css'
+import { Loader } from '../loader/loader'
 
 
 
@@ -22,14 +22,8 @@ export const BurgerIngredients = () => {
 
       
       { ingredientsRequest && (
-          <div className={burgerIngredientsStyles.loader_container}>
-            <div className={burgerIngredientsStyles.loader_wrapper}>
-              <span className={burgerIngredientsStyles.loader}>
-                <BurgerIcon type="primary" />
-              </span>
-            </div>
-          </div>)
-      }
+        <Loader />
+      )}
 
       { (list.length > 0 && !ingredientsRequest) && 
         <>

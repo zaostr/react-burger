@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { RegisterForm } from '../components/register-form/register-form'
+import { RegisterForm } from '../components/user/register-form/register-form'
 import { useSelector } from 'react-redux'
 
 import registerStyles from './css/login.module.css'

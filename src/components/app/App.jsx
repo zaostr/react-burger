@@ -5,38 +5,44 @@ import { ErrorHandler } from '../error-handler/error-handler';
 import { getIngredients } from '../../services/actions/ingredients';
 import { ProtectedRoute } from '../protected-route/protected-route'
 import {
-  BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  useLocation,
 } from 'react-router-dom';
 import {
   ForgotPasswordPage,
   LoginPage, NotFound404, ProfilePage, RegisterPage, ResetPasswordPage,
-  IngredientDetailsPage
+  IngredientDetailsPage,
+  HomePage
 } from '../../pages';
 import { useDispatch } from 'react-redux';
+import { IngredientDetailsPopup } from '../ingredient-details-popup/ingredient-details-popup';
 
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch( getIngredients() );
   }, [dispatch]);
 
   return (
-    <Router>
       <div className="App">
         <AppHeader />
-
-        <Switch>
+        <Switch location={background || location}>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
           <Route path="/login" exact>
             <LoginPage />
           </Route>
           <Route path="/register" exact>
             <RegisterPage />
           </Route>
-          <ProtectedRoute role={0} path={["/profile","/profile/*"]} exact>
+          <ProtectedRoute role={0} path="/profile*" exact>
             <ProfilePage />
           </ProtectedRoute>
           <Route path="/forgot-password" exact>
@@ -45,16 +51,21 @@ function App() {
           <Route path="/reset-password" exact>
             <ResetPasswordPage />
           </Route>
-          <Route path={["/", "/ingredients/:id"]} exact>
+          {/* <Route path={["/", "/ingredients/:id"]} exact>
+            <IngredientDetailsPage />
+          </Route> */}
+          <Route path="/ingredients/:id">
             <IngredientDetailsPage />
           </Route>
           <Route path="*" exact>
             <NotFound404 />
           </Route>
         </Switch>
+        {background && (
+          <Route path="/ingredients/:id" exact component={IngredientDetailsPopup}/>
+        )}
         <ErrorHandler />
       </div>
-    </Router>
   );
 }
 

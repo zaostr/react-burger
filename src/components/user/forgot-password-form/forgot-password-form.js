@@ -4,12 +4,13 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import formStyles from './forgot-password-form.module.css'
 import { resetPasswordRequest } from '../../../utils/burger-api'
 import { Redirect, useLocation } from 'react-router-dom'
+import { useForm } from '../../../hooks/useForm'
 
 export const ForgotPasswordForm = () => {
     const location = useLocation();
     const [resetRequestState, setResetRequestState] = useState(false);
     const emailInputRef = useRef(null);
-    const [form, setFormValue] = useState({
+    const {form, handleChange} = useForm({
         email: ''
     })
 
@@ -39,12 +40,9 @@ export const ForgotPasswordForm = () => {
                     type='email'
                     placeholder='Укажите e-mail'
                     value={form.email}
-                    onChange={e => setFormValue({
-                        ...form,
-                        email: e.target.value
-                    })}
+                    onChange={handleChange}
                     ref={emailInputRef}
-                    name='userEmail'
+                    name='email'
                     error={false}
                     errorText='Error!'
                     size='default'

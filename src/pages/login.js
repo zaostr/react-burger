@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { LoginForm } from '../components/login-form/login-form'
+import { LoginForm } from '../components/user/login-form/login-form'
 
 import loginStyles from './css/login.module.css'
 import { useSelector } from 'react-redux'

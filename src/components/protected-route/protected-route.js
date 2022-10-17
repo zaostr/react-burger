@@ -6,7 +6,7 @@ import { getCookie } from '../../utils/data';
 import { NotFound404 } from '../../pages';
 
 export const ProtectedRoute = ({children, role, ...rest}) => {
-    let { user, isAuthorized } = useSelector(store => store.auth);
+    const { user, isAuthorized } = useSelector(store => store.auth);
     const {getUser} = useAuth();
     const [cookieState, setCookieState] = useState({
         access: getCookie('authToken'),

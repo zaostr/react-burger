@@ -15,7 +15,7 @@ export function authorizeUser(form) {
         return await loginRequest(form)
         .then(data => {
             if ( data.success ) {
-                let authToken = data.accessToken.replace('Bearer ', '');
+                const authToken = data.accessToken.replace('Bearer ', '');
                 setCookie('authToken', authToken, {path: '/', 'max-age': 1200});
                 setCookie('refreshToken', data.refreshToken, {path: '/', 'max-age': 12000});
                 dispatch({
@@ -23,21 +23,25 @@ export function authorizeUser(form) {
                     payload: data.user
                 });
             } else {
-                dispatch({type: AUTH_SIGN_OUT});
+                logoutUser();
             }
         })
         .catch(err => {
-            dispatch({type: AUTH_SIGN_OUT});
+            logoutUser();
         });
+    }
+}
+export function logoutUser() {
+    return function(dispatch) {
+        return dispatch({type: AUTH_SIGN_OUT});
     }
 }
 export function registerUser(form) {
     return async function(dispatch) {
         return await registerRequest(form)
         .then(data => {
-            console.log(data);
             if ( data.success ) {
-                let authToken = data.accessToken.replace('Bearer ', '');
+                const authToken = data.accessToken.replace('Bearer ', '');
                 setCookie('authToken', authToken, {path: '/', 'max-age': 1200});
                 setCookie('refreshToken', data.refreshToken, {path: '/', 'max-age': 12000});
                 dispatch({
@@ -46,12 +50,12 @@ export function registerUser(form) {
                 });
                 return true;
             } else {
-                dispatch({type: AUTH_SIGN_OUT});
+                logoutUser();
                 return data.message;
             }
         })
         .catch(err => {
-            dispatch({type: AUTH_SIGN_OUT});
+            logoutUser();
             return err.message;
         });
     }

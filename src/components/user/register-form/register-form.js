@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useAuth } from '../../hooks/useAuth'
+import { useAuth } from '../../../hooks/useAuth'
 
 import formStyles from './register-form.module.css'
+import { useForm } from '../../../hooks/useForm'
 //import { Redirect } from 'react-router-dom'
 
 export const RegisterForm = () => {
@@ -11,7 +12,7 @@ export const RegisterForm = () => {
     const nameInputRef = useRef(null);
     const emailInputRef = useRef(null);
     const passwordInputRef = useRef(null);
-    const [form, setFormValue] = useState({
+    const {form, handleChange} = useForm({
         name: '',
         email: '',
         password: ''
@@ -21,7 +22,7 @@ export const RegisterForm = () => {
     const userRegister = async e => {
         e.preventDefault();
         setRegistrationError(false);
-        let test = await register(form);
+        const test = await register(form);
         setRegistrationError(test);
     };
     
@@ -37,12 +38,9 @@ export const RegisterForm = () => {
                     type='text'
                     placeholder='Имя'
                     value={form.name}
-                    onChange={e => setFormValue({
-                        ...form,
-                        name: e.target.value
-                    })}
+                    onChange={handleChange}
                     ref={nameInputRef}
-                    name='userName'
+                    name='name'
                     error={false}
                     errorText='Error!'
                     size='default'
@@ -53,12 +51,9 @@ export const RegisterForm = () => {
                     type='email'
                     placeholder='E-mail'
                     value={form.email}
-                    onChange={e => setFormValue({
-                        ...form,
-                        email: e.target.value
-                    })}
+                    onChange={handleChange}
                     ref={emailInputRef}
-                    name='userEmail'
+                    name='email'
                     error={registrationError ? true : false }
                     errorText={registrationError ? registrationError : 'Error!'}
                     size='default'
@@ -69,16 +64,16 @@ export const RegisterForm = () => {
                     type={passwordVisibility ? 'text' : 'password'}
                     placeholder='Password'
                     value={form.password}
-                    onChange={e => setFormValue({
-                        ...form,
-                        password: e.target.value
-                    })}
+                    onChange={handleChange}
                     ref={passwordInputRef}
-                    name='userPassword'
+                    name='password'
                     error={false}
                     errorText='Error!'
                     size='default'
-                    onIconClick={()=>setPasswordVisibility(!passwordVisibility)}
+                    onIconClick={()=>{
+                        passwordInputRef.current.focus();
+                        setPasswordVisibility(!passwordVisibility)
+                    }}
                     icon={passwordVisibility ? 'HideIcon' : 'ShowIcon'}
                 />
             </div>

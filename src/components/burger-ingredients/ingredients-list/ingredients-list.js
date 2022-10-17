@@ -12,9 +12,9 @@ export const IngredientsList = ({data, setCurrentTab}) => {
   }
 
   useEffect(() => {
-    let wrapper = document.getElementById('IngredientsListSectionWrapper');
+    const wrapper = document.getElementById('IngredientsListSectionWrapper');
     const handleWrapperScroll = (e) => {
-      let sections = e.target.childNodes;
+      const sections = e.target.childNodes;
       for (let index = sections.length; index > 0; index--) {
         const element = sections[index - 1];
         if ( (element.offsetHeight + (element.offsetTop - element.parentNode.offsetTop) - wrapper.scrollTop) > 0 ) {

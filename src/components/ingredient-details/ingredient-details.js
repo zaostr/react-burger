@@ -1,36 +1,32 @@
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
-import { getIngredientsRequest } from '../../utils/burger-api';
+import { setDetailedIngredient } from '../../services/actions/ingredients';
+import { Loader } from '../loader/loader';
+//import { getIngredientsRequest } from '../../utils/burger-api';
 
 import detailsStyles from './ingredient-details.module.css'
 
 export const IngredientDetails = () => {
-    let {detailed} = useSelector(store => store.ingredients);
+    const {detailed, list, ingredientsRequest} = useSelector(store => store.ingredients);
     const params = useParams();
-    const [detailedIngedient, setDetailedIngedient] = useState(detailed);
-  
-    /* eslint-disable */
+    const dispatch = useDispatch();
+    const [detailedIngedient, setDetailedIngedientState] = useState(detailed);
+
     useEffect(() => {
-        if ((detailed === undefined || detailed === false) && params?.id) {
-            getIngredientsRequest()
-            .then(data => {
-                if (data.success) {
-                    setDetailedIngedient(data.data.filter(ingredient => ingredient._id === params?.id)[0])
-                } else {
-                    setDetailedIngedient(false);
-                }
-            });
+        setDetailedIngedientState(list.filter(ingredient => ingredient._id === params?.id)[0]);
+        if (detailed === false) {
+            dispatch(setDetailedIngredient(detailedIngedient));
         }
-    }, []);
-    /* eslint-enable */
+    }, [detailed, list, detailedIngedient, dispatch, params?.id]);
 
-
+    if (ingredientsRequest) {
+        return <Loader />
+    }
     
-
   return (
     <>
-    {( detailedIngedient ) ? (
+    {( detailedIngedient ) && (
         <div className={'mb-5'}>
             <p className={`${detailsStyles.ingredientDetailsHeading} ingredientTitle text text_type_main-large`}>Детали ингредиента</p>
             <div className={`${detailsStyles.ingredientDetailsInfo}`}>
@@ -56,8 +52,6 @@ export const IngredientDetails = () => {
                 </div>
             </div>
         </div>
-    ) : (
-        <h2>Произошла ошибка!</h2>
     )}
     </>
     

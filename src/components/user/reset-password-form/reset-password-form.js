@@ -1,18 +1,20 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import formStyles from './reset-password-form.module.css'
 import { changePasswordRequest } from '../../../utils/burger-api'
 import { Redirect } from 'react-router-dom'
+import { useForm } from '../../../hooks/useForm'
 
 export const ResetPasswordForm = () => {
     const [resetRequestState, setResetRequestState] = useState({
         success: false,
         message: ''
     });
+    const passwordInputRef = useRef(null);
     const [shouldRedirect, setRedirect] = useState(false);
     const [passwordVisibility, setPasswordVisibility] = useState(false);
-    const [form, setFormValue] = useState({
+    const {form, handleChange} = useForm({
         password: '',
         token: ''
     })
@@ -52,15 +54,16 @@ export const ResetPasswordForm = () => {
                     type={passwordVisibility ? 'text' : 'password'}
                     placeholder='Введите новый пароль'
                     value={form.password}
-                    onChange={e => setFormValue({
-                        ...form,
-                        password: e.target.value
-                    })}
+                    onChange={handleChange}
                     name='password'
                     error={false}
                     errorText='Error!'
                     size='default'
-                    onIconClick={()=>setPasswordVisibility(!passwordVisibility)}
+                    ref={passwordInputRef}
+                    onIconClick={()=>{
+                        passwordInputRef.current.focus();
+                        setPasswordVisibility(!passwordVisibility)
+                    }}
                     icon={passwordVisibility ? 'HideIcon' : 'ShowIcon'}
                 />
             </div>
@@ -69,10 +72,7 @@ export const ResetPasswordForm = () => {
                     type='text'
                     placeholder='Введите код из письма'
                     value={form.token}
-                    onChange={e => setFormValue({
-                        ...form,
-                        token: e.target.value
-                    })}
+                    onChange={handleChange}
                     name='token'
                     error={false}
                     errorText='Error!'

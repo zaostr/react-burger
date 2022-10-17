@@ -2,9 +2,9 @@ import { useDispatch } from "react-redux";
 import {
     authorizeUser,
     registerUser,
-    AUTH_SIGN_OUT,
     AUTH_SIGN_IN,
-    AUTH_REQUEST
+    AUTH_REQUEST,
+    logoutUser
 } from '../services/actions/auth'
 import { getUserRequest } from "../utils/burger-api";
 
@@ -24,14 +24,14 @@ export const useAuth = () => {
                     payload: false
                 })
                 if (data.success) {
-                    let user = data.user;
+                    const user = data.user;
                     dispatch({
                         type: AUTH_SIGN_IN,
                         payload: data.user
                     });
                     return user;
                 } else {
-                    dispatch({ type: AUTH_SIGN_OUT });
+                    dispatch(logoutUser());
                     return false;
                 }
             })
@@ -40,13 +40,13 @@ export const useAuth = () => {
                     type: AUTH_REQUEST,
                     payload: false
                 })
-                dispatch({ type: AUTH_SIGN_OUT });
+                dispatch(logoutUser());
             });
     }
 
     const signIn = (form) => dispatch(authorizeUser(form));
 
-    const signOut = () => dispatch({type: AUTH_SIGN_OUT});
+    const signOut = () => dispatch(logoutUser());
     
     const register = (form) => dispatch(registerUser(form));
 
