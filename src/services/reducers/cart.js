@@ -25,7 +25,7 @@ export const cartReducer = (state = cartState, action) => {
     switch(action.type) {
         case CART_INSERT_ITEM:
             if ( action.payload.type === 'bun' ) {
-                let listWithoutBun = [...state.list].filter(x => x.type !== 'bun');
+                const listWithoutBun = [...state.list].filter(x => x.type !== 'bun');
                 return {
                     ...state,
                     list: [
@@ -45,7 +45,7 @@ export const cartReducer = (state = cartState, action) => {
 
         case CART_REMOVE_ITEM:
             if ( action.payload.type !== 'bun' ) {
-                let newList = [...state.list].filter((x,key) => key !== action.payload.index);
+                const newList = [...state.list].filter((x,key) => key !== action.payload.index);
                 return {
                     ...state,
                     list: newList
@@ -72,7 +72,7 @@ export const cartReducer = (state = cartState, action) => {
             }
 
         case CART_SORT_LIST:
-            let newList = [...state.list].filter((x,key) => key !== action.payload.oldIndex);
+            const newList = [...state.list].filter((x,key) => key !== action.payload.oldIndex);
             newList.splice(action.payload.newIndex, 0, {...action.payload.item} );
             return {
                 ...state,

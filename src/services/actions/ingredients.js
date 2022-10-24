@@ -28,7 +28,6 @@ export function getIngredients() {
             },2000)
         })
         .catch(err => {
-            console.log(err.message);
             dispatch({
                 type: INGREDIENTS_REQUEST_FAILED,
                 payload: err.message
@@ -44,3 +43,11 @@ export function getIngredients() {
     }
 }
 
+export function setDetailedIngredient(ingredient) {
+    return function(dispatch) {
+        dispatch({
+            type: INGREDIENTS_SET_DETAILED,
+            payload: ingredient
+        });
+    }
+}

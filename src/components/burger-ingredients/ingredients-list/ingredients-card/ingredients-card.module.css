@@ -1,3 +1,7 @@
 .card {
     cursor: pointer;
+    color: var(--c-text-light);
+}
+.card:hover {
+    color: var(--c-text-light);
 }

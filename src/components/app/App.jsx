@@ -1,29 +1,71 @@
-import appStyles from './App.module.css';
+//import appStyles from './App.module.css';
+import { useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import { ErrorHandler } from '../error-handler/error-handler';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-
+import { getIngredients } from '../../services/actions/ingredients';
+import { ProtectedRoute } from '../protected-route/protected-route'
+import {
+  Switch,
+  Route,
+  useLocation,
+} from 'react-router-dom';
+import {
+  ForgotPasswordPage,
+  LoginPage, NotFound404, ProfilePage, RegisterPage, ResetPasswordPage,
+  IngredientDetailsPage,
+  HomePage
+} from '../../pages';
+import { useDispatch } from 'react-redux';
+import { IngredientDetailsPopup } from '../ingredient-details-popup/ingredient-details-popup';
 
 
 function App() {
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const background = location.state && location.state.background;
+
+  useEffect(() => {
+    dispatch( getIngredients() );
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <AppHeader />
-      <main className={`${appStyles.main} pl-5 pr-5`}>
-        <DndProvider backend={HTML5Backend}>
-          <div>
-            <BurgerIngredients />
-          </div>
-          <div>
-              <BurgerConstructor />
-          </div>
-        </DndProvider>
-      </main>
-      <ErrorHandler />
-    </div>
+      <div className="App">
+        <AppHeader />
+        <Switch location={background || location}>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/login" exact>
+            <LoginPage />
+          </Route>
+          <Route path="/register" exact>
+            <RegisterPage />
+          </Route>
+          <ProtectedRoute role={0} path="/profile*" exact>
+            <ProfilePage />
+          </ProtectedRoute>
+          <Route path="/forgot-password" exact>
+            <ForgotPasswordPage />
+          </Route>
+          <Route path="/reset-password" exact>
+            <ResetPasswordPage />
+          </Route>
+          {/* <Route path={["/", "/ingredients/:id"]} exact>
+            <IngredientDetailsPage />
+          </Route> */}
+          <Route path="/ingredients/:id">
+            <IngredientDetailsPage />
+          </Route>
+          <Route path="*" exact>
+            <NotFound404 />
+          </Route>
+        </Switch>
+        {background && (
+          <Route path="/ingredients/:id" exact component={IngredientDetailsPopup}/>
+        )}
+        <ErrorHandler />
+      </div>
   );
 }
 

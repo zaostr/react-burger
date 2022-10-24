@@ -1,0 +1,12 @@
+.wrapper {
+    max-width: 480px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.main {
+    min-height: calc(100vh - 88px);
+    padding-top: 180px;
+}

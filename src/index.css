@@ -15,6 +15,7 @@ body {
   --c-bg: #131316;
   --c-bg-modal: #1C1C21;
   --c-accent: #4C4CFF;
+  --c-accent-hover: #3131DA;
   --c-text-dark: #8585AD;
   --c-text-light: #F2F2F3;
   --c-input: #2F2F37;
@@ -38,6 +39,16 @@ body {
   border: 3px solid var(--c-text-dark);
 }
 
+a {
+  text-decoration: none;
+  color: var(--c-accent);
+  transition: .3s;
+}
+
+a:hover {
+  color: var(--c-accent-hover);
+}
+
 .text-center {
   text-align: center;
 }
@@ -51,4 +62,21 @@ body {
 
 body.overflow-hidden {
   overflow: hidden!important;
+}
+
+main {
+  max-width: var(--w-content);
+  margin: 0 auto;
+}
+
+.loginForm .input__container,
+.RegisterForm .input__container,
+form .input__container {
+  width: 100%;
+}
+.loginForm div.input,
+.RegisterForm div.input,
+form div.input {
+  max-width: 480px;
+  width: 100%;
 }
