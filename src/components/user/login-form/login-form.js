@@ -8,6 +8,7 @@ import { useForm } from '../../../hooks/useForm'
 export const LoginForm = () => {
     const {signIn} = useAuth();
     const [passwordVisibility, setPasswordVisibility] = useState(false);
+    const [loginError, setLoginError] = useState(false);
     const emailInputRef = useRef(null);
     const passwordInputRef = useRef(null);
     const {form, handleChange} = useForm({
@@ -16,9 +17,11 @@ export const LoginForm = () => {
     })
 
     const login = useCallback(
-        e => {
+        async e => {
           e.preventDefault();
-          signIn(form);
+          const loginResult = await signIn(form);
+          setLoginError(loginResult);
+          //loginResult.then(data => console.log(data));
         },
         [form, signIn]
       );
@@ -61,6 +64,11 @@ export const LoginForm = () => {
             <div>
                 <Button>Войти</Button>
             </div>
+            {
+                (loginError) && (
+                    <div className='text text_type_main-default text_color_inactive mt-4'>{ loginError }</div>
+                )
+            }
         </form>
     </div>
   )

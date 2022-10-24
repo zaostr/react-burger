@@ -22,8 +22,8 @@ export const RegisterForm = () => {
     const userRegister = async e => {
         e.preventDefault();
         setRegistrationError(false);
-        const test = await register(form);
-        setRegistrationError(test);
+        const registerResult = await register(form);
+        setRegistrationError(registerResult);
     };
     
     /*if (endRegistration) {

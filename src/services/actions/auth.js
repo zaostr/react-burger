@@ -22,12 +22,15 @@ export function authorizeUser(form) {
                     type: AUTH_SIGN_IN,
                     payload: data.user
                 });
+                return data.success;
             } else {
                 logoutUser();
+                return data.message;
             }
         })
         .catch(err => {
             logoutUser();
+            return err.message;
         });
     }
 }

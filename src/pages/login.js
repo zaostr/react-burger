@@ -28,7 +28,13 @@ export const LoginPage = () => {
 
     if ( shouldRedirect ) {
         return (
-            <Redirect to={ state?.from || '/' } />
+            <Redirect to={{
+                pathname: state?.from || '/',
+                state: {
+                    from: '/login',
+                    action: state?.action === 'loginForOrder' ? 'makeOrder' : false
+                } 
+            }} />
         )
     }
 
