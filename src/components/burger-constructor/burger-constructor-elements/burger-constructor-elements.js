@@ -70,12 +70,16 @@ const BurgerConstructorElements = () => {
             />
           </div>
         ) : (
-          <div className={BurgerConstructorElementsStyles.ConstructorEmptyTopElementWrapper}>
+          <div className={`${BurgerConstructorElementsStyles.ConstructorEmptyTopElementWrapper}`}>
             <span></span>
             <div 
               className={`${BurgerConstructorElementsStyles.ConstructorEmptyTopElement}
               ${(isBunTopAreaHover || isBunBottomAreaHover) 
                 ? BurgerConstructorElementsStyles.overlayActive 
+                : ''
+              }
+              ${(canDropBunTop || canDropBunBottom) 
+                ? BurgerConstructorElementsStyles.overlayHalfActive 
                 : ''
               }`}
             >
@@ -98,6 +102,10 @@ const BurgerConstructorElements = () => {
             className={`${BurgerConstructorElementsStyles.EmptyList}
             ${(isIngredientAreaHover) 
               ? BurgerConstructorElementsStyles.overlayActive 
+              : ''
+            }
+            ${(canDropIngredient) 
+              ? BurgerConstructorElementsStyles.overlayHalfActive 
               : ''
             }`}>Выберите начинку</div>
         </div>
@@ -135,6 +143,10 @@ const BurgerConstructorElements = () => {
               className={`${BurgerConstructorElementsStyles.ConstructorEmptyBottomElement} 
               ${(isBunTopAreaHover || isBunBottomAreaHover) 
                 ? BurgerConstructorElementsStyles.overlayActive 
+                : ''
+              }
+              ${(canDropBunTop || canDropBunBottom) 
+                ? BurgerConstructorElementsStyles.overlayHalfActive 
                 : ''
               }`}>
               <div>Выберите булки</div>

@@ -33,25 +33,37 @@ header nav {
     padding-left: 20px;
     padding-right: 20px;
     grid-gap: 8px;
-    color: var(--c-text-light);
+    color: var(--c-text-dark);
+    transition: .3s;
 }
 .headerBtn svg {
-    fill: var(--c-text-light);
+    fill: var(--c-text-dark);
+    transition: .3s;
 }
 
-.headerBtnInactive {
+/*.headerBtnInactive {
     composes: headerBtn
 }
 .headerBtnInactive button {
     color: var(--c-text-dark);
 }
-
-.headerBtnInactive button:hover {
-    color: var(--c-text-dark);
-    opacity: 1;
-}
 .headerBtnInactive svg {
     fill: var(--c-text-dark);
+}*/
+
+.headerBtn button:hover {
+    color: var(--c-text-light);
+    opacity: 1;
+}
+.headerBtn:hover svg {
+    fill: var(--c-text-light);
+    opacity: 1;
+}
+.active button {
+    color: var(--c-text-light);
+}
+.active svg {
+    fill: var(--c-text-light);
 }
 
 @media screen and (max-width: 1200px) {

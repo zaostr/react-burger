@@ -1,23 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {IngredientsTabs} from './ingredients-tabs/ingredients-tabs'
 import {IngredientsList} from './ingredients-list/ingredients-list'
-import { getIngredients } from '../../services/actions/ingredients';
-import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import burgerIngredientsStyles from './burger-ingredients.module.css'
+//import burgerIngredientsStyles from './burger-ingredients.module.css'
+import { Loader } from '../loader/loader'
 
 
 
 export const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun');
-  const dispatch = useDispatch();
 
-  const {list, ingredientsRequest} = useSelector(store => store.ingredients);
-
-  useEffect(() => {
-    dispatch( getIngredients() );
-  }, [dispatch]);
+   const {list, ingredientsRequest} = useSelector(store => store.ingredients);
 
 
   return (
@@ -28,16 +22,10 @@ export const BurgerIngredients = () => {
 
       
       { ingredientsRequest && (
-          <div className={burgerIngredientsStyles.loader_container}>
-            <div className={burgerIngredientsStyles.loader_wrapper}>
-              <span className={burgerIngredientsStyles.loader}>
-                <BurgerIcon type="primary" />
-              </span>
-            </div>
-          </div>)
-      }
+        <Loader />
+      )}
 
-      { (list.length > 0) && 
+      { (list.length > 0 && !ingredientsRequest) && 
         <>
           <IngredientsTabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
         

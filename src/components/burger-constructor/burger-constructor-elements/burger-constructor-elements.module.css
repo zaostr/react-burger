@@ -85,6 +85,9 @@
     composes: constructor-element from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
 }
 
+.overlayHalfActive {
+    border-color: #cfcfcf!important;
+}
 
 .overlayActive {
     border-color: #fff!important;
