@@ -21,7 +21,6 @@ export const LoginForm = () => {
           e.preventDefault();
           const loginResult = await signIn(form);
           setLoginError(loginResult);
-          //loginResult.then(data => console.log(data));
         },
         [form, signIn]
       );

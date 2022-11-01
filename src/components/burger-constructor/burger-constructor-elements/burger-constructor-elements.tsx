@@ -7,11 +7,12 @@ import BurgerConstructorElementsStyles from './burger-constructor-elements.modul
 import { useDispatch, useSelector } from 'react-redux';
 import { cartInsertItem } from '../../../services/actions/cart'
 import { useDrop } from 'react-dnd';
+import { ingredientType } from '../../../utils/types';
 
 const BurgerConstructorElements = () => {
-  const [selectedBun, setSelectedBun] = useState(false);
+  const [selectedBun, setSelectedBun] = useState<ingredientType | null>(null);
   const dispatch = useDispatch();
-
+  // @ts-ignore
   const cartList = useSelector(store => store.cart.list);
 
   const [{ isBunTopAreaHover, canDropBunTop }, dropBunTop] = useDrop({
@@ -21,6 +22,7 @@ const BurgerConstructorElements = () => {
       canDropBunTop: monitor.canDrop()
     }),
     drop(item) {
+      // @ts-ignore
       dispatch(cartInsertItem(item));
     }
   })
@@ -31,6 +33,7 @@ const BurgerConstructorElements = () => {
       canDropBunBottom: monitor.canDrop()
     }),
     drop(item) {
+      // @ts-ignore
       dispatch(cartInsertItem(item));
     }
   })
@@ -42,6 +45,7 @@ const BurgerConstructorElements = () => {
       canDropIngredient: monitor.canDrop()
     }),
     drop(item) {
+      // @ts-ignore
       dispatch(cartInsertItem(item));
     }
   })
@@ -49,7 +53,7 @@ const BurgerConstructorElements = () => {
  
   /* eslint-disable */
   useEffect(() => {
-    setSelectedBun(cartList.filter(x => x.type === 'bun')[0] || false);
+    setSelectedBun(cartList.filter((x: ingredientType) => x.type === 'bun')[0] || false);
   }, [JSON.stringify(cartList)])
   /* eslint-enable */
   
@@ -93,7 +97,7 @@ const BurgerConstructorElements = () => {
       <div 
         ref={dropIngredient} 
         className={`
-        ${(cartList.filter(x => x.type !== 'bun').length === 0 || canDropIngredient) 
+        ${(cartList.filter((x: ingredientType) => x.type !== 'bun').length === 0 || canDropIngredient) 
           ? BurgerConstructorElementsStyles.ListWrapperWithOverlay 
           : BurgerConstructorElementsStyles.ListWrapper
         }`}>
@@ -110,7 +114,7 @@ const BurgerConstructorElements = () => {
             }`}>Выберите начинку</div>
         </div>
         <div className={BurgerConstructorElementsStyles.List}>
-          { cartList.map((ingredient,key) => (
+          { cartList.map((ingredient: ingredientType, key: number) => (
             (ingredient.type !== 'bun')
             && (
                 <BurgerConstructorElement 
@@ -160,7 +164,3 @@ const BurgerConstructorElements = () => {
 
 export default BurgerConstructorElements
 
-
-/*BurgerConstructorElements.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired
-}*/

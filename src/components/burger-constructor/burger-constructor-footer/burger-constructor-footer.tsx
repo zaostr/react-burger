@@ -21,13 +21,14 @@ import constructorFooter from './burger-constructor-footer.module.css'
 
 
 const BurgerConstructorFooter = () => {
+  // @ts-ignore
   const cartState = useSelector(store => store.cart);
+  // @ts-ignore
   const isAuthorized = useSelector(store => store.auth.isAuthorized);
   const dispatch = useDispatch();
-  const [requestErrorText, setRequestErrorText] = useState(false);
+  const [requestErrorText, setRequestErrorText] = useState<boolean | string>(false);
   const [orderId, setOrderId] = useState(0);
-  //const [processOrder, setProccessOrder] = useState(cartState.orderRequest);
-  const {state} = useLocation();
+  const {state} = useLocation<{from: {}; action: {}}>();
   const modalControls = useModalControls({
     closeCallback: () => setOrderId(0)
   });
@@ -45,7 +46,7 @@ const BurgerConstructorFooter = () => {
       return false
     }
 
-    if (cartState.list.filter(x => x.type === 'bun').length === 0) {
+    if (cartState.list.filter((x: {type: string}) => x.type === 'bun').length === 0) {
       setRequestErrorText('Не выбрана булка');
       modalControls.open();
       return false
@@ -65,6 +66,7 @@ const BurgerConstructorFooter = () => {
         dispatch({type: CART_ORDER_SUCCESS});
         dispatch({type: CART_SAVE_ORDER, payload: dataJson.order});
         setOrderId(dataJson.order.number);
+        // @ts-ignore
         dispatch(cartClear());
       },2000)
     })
@@ -74,11 +76,6 @@ const BurgerConstructorFooter = () => {
     });
   }
 
-  console.log(state, !isAuthorized && cartState.orderRequest);
-  if (isAuthorized && state?.from === '/login' && state?.action === 'makeOrder') {
-    //console.log(123);
-    //handleMakeOrder();
-  }
 
   if (!isAuthorized && cartState.orderRequest) {
     return (
@@ -91,7 +88,8 @@ const BurgerConstructorFooter = () => {
     <div className={`${constructorFooter.burgerConstructorFooter} mt-10 pb-15`}>
 
       <BurgerConstructorTotal />
-
+      
+      { /* @ts-ignore */ }
       <Button type="primary" size="large" onClick={handleMakeOrder}>
           Оформить заказ
       </Button>

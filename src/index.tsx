@@ -10,18 +10,23 @@ import thunk from "redux-thunk";
 import rootReducer from './services/reducers';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+
 const composeEnhancers =
+// @ts-ignore
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  // @ts-ignore
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose; 
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 const store = configureStore({
   reducer: rootReducer, 
+  // @ts-ignore
   enhancer
 });
 
 const root = ReactDOM.createRoot(
+  // @ts-ignore
   document.getElementById('root')
 );
 root.render(

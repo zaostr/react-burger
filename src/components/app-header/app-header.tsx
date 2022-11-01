@@ -19,14 +19,16 @@ export class AppHeader extends Component {
           <nav className='headerLeft'>
             <div>
               <NavLink to="/" exact className={appHeaderStyles.headerBtn} activeClassName={appHeaderStyles.active}>
-                <Button type='secondary'>
-                  <BurgerIcon />
+                {/* @ts-ignore */ }
+                <Button type="secondary">
+                  <BurgerIcon type={'secondary'} />
                   Конструктор
                 </Button>
               </NavLink>
             </div>
             <div>
               <NavLink to="/feed" className={appHeaderStyles.headerBtn} activeClassName={appHeaderStyles.active}>
+                {/* @ts-ignore */ }
                 <Button type='secondary'>
                     <ListIcon type="secondary" />
                     Лента заказов
@@ -40,6 +42,7 @@ export class AppHeader extends Component {
           <div className={appHeaderStyles.headerRight}>
             <div>
               <NavLink to="/profile" className={appHeaderStyles.headerBtn} activeClassName={appHeaderStyles.active}>
+                {/* @ts-ignore */ }
                 <Button type='secondary'>
                   <ProfileIcon type="secondary" />
                   Личный кабинет

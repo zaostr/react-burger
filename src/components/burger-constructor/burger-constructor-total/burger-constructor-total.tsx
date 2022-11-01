@@ -7,13 +7,14 @@ import { useSelector } from 'react-redux';
 
 
 const BurgerConstructorTotal = () => {
+  // @ts-ignore
   const total = useSelector(store => store.cart.total);
 
 
   return (
     <p className={`${constructorTotal.total} text text_type_digits-medium`}>
       { total }
-      <CurrencyIcon />
+      <CurrencyIcon type={'primary'} />
     </p>
   )
 }

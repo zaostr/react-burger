@@ -23,9 +23,11 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
+  // @ts-ignore
   const background = location.state && location.state.background;
 
   useEffect(() => {
+    // @ts-ignore
     dispatch( getIngredients() );
   }, [dispatch]);
 
