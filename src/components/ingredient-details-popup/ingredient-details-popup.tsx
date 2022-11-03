@@ -6,7 +6,7 @@ import { IngredientDetails } from '../ingredient-details/ingredient-details'
 import { Modal } from '../modal/modal'
 
 export const IngredientDetailsPopup = () => {
-    const params = useParams();
+    const params: {id: string | undefined;} = useParams();
     const history = useHistory();
     const dispatch = useDispatch();
     const modalControls = useModalControls({

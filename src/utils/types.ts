@@ -13,13 +13,20 @@ import PropTypes from 'prop-types';
     image_mobile: PropTypes.string,
     image_large: PropTypes.string,
     __v: PropTypes.number
-})*/
+})
 
 export const modalType = {
     isOpen: PropTypes.bool, 
     disableCloseButton: PropTypes.bool,
     disableCloseOverlay: PropTypes.bool,
     disableOverlay: PropTypes.bool
+}*/
+export type modalType = {
+    isOpen?: boolean; 
+    disableCloseButton?: boolean;
+    disableCloseOverlay?: boolean;
+    disableOverlay?: boolean;
+    closeCallback?: () => void;
 }
 
 export type ingredientType = {

@@ -7,15 +7,19 @@ import { Loader } from '../loader/loader';
 
 import detailsStyles from './ingredient-details.module.css'
 
+import { ingredientType } from '../../utils/types';
+
 export const IngredientDetails = () => {
+    // @ts-ignore
     const {detailed, list, ingredientsRequest} = useSelector(store => store.ingredients);
-    const params = useParams();
+    const params: {id: string | undefined;} = useParams();
     const dispatch = useDispatch();
-    const [detailedIngedient, setDetailedIngedientState] = useState(detailed);
+    const [detailedIngedient, setDetailedIngedientState] = useState<ingredientType>(detailed);
 
     useEffect(() => {
-        setDetailedIngedientState(list.filter(ingredient => ingredient._id === params?.id)[0]);
+        setDetailedIngedientState(list.filter((ingredient: ingredientType) => ingredient._id === params?.id)[0]);
         if (detailed === false) {
+            // @ts-ignore
             dispatch(setDetailedIngredient(detailedIngedient));
         }
     }, [detailed, list, detailedIngedient, dispatch, params?.id]);

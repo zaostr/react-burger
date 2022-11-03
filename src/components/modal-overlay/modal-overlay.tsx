@@ -2,7 +2,7 @@ import React from 'react'
 
 import ModalOverlayStyles from './modal-overlay.module.css'
 
-export const ModalOverlay = (props) => {
+export const ModalOverlay = (props: any) => {
   const handleCloseModalByOverlay = () => {
       if (props.modalProps.disableCloseOverlay) {
           return;

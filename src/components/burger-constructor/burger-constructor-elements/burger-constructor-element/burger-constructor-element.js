@@ -85,7 +85,10 @@ export const BurgerConstructorElement = ({ ingredient, index }) => {
         </div>
     )
 }
+
+/*
 BurgerConstructorElement.propTypes = {
     ingredient: ingredientType.isRequired,
     index: PropTypes.number
 }
+*/

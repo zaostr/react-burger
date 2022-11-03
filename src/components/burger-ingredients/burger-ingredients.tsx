@@ -10,8 +10,8 @@ import { Loader } from '../loader/loader'
 
 export const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun');
-
-   const {list, ingredientsRequest} = useSelector(store => store.ingredients);
+  // @ts-ignore
+  const {list, ingredientsRequest} = useSelector(store => store.ingredients);
 
 
   return (
@@ -37,8 +37,5 @@ export const BurgerIngredients = () => {
 }
 
 
-/*BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired
-}*/
 
 export default BurgerIngredients

@@ -10,14 +10,15 @@ import { ingredientType } from '../../../../utils/types';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
-const IngredientCard = ({info}) => {
+const IngredientCard = ({info}: {info: ingredientType}) => {
+  // @ts-ignore
   const cartList = useSelector(store => store.cart.list);
   const location = useLocation();
   const [counterState, setCounterState] = useState(0);
   
   /* eslint-disable */
   useEffect(() => {
-    setCounterState( cartList.filter(x => x._id === info._id).length );
+    setCounterState( cartList.filter((x:ingredientType) => x._id === info._id).length );
   },[JSON.stringify(cartList)])
   /* eslint-enable */
 
@@ -66,7 +67,7 @@ const IngredientCard = ({info}) => {
 
 export default IngredientCard
 
-
+/*
 IngredientCard.propTypes = {
   info: ingredientType.isRequired
-}
+}*/

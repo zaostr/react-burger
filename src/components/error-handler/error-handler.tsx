@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ERROR_STATE } from '../../services/actions/errorHandler'
 
 export const ErrorHandler = () => {
+  // @ts-ignore
   const ErrorHandler = useSelector(store => store.errorHandler);
   const dispatch = useDispatch();
   

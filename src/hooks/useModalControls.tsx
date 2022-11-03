@@ -7,7 +7,7 @@ export const useModalControls = ({
         disableCloseOverlay = false,
         disableOverlay = false,
         closeCallback = () => {}
-    } = {}) => {
+    }: modalType = {}) => {
     const [isModalOpen, setIsModalOpen] = useState(isOpen);
 
     const handleOpenModal = () => {
@@ -32,5 +32,6 @@ export const useModalControls = ({
     }
   }
 }
-
+/*
 useModalControls.propTypes = modalType
+*/

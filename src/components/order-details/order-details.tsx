@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import orderDetailsStyle from './order-details.module.css'
 import done from '../../assets/icons/done.svg'
 
-export const OrderDetails = (props) => {
+export const OrderDetails = (props: {id: number;}) => {
   return (
     <div className={`${orderDetailsStyle.completeOrderWrapper} mt-20 mb-20`}>
         <p className={`${orderDetailsStyle.completeOrderNumber} text text_type_digits-large mb-8`}>{props.id}</p>
@@ -15,7 +15,7 @@ export const OrderDetails = (props) => {
     </div>
   )
 }
-
+/*
 OrderDetails.propTypes = {
   id: PropTypes.number.isRequired
-}
+}*/
