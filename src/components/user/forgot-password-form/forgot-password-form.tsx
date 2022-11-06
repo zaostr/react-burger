@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, SyntheticEvent } from 'react'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import formStyles from './forgot-password-form.module.css'
@@ -8,14 +8,14 @@ import { useForm } from '../../../hooks/useForm'
 
 export const ForgotPasswordForm = () => {
     const location = useLocation();
-    const [resetRequestState, setResetRequestState] = useState(false);
-    const emailInputRef = useRef(null);
-    const {form, handleChange} = useForm({
+    const [resetRequestState, setResetRequestState] = useState<boolean>(false);
+    const emailInputRef = useRef<HTMLInputElement | null>(null);
+    const {form, handleChange} = useForm<{email: string}>({
         email: ''
     })
 
     const forgotPassword = useCallback(
-        e => {
+        (e: SyntheticEvent) => {
           e.preventDefault();
           resetPasswordRequest(form)
           .then(data => {
@@ -49,7 +49,7 @@ export const ForgotPasswordForm = () => {
                 />
             </div>
             <div>
-                <Button>Восстановить</Button>
+                <Button htmlType="submit">Восстановить</Button>
             </div>
         </form>
     </div>

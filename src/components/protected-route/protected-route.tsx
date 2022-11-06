@@ -1,11 +1,17 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth'
 import { getCookie } from '../../utils/data';
 import { NotFound404 } from '../../pages';
 
-export const ProtectedRoute = ({children, role, ...rest}) => {
+export const ProtectedRoute = ({children, role, ...rest} : {
+    children: React.ReactNode;
+    role: number;
+    path: string;
+    exact: boolean;
+}) => {
+    // @ts-ignore
     const { user, isAuthorized } = useSelector(store => store.auth);
     const {getUser} = useAuth();
     const [cookieState, setCookieState] = useState({

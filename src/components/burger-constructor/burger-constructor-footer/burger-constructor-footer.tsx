@@ -53,7 +53,7 @@ const BurgerConstructorFooter = () => {
     }
     
 
-    dispatch({type: CART_ORDER_REQUEST});
+    dispatch({type: CART_ORDER_REQUEST, payload: true});
     if (!isAuthorized) {
       return false
     }
@@ -89,8 +89,7 @@ const BurgerConstructorFooter = () => {
 
       <BurgerConstructorTotal />
       
-      { /* @ts-ignore */ }
-      <Button type="primary" size="large" onClick={handleMakeOrder}>
+      <Button htmlType="button" type="primary" size="large" onClick={handleMakeOrder}>
           Оформить заказ
       </Button>
 

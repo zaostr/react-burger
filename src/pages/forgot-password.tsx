@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
-import { Link, Redirect, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Link, Redirect } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { ResetPasswordForm } from '../components/user/reset-password-form/reset-password-form'
+import { ForgotPasswordForm } from '../components/user/forgot-password-form/forgot-password-form'
 import { getCookie } from '../utils/data';
 
 import loginStyles from './css/login.module.css'
+import { useSelector } from 'react-redux'
 
-export const ResetPasswordPage = () => {
+export const ForgotPasswordPage = () => {
+    // @ts-ignore
     const isAuthorized = useSelector(store => store.auth.isAuthorized);
     const { getUser } = useAuth();
-    const {state} = useLocation();
     const [shouldRedirect, setRedirect] = useState(isAuthorized);
     const [cookieState, setCookieState] = useState({
         access: getCookie('authToken'),
@@ -27,6 +27,7 @@ export const ResetPasswordPage = () => {
     }, []);
     /* eslint-enable */
 
+
     useEffect(() => {
         setRedirect(isAuthorized);
         setCookieState({
@@ -35,14 +36,14 @@ export const ResetPasswordPage = () => {
         })
     }, [isAuthorized])
 
-    if ( shouldRedirect || state?.from.pathname !== '/forgot-password' ) {
+    if ( shouldRedirect ) {
         return (
             <Redirect to={{
                 pathname: '/'
             }} />
         )
     }
-    
+
     if ( !isAuthorized && cookieState.access !== undefined && cookieState.refresh !== undefined ) {
         return null
     }
@@ -52,7 +53,7 @@ export const ResetPasswordPage = () => {
         <div className={`${loginStyles.wrapper}`}>
             <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
             <div className='mb-20'>
-                <ResetPasswordForm />
+                <ForgotPasswordForm />
             </div>
             <p className='text text_type_main-default text_color_inactive'>
                 <span className='mr-2'>Вспомнили пароль?</span>

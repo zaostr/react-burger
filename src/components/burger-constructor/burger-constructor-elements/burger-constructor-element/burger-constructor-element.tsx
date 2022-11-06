@@ -8,13 +8,27 @@ import BurgerConstructorElementStyles from './burger-constructor-element.module.
 import { ingredientType } from '../../../../utils/types';
 import { useDispatch } from 'react-redux';
 import { cartRemoveItem } from '../../../../services/actions/cart'
-import { useDrop, useDrag } from 'react-dnd';
+import { useDrop, useDrag, XYCoord } from 'react-dnd';
 
-export const BurgerConstructorElement = ({ ingredient, index }) => {
-    const refCartItem = useRef(null);
+
+
+type DragItem = ingredientType & {
+    cartIndex: number;
+}
+
+interface CollectedProps {
+    isDrag: boolean;
+    opacity: 0 | 1;
+}
+
+export const BurgerConstructorElement = ({ ingredient, index }: {
+    ingredient: ingredientType;
+    index: number;
+}) => {
+    const refCartItem = useRef<HTMLDivElement>(null);
     const dispatch = useDispatch();
 
-    const [{ opacity }, drag] = useDrag({
+    const [{ opacity }, drag] = useDrag<DragItem, undefined, CollectedProps>({
         type: 'cart-item',
         item: { 
             ...ingredient,
@@ -26,7 +40,7 @@ export const BurgerConstructorElement = ({ ingredient, index }) => {
         })
     })
 
-    const [, drop] = useDrop({
+    const [, drop] = useDrop<DragItem>({
       accept: 'cart-item',
       collect: monitor => ({
         isCartItemHover: monitor.isOver()
@@ -36,7 +50,7 @@ export const BurgerConstructorElement = ({ ingredient, index }) => {
             return
         }
 
-        const dragIndex = item.cartIndex;
+        const dragIndex: number = item.cartIndex;
         const hoverIndex = index;
 
         if (dragIndex === hoverIndex) {
@@ -47,9 +61,9 @@ export const BurgerConstructorElement = ({ ingredient, index }) => {
         
         const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             
-        const clientOffset = monitor.getClientOffset()
+        const clientOffset = monitor.getClientOffset();
         
-        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+        const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
         
         if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
             return
@@ -59,6 +73,7 @@ export const BurgerConstructorElement = ({ ingredient, index }) => {
             return
         }
 
+        // @ts-ignore
         dispatch( cartSortList(dragIndex, hoverIndex, item) );
 
         item.cartIndex = hoverIndex;
@@ -68,7 +83,8 @@ export const BurgerConstructorElement = ({ ingredient, index }) => {
 
     drag(drop(refCartItem));
 
-    function removeConstructorElement(index) {
+    function removeConstructorElement(index: number): void {
+        // @ts-ignore
         dispatch(cartRemoveItem(index))
     }
 

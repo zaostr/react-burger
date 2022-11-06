@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, SyntheticEvent } from 'react'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import formStyles from './reset-password-form.module.css'
@@ -11,16 +11,16 @@ export const ResetPasswordForm = () => {
         success: false,
         message: ''
     });
-    const passwordInputRef = useRef(null);
-    const [shouldRedirect, setRedirect] = useState(false);
-    const [passwordVisibility, setPasswordVisibility] = useState(false);
-    const {form, handleChange} = useForm({
+    const passwordInputRef = useRef<HTMLInputElement | null>(null);
+    const [shouldRedirect, setRedirect] = useState<boolean>(false);
+    const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
+    const {form, handleChange} = useForm<{password: string; token: string;}>({
         password: '',
         token: ''
     })
 
     const changePassword = useCallback(
-        e => {
+        (e: SyntheticEvent) => {
           e.preventDefault();
           setResetRequestState({
             success: false,
@@ -61,8 +61,8 @@ export const ResetPasswordForm = () => {
                     size='default'
                     ref={passwordInputRef}
                     onIconClick={()=>{
-                        passwordInputRef.current.focus();
-                        setPasswordVisibility(!passwordVisibility)
+                        passwordInputRef.current?.focus();
+                        setPasswordVisibility(!passwordVisibility);
                     }}
                     icon={passwordVisibility ? 'HideIcon' : 'ShowIcon'}
                 />
@@ -80,7 +80,7 @@ export const ResetPasswordForm = () => {
                 />
             </div>
             <div>
-                <Button>Сохранить</Button>
+                <Button htmlType='submit'>Сохранить</Button>
             </div>
             {
                 (resetRequestState.message !== '') && (

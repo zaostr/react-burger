@@ -5,7 +5,7 @@ import { RegisterPage } from './register';
 import { ForgotPasswordPage } from './forgot-password';
 import { ResetPasswordPage } from './reset-password';
 import { IngredientDetailsPage } from './ingredient-details';
-import { NotFound404 } from './not-found.js';
+import { NotFound404 } from './not-found';
 
 export {
     HomePage,

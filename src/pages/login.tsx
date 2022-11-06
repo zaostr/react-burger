@@ -7,10 +7,14 @@ import loginStyles from './css/login.module.css'
 import { useSelector } from 'react-redux'
 
 export const LoginPage = () => {
+    // @ts-ignore
     const {isAuthorized} = useSelector(store => store.auth);
     const { getUser } = useAuth();
     const [shouldRedirect, setRedirect] = useState(isAuthorized);
-    const {state} = useLocation();
+    const {state} = useLocation<Location & {
+        from?: string;
+        action?: string;
+    }>();
 
     const init = async () => {
         await getUser();

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, SyntheticEvent } from 'react'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import formStyles from './login-form.module.css'
@@ -8,16 +8,16 @@ import { useForm } from '../../../hooks/useForm'
 export const LoginForm = () => {
     const {signIn} = useAuth();
     const [passwordVisibility, setPasswordVisibility] = useState(false);
-    const [loginError, setLoginError] = useState(false);
-    const emailInputRef = useRef(null);
-    const passwordInputRef = useRef(null);
-    const {form, handleChange} = useForm({
+    const [loginError, setLoginError] = useState<boolean | string>(false);
+    const emailInputRef = useRef<HTMLInputElement | null>(null);
+    const passwordInputRef = useRef<HTMLInputElement | null>(null);
+    const {form, handleChange} = useForm<{email: string; password: string;}>({
         email: '',
         password: ''
     })
 
     const login = useCallback(
-        async e => {
+        async (e: SyntheticEvent) => {
           e.preventDefault();
           const loginResult = await signIn(form);
           setLoginError(loginResult);
@@ -54,14 +54,14 @@ export const LoginForm = () => {
                     errorText='Error!'
                     size='default'
                     onIconClick={()=>{
-                        passwordInputRef.current.focus();
+                        passwordInputRef.current?.focus();
                         setPasswordVisibility(!passwordVisibility)
                     }}
                     icon={passwordVisibility ? 'HideIcon' : 'ShowIcon'}
                 />
             </div>
             <div>
-                <Button>Войти</Button>
+                <Button htmlType="submit">Войти</Button>
             </div>
             {
                 (loginError) && (

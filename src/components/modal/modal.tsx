@@ -2,13 +2,12 @@ import { useEffect } from 'react'
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { modalsElement, ESC_KEYCODE } from '../../utils/constants'
-import { modalType } from '../../utils/types'
+import { modalHookType } from '../../utils/types'
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
 import ModalStyles from './modal.module.css'
 
-// !! TODO
-export const Modal = (props: any) => {
+export const Modal = (props: modalHookType) => {
 
     const handleCloseModalByEsc = (e: KeyboardEvent) => {
         if ( e.keyCode === ESC_KEYCODE ) props.close();
@@ -38,7 +37,7 @@ export const Modal = (props: any) => {
             </div>
         </div>
       ),
-      modalsElement
+      (modalsElement as Element | DocumentFragment)
     )
 }
 /*

@@ -31,6 +31,7 @@ export const useAuth = () => {
                     });
                     return user;
                 } else {
+                    // @ts-ignore
                     dispatch(logoutUser());
                     return false;
                 }
@@ -40,15 +41,19 @@ export const useAuth = () => {
                     type: AUTH_REQUEST,
                     payload: false
                 })
+                // @ts-ignore
                 dispatch(logoutUser());
             });
     }
 
-    const signIn = (form) => dispatch(authorizeUser(form));
+    // @ts-ignore
+    const signIn = (form): boolean | string => dispatch(authorizeUser(form));
 
-    const signOut = () => dispatch(logoutUser());
-    
-    const register = (form) => dispatch(registerUser(form));
+    // @ts-ignore
+    const signOut = (): boolean | string => dispatch(logoutUser());
+
+    // @ts-ignore
+    const register = (form): true | string => dispatch(registerUser(form));
 
     return {
         getUser,

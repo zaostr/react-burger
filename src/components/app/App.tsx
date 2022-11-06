@@ -17,14 +17,16 @@ import {
 } from '../../pages';
 import { useDispatch } from 'react-redux';
 import { IngredientDetailsPopup } from '../ingredient-details-popup/ingredient-details-popup';
+import { Location, LocationState } from 'history';
+
+
 
 
 function App() {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<Location & {background?: Location | undefined;}>();
 
-  // @ts-ignore
-  const background = location.state && location.state.background;
+  const background = location.state && location.state?.background;
 
   useEffect(() => {
     // @ts-ignore
@@ -53,9 +55,6 @@ function App() {
           <Route path="/reset-password" exact>
             <ResetPasswordPage />
           </Route>
-          {/* <Route path={["/", "/ingredients/:id"]} exact>
-            <IngredientDetailsPage />
-          </Route> */}
           <Route path="/ingredients/:id">
             <IngredientDetailsPage />
           </Route>

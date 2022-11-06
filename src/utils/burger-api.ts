@@ -1,7 +1,9 @@
 import { baseUrl } from "./constants";
 import { getCookie, setCookie } from './data';
+import { ingredientType } from "./types";
 
-export const checkReponse = (res) => {
+
+export const checkReponse = (res: Response) => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
@@ -9,7 +11,9 @@ export function getIngredientsRequest() {
     return fetch(`${baseUrl}/ingredients`)
             .then(checkReponse)
 }
-export async function makeOrder(orderState) {
+export async function makeOrder(orderState: {
+    list: ingredientType[]
+}) {
     const requestBody = orderState.list.map(ingredient => ingredient._id);
     return await fetch(
         `${baseUrl}/orders`,
@@ -25,7 +29,7 @@ export async function makeOrder(orderState) {
 }
 
 
-export const refreshAccessToken = async (refreshToken) => {
+export const refreshAccessToken = async (refreshToken: string) => {
     return await fetch(
         `${baseUrl}/auth/token`,
         {
@@ -79,7 +83,10 @@ export const getUserRequest = async () => {
     )
     .then(checkReponse)
 }
-export const loginRequest = async form => {
+export const loginRequest = async (form: {
+    email: string;
+    password: string;
+}) => {
     return await fetch(
         `${baseUrl}/auth/login`,
         {
@@ -92,7 +99,11 @@ export const loginRequest = async form => {
     )
     .then(checkReponse)
 }
-export const registerRequest = async form => {
+export const registerRequest = async (form: {
+    name: string;
+    email: string;
+    password: string;
+}) => {
     return await fetch(
         `${baseUrl}/auth/register`,
         {
@@ -104,7 +115,11 @@ export const registerRequest = async form => {
         }
     ).then(checkReponse)
 }
-export const editUserDataRequest = async form => {
+export const editUserDataRequest = async (form: {
+    name: string;
+    email: string;
+    password: string;
+}) => {
     const token = await getAccessToken();
     if (!token) {
         return false;
@@ -122,7 +137,9 @@ export const editUserDataRequest = async form => {
     ).then(checkReponse)
 }
 
-export const resetPasswordRequest = async form => {
+export const resetPasswordRequest = async (form: {
+    email: string;
+}) => {
     return await fetch(
         `${baseUrl}/password-reset`,
         {
@@ -134,7 +151,10 @@ export const resetPasswordRequest = async form => {
         }
     ).then(checkReponse)
 }
-export const changePasswordRequest = async form => {
+export const changePasswordRequest = async (form: {
+    token: string;
+    password: string;
+}) => {
     return await fetch(
         `${baseUrl}/password-reset/reset`,
         {

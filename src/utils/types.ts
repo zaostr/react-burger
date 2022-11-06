@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import React from 'react';
 
 /*export const ingredientType = PropTypes.shape({
     _id: PropTypes.string,
@@ -43,4 +44,16 @@ export type ingredientType = {
     image_large: string;
     __v: number;
     uuid?: string;
+}
+
+export type modalHookType = {
+    open: ()=>void;
+    close: ()=>void;
+    modalProps: {
+        isOpen: boolean;
+        disableCloseButton: boolean;
+        disableCloseOverlay: boolean;
+        disableOverlay: boolean;
+    }
+    children?: React.ReactNode;
 }

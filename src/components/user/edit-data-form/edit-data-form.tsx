@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, SyntheticEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -7,6 +7,7 @@ import { editUserDataRequest } from '../../../utils/burger-api'
 import { AUTH_SIGN_IN } from '../../../services/actions/auth'
 
 export const EditDataForm = () => {
+    // @ts-ignore
     const user = useSelector(store => store.auth.user);
     const dispatch = useDispatch();
     const [editFormState, setEditFormState] = useState({
@@ -19,12 +20,12 @@ export const EditDataForm = () => {
         email: true,
         password: true
     });
-    const [editResult, setEditResult] = useState(false);
-    const nameInputRef = useRef(null);
-    const emailInputRef = useRef(null);
-    const passwordInputRef = useRef(null);
+    const [editResult, setEditResult] = useState<boolean | string>(false);
+    const nameInputRef = useRef<HTMLInputElement | null>(null);
+    const emailInputRef = useRef<HTMLInputElement | null>(null);
+    const passwordInputRef = useRef<HTMLInputElement | null>(null);
 
-    const resetEditedValues = (e) => {
+    const resetEditedValues = (e: SyntheticEvent) => {
         e.preventDefault();
         setEditFormState({
             name: user.name,
@@ -33,7 +34,7 @@ export const EditDataForm = () => {
         })
     }
     
-    const editUserData = async e => {
+    const editUserData = async (e: SyntheticEvent) => {
         e.preventDefault();
         setEditResult(false);
         editUserDataRequest(editFormState)
@@ -71,14 +72,14 @@ export const EditDataForm = () => {
                 error={false}
                 errorText='Error!'
                 size='default'
-                icon={editInputState.name ? 'EditIcon' : false}
+                icon={editInputState.name ? 'EditIcon' : undefined}
                 onIconClick={(e) => {
                     setEditInputState({
                         ...editInputState,
                         name: !editInputState.name
                     })
                     setTimeout(() => {
-                        nameInputRef.current.focus();
+                        nameInputRef.current?.focus();
                     },50);
                 }}
                 disabled={editInputState.name}
@@ -102,14 +103,14 @@ export const EditDataForm = () => {
                 error={false}
                 errorText='Error!'
                 size='default'
-                icon={editInputState.email ? 'EditIcon' : false}
+                icon={editInputState.email ? 'EditIcon' : undefined}
                 onIconClick={()=>{
                     setEditInputState({
                         ...editInputState,
                         email: !editInputState.email
                     })
                     setTimeout(() => {
-                        emailInputRef.current.focus();
+                        emailInputRef.current?.focus();
                     },50);
                 }}
                 disabled={editInputState.email}
@@ -133,14 +134,14 @@ export const EditDataForm = () => {
                 error={false}
                 errorText='Error!'
                 size='default'
-                icon={editInputState.password ? 'EditIcon' : false}
+                icon={editInputState.password ? 'EditIcon' : undefined}
                 onIconClick={()=>{
                     setEditInputState({
                         ...editInputState,
                         password: !editInputState.password
                     })
                     setTimeout(() => {
-                        passwordInputRef.current.focus();
+                        passwordInputRef.current?.focus();
                     },50);
                 }}
                 disabled={editInputState.password}
@@ -154,8 +155,8 @@ export const EditDataForm = () => {
          editFormState.email !== user.email ||
          editFormState.password !== ''
          ? (<div>
-            <Button type="secondary" onClick={resetEditedValues}>Отмена</Button>
-            <Button>Сохранить</Button>
+            <Button htmlType="reset" type="secondary" onClick={resetEditedValues}>Отмена</Button>
+            <Button htmlType="submit">Сохранить</Button>
          </div>)
          : (<></>)
         )}

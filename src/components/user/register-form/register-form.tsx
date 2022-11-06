@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, SyntheticEvent } from 'react'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useAuth } from '../../../hooks/useAuth'
 
@@ -8,22 +8,24 @@ import { useForm } from '../../../hooks/useForm'
 
 export const RegisterForm = () => {
     const { register } = useAuth();
-    const [passwordVisibility, setPasswordVisibility] = useState(false);
-    const nameInputRef = useRef(null);
-    const emailInputRef = useRef(null);
-    const passwordInputRef = useRef(null);
-    const {form, handleChange} = useForm({
+    const [passwordVisibility, setPasswordVisibility] = useState<Boolean>(false);
+    const nameInputRef = useRef<HTMLInputElement | null>(null);
+    const emailInputRef = useRef<HTMLInputElement | null>(null);
+    const passwordInputRef = useRef<HTMLInputElement | null>(null);
+    const {form, handleChange} = useForm<{name: string; email: string; password: string;}>({
         name: '',
         email: '',
         password: ''
     });
-    const [registrationError, setRegistrationError] = useState(false);
+    const [registrationError, setRegistrationError] = useState<string>('');
 
-    const userRegister = async e => {
+    const userRegister = async (e: SyntheticEvent) => {
         e.preventDefault();
-        setRegistrationError(false);
-        const registerResult = await register(form);
-        setRegistrationError(registerResult);
+        setRegistrationError('');
+        const registerResult: true | string = await register(form);
+        if (registerResult !== true) {
+            setRegistrationError(registerResult);
+        }
     };
     
     /*if (endRegistration) {
@@ -32,7 +34,7 @@ export const RegisterForm = () => {
 
   return (
     <div className={`${formStyles.wrapper}`}>
-        <form className='RegisterForm'>
+        <form className='RegisterForm' onSubmit={userRegister}>
             <div className='mb-6'>
                 <Input
                     type='text'
@@ -55,7 +57,7 @@ export const RegisterForm = () => {
                     ref={emailInputRef}
                     name='email'
                     error={registrationError ? true : false }
-                    errorText={registrationError ? registrationError : 'Error!'}
+                    errorText={!registrationError ? registrationError : 'Error!'}
                     size='default'
                 />
             </div>
@@ -71,14 +73,14 @@ export const RegisterForm = () => {
                     errorText='Error!'
                     size='default'
                     onIconClick={()=>{
-                        passwordInputRef.current.focus();
+                        passwordInputRef.current?.focus();
                         setPasswordVisibility(!passwordVisibility)
                     }}
                     icon={passwordVisibility ? 'HideIcon' : 'ShowIcon'}
                 />
             </div>
             <div>
-                <Button onClick={userRegister}>Зарегистрироваться</Button>
+                <Button htmlType='submit'>Зарегистрироваться</Button>
             </div>
             {
                 (registrationError) && (
