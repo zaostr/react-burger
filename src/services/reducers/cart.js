@@ -82,7 +82,7 @@ export const cartReducer = (state = cartState, action) => {
         case CART_ORDER_REQUEST:
             return {
                 ...state,
-                orderRequest: true,
+                orderRequest: action.payload,
                 orderSuccess: false,
                 orderFail: false
             }
