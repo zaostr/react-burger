@@ -13,7 +13,8 @@ import {
   ForgotPasswordPage,
   LoginPage, NotFound404, ProfilePage, RegisterPage, ResetPasswordPage,
   IngredientDetailsPage,
-  HomePage
+  HomePage,
+  FeedPage
 } from '../../pages';
 import { useDispatch } from 'react-redux';
 import { IngredientDetailsPopup } from '../ingredient-details-popup/ingredient-details-popup';
@@ -56,6 +57,12 @@ function App() {
             <ResetPasswordPage />
           </Route>
           <Route path="/ingredients/:id">
+            <IngredientDetailsPage />
+          </Route>
+          <Route path="/feed">
+            <FeedPage />
+          </Route>
+          <Route path="/feed/:id">
             <IngredientDetailsPage />
           </Route>
           <Route path="*" exact>
