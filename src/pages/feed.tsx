@@ -1,5 +1,7 @@
 import React from 'react'
 import { OrdersFeed } from '../components/orders-feed/orders-feed';
+import { OrdersInWork } from '../components/orders-in-work/orders-in-work';
+import { OrdersReady } from '../components/orders-ready/orders-ready';
 
 import styles from './css/feed.module.css';
 
@@ -12,9 +14,12 @@ export const FeedPage = () => {
         </div>
         <div className='pt-25'>
           <div className={`${styles.desk} mb-15`}>
-            {/* <OrdersReady /> */}
-
-            {/* <OrdersInWork /> */}
+            <div>
+              <OrdersReady />
+            </div>
+            <div>
+              <OrdersInWork />
+            </div>
           </div>
 
           <div className='mb-15'>

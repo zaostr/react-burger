@@ -47,3 +47,18 @@
 .ingredientCircle:not(:last-child) {
     margin-left: -14px;
 }
+
+.ingredientCircleBackground {
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ingredientCircleOverlay > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5)!important;
+}

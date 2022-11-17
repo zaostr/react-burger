@@ -7,3 +7,8 @@
     height: calc(100vh - 88px);
     padding-bottom: 60px;
 }
+
+.desk {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
