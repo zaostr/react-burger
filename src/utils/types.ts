@@ -1,3 +1,4 @@
+import { type } from 'os';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -56,4 +57,41 @@ export type modalHookType = {
         disableOverlay: boolean;
     }
     children?: React.ReactNode;
+}
+
+export type TLoginForm = {
+    email: string;
+    password: string;
+    role?: number;
+}
+
+export type TRegisterForm = {
+    name: string;
+    email: string;
+    password: string;
+}
+export type TEditForm = TRegisterForm;
+
+/*export type TOrder = {
+    name: string;
+    order: {
+        number?: number;
+    };
+    success: boolean;
+}*/
+export type TOrder = {
+    name: string;
+    ingredients: Array<string>;
+    success: boolean;
+    number: number;
+    status: string;
+    _id: string;
+    updatedAt: string;
+    createdAt: string;
+}
+
+export type TWsFeed = {
+    orders: Array<TOrder>;
+    total: number;
+    totalToday: number;
 }

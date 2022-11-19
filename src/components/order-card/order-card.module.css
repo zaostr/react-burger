@@ -50,7 +50,7 @@
 
 .ingredientCircleBackground {
     background-position: center;
-    background-size: contain;
+    background-size: 175%;
     background-repeat: no-repeat;
 }
 
@@ -60,5 +60,11 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, .5)!important;
+    background-color: #1c1c2199!important;
+}
+
+.status {
+    display: block;
+    margin-top: 6px;
+    font-size: 16px;
 }

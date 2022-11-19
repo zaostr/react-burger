@@ -1,18 +1,24 @@
 import {
     ERROR_INSERT,
     ERROR_REMOVE,
-    ERROR_STATE
+    ERROR_STATE,
+    TErrorActions
 } from '../actions/errorHandler'
 
 
-
-const errorHandlerState = {
-    message: '',
-    code: 0,
-    status: 0
+export type TErrorHandlerState = {
+    message: string;
+    code: number;
+    status: boolean;
 }
 
-export const errorHandlerReducer = (state = errorHandlerState, action) => {
+const errorHandlerState: TErrorHandlerState = {
+    message: '',
+    code: 0,
+    status: false
+}
+
+export const errorHandlerReducer = (state = errorHandlerState, action: TErrorActions) => {
     switch(action.type) {
         case ERROR_INSERT:
             return {
@@ -26,7 +32,8 @@ export const errorHandlerReducer = (state = errorHandlerState, action) => {
             return {
                 ...state,
                 message: '',
-                code: 0
+                code: 0,
+                status: false
             }
 
         case ERROR_STATE:

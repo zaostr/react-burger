@@ -1,39 +1,20 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../services/types';
+import { Loader } from '../loader/loader';
 import { OrderCard } from '../order-card/order-card';
 
-const result = {
-    "success": true,
-    "orders": [
-      {
-        "ingredients": [
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-          "60d3b41abdacab0026a733c9",
-        ],
-        "_id": "",
-        "status": "done",
-        "number": 0,
-        "createdAt": "2021-06-23T14:43:22.587Z",
-        "updatedAt": "2021-06-23T14:43:22.603Z"
-      }
-    ],
-    "total": 1,
-    "totalToday": 1
-  };
+import styles from './orders-feed.module.css';
 
 export const OrdersFeed = () => {
+  const list = useSelector((store:RootState) => store.feed.list);
+  
+  if (list.length < 1) {
+    //return <Loader />;
+  }
   return (
-    <div>
-        { result.orders.map((order,key) => <OrderCard key={key} info={order} />) }
+    <div className={`${styles.list}`}>
+        { list.map((order,key) => <OrderCard key={key} info={order} showStatus={false} />) }
     </div>
   )
 }

@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { OrdersFeed } from '../components/orders-feed/orders-feed';
 import { OrdersInWork } from '../components/orders-in-work/orders-in-work';
 import { OrdersReady } from '../components/orders-ready/orders-ready';
 
+import {
+  wsConnectionClosed,
+  WS_CONNECTION_START,
+} from '../services/actions/ws';
+
 import styles from './css/feed.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../services/types';
 
 export const FeedPage = () => {
+  const dispatch = useDispatch();
+  const {total, totalDay, wsConnected} = useSelector((store: RootState) => {console.log(store); return store.feed});
+  
+  useEffect(() => {
+    dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all'})
+    
+  }, [wsConnected])
+  
   return (
       <main className={`${styles.main} pl-5 pr-5`}>
         <div>
@@ -23,13 +38,13 @@ export const FeedPage = () => {
           </div>
 
           <div className='mb-15'>
-            <p>Выполнено за все время:</p>
-            <p></p>
+            <p className={`name text text_type_main-medium`}>Выполнено за все время:</p>
+            <p className={`text ${styles.shadows} text_type_digits-large`}>{ total.toLocaleString('ru-ru') }</p>
           </div>
 
           <div>
-            <p>Выполнено за сегодня:</p>
-            <p></p>
+            <p className={`name text text_type_main-medium`}>Выполнено за сегодня:</p>
+            <p className={`text ${styles.shadows} text_type_digits-large`}>{ totalDay.toLocaleString('ru-ru') }</p>
           </div>
         </div>
       </main>

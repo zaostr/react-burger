@@ -1,3 +1,4 @@
+import { ingredientType, TOrder } from '../../utils/types'
 import {
     CART_INSERT_ITEM,
     CART_REMOVE_ITEM,
@@ -7,12 +8,21 @@ import {
     CART_ORDER_REQUEST,
     CART_ORDER_SUCCESS,
     CART_ORDER_FAIL,
-    CART_SAVE_ORDER
+    CART_SAVE_ORDER,
+    TCartActions
 } from '../actions/cart'
 
 
+export type TCartState = {
+    list: Array<ingredientType>;
+    total: number;
+    orderRequest: boolean;
+    orderSuccess: boolean;
+    orderFail: boolean;
+    orders: Array<TOrder>
+}
 
-const cartState = {
+const cartState: TCartState = {
     list: [],
     total: 0,
     orderRequest: false,
@@ -21,7 +31,8 @@ const cartState = {
     orders: []
 }
 
-export const cartReducer = (state = cartState, action) => {
+export const cartReducer = (state = cartState, action: TCartActions) => {
+    let newList = [];
     switch(action.type) {
         case CART_INSERT_ITEM:
             if ( action.payload.type === 'bun' ) {
@@ -44,14 +55,16 @@ export const cartReducer = (state = cartState, action) => {
             }
 
         case CART_REMOVE_ITEM:
-            if ( action.payload.type !== 'bun' ) {
-                const newList = [...state.list].filter((x,key) => key !== action.payload.index);
+            const thisIngredient = [...state.list].filter((x,key) => key === action.payload.index)[0];
+            newList = [...state.list].filter((x,key) => key !== action.payload.index);
+            if (thisIngredient.type !== 'bun') {
                 return {
                     ...state,
                     list: newList
                 }
+            } else {
+                return state
             }
-            break;
 
         case CART_CLEAR:
             return {
@@ -72,7 +85,7 @@ export const cartReducer = (state = cartState, action) => {
             }
 
         case CART_SORT_LIST:
-            const newList = [...state.list].filter((x,key) => key !== action.payload.oldIndex);
+            newList = [...state.list].filter((x,key) => key !== action.payload.oldIndex);
             newList.splice(action.payload.newIndex, 0, {...action.payload.item} );
             return {
                 ...state,

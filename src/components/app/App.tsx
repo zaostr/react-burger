@@ -18,7 +18,7 @@ import {
 } from '../../pages';
 import { useDispatch } from 'react-redux';
 import { IngredientDetailsPopup } from '../ingredient-details-popup/ingredient-details-popup';
-import { Location, LocationState } from 'history';
+import { Location } from 'history';
 
 
 

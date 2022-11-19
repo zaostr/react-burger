@@ -12,7 +12,12 @@ export const LoginPage = () => {
     const { getUser } = useAuth();
     const [shouldRedirect, setRedirect] = useState(isAuthorized);
     const {state} = useLocation<Location & {
-        from?: string;
+        from?: {
+            pathname: string;
+            search: string;
+            hash: string;
+            key: string;
+        };
         action?: string;
     }>();
 
@@ -31,9 +36,10 @@ export const LoginPage = () => {
     }, [isAuthorized])
 
     if ( shouldRedirect ) {
+        console.log(state?.from);
         return (
             <Redirect to={{
-                pathname: state?.from || '/',
+                pathname: state?.from?.pathname || '/',
                 state: {
                     from: '/login',
                     action: state?.action === 'loginForOrder' ? 'makeOrder' : false
