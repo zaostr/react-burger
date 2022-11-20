@@ -44,24 +44,24 @@ function App() {
           <Route path="/" exact>
             <HomePage />
           </Route>
-          <Route path="/login" exact>
+          <ProtectedRoute onlyAuth={false} path="/login" exact>
             <LoginPage />
-          </Route>
-          <Route path="/register" exact>
+          </ProtectedRoute>
+          <ProtectedRoute onlyAuth={false} path="/register" exact>
             <RegisterPage />
-          </Route>
-          <ProtectedRoute role={0} path='/profile/orders/:id' exact>
+          </ProtectedRoute>
+          <ProtectedRoute onlyAuth={true} path='/profile/orders/:id' exact>
             <OrderDetailsPage />
           </ProtectedRoute>
-          <ProtectedRoute role={0} path="/profile*" exact>
+          <ProtectedRoute onlyAuth={true} path="/profile*" exact>
             <ProfilePage />
           </ProtectedRoute>
-          <Route path="/forgot-password" exact>
+          <ProtectedRoute onlyAuth={false} path="/forgot-password" exact>
             <ForgotPasswordPage />
-          </Route>
-          <Route path="/reset-password" exact>
+          </ProtectedRoute>
+          <ProtectedRoute onlyAuth={false} path="/reset-password" exact>
             <ResetPasswordPage />
-          </Route>
+          </ProtectedRoute>
           <Route path="/ingredients/:id" exact>
             <IngredientDetailsPage />
           </Route>

@@ -4,7 +4,6 @@ import { useAuth } from '../../../hooks/useAuth'
 
 import formStyles from './register-form.module.css'
 import { useForm } from '../../../hooks/useForm'
-//import { Redirect } from 'react-router-dom'
 
 export const RegisterForm = () => {
     const { register } = useAuth();
@@ -28,9 +27,6 @@ export const RegisterForm = () => {
         }
     };
     
-    /*if (endRegistration) {
-        <Redirect to={{pathname:'/',state:{isRegistered: true}}} />
-    }*/
 
   return (
     <div className={`${formStyles.wrapper}`}>

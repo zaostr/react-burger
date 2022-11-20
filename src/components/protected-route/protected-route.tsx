@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Redirect, Route } from 'react-router-dom'
+import { Redirect, Route, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth'
 import { getCookie } from '../../utils/data';
-import { NotFound404 } from '../../pages';
 
-export const ProtectedRoute = ({children, role, ...rest} : {
+export const ProtectedRoute = ({children, onlyAuth, ...rest} : {
     children: React.ReactNode;
-    role: number;
     path: string;
+    onlyAuth: boolean;
     exact: boolean;
 }) => {
     // @ts-ignore
@@ -18,6 +17,15 @@ export const ProtectedRoute = ({children, role, ...rest} : {
         access: getCookie('authToken'),
         refresh: getCookie('refreshToken')
     })
+    const {state} = useLocation<Location & {
+        from?: {
+            pathname: string;
+            search: string;
+            hash: string;
+            key: string;
+        };
+        action?: string;
+    }>();
 
     const init = async () => {
         await getUser();
@@ -29,13 +37,13 @@ export const ProtectedRoute = ({children, role, ...rest} : {
     }, []);
     /* eslint-enable */
 
-
     useEffect(() => {
         setCookieState({
             access: getCookie('authToken'),
             refresh: getCookie('refreshToken')
         })
     }, [user]);
+
     
     if ( !isAuthorized && cookieState.access !== undefined && cookieState.refresh !== undefined ) {
         return null
@@ -46,14 +54,21 @@ export const ProtectedRoute = ({children, role, ...rest} : {
         <Route 
             {...rest}
             render={({location}) => 
-                ( isAuthorized ) 
-                ? (user.role >= role ? (children) : <NotFound404 />)
-                : (<Redirect
-                    to={{
-                        pathname: '/login',
-                        state: { from: location }
-                    }}
-                  />)
+            ( isAuthorized )
+            ? ( (onlyAuth) ? (children) : (
+                <Redirect
+                to={{
+                    pathname: state?.from?.pathname || '/',
+                    state: { from: location }
+                }}
+              />) )
+            : ( (onlyAuth) ? (
+                <Redirect
+                to={{
+                    pathname: '/login',
+                    state: { from: location }
+                }}
+              />) : (children) )
             }
         />
     )

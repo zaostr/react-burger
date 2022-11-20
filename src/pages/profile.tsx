@@ -2,13 +2,10 @@ import styles from './css/profile.module.css'
 import { EditDataForm } from '../components/user/edit-data-form/edit-data-form'
 import { NavLink, Route, Switch, useLocation } from 'react-router-dom'
 import { NotFound404 } from './not-found';
-import BurgerConstructorFooter from '../components/burger-constructor/burger-constructor-footer/burger-constructor-footer';
 import { UserOrdersFeed } from '../components/user-orders-feed/user-orders-feed';
 import { OrderDetailsPopup } from '../components/order-details-popup/order-details-popup';
-import { OrderDetailsPage } from './order-details-page';
 
 export const ProfilePage = () => {
-    //const match = useRouteMatch();
   const location = useLocation<Location & {background?: Location | undefined;}>();
 
   const background = location.state && location.state?.background;
@@ -24,7 +21,7 @@ export const ProfilePage = () => {
                     <NavLink exact to={{pathname: '/profile/orders'}} activeClassName={styles.active} className='text text_type_main-medium'>История заказов</NavLink>
                 </p>
                 <p>
-                    <a href='#' className='text text_type_main-medium' onClick={()=>console.log(1)}>Выход</a>
+                    <a href='#' className='text text_type_main-medium'>Выход</a>
                 </p>
             </div>
             <div className={`${styles.textDark} text text_type_main-default text_color_inactive mt-20`}>

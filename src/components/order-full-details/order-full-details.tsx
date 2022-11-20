@@ -16,12 +16,14 @@ export const OrderFullDetails = ({order}: {order: TOrder | null}) => {
   }, [list])
 
   useEffect(() => {
-    console.log(orderIngredients);
-    if (orderIngredients) { 
-        setOrderAmount( getOrderAmount(orderIngredients) );
-    }
-}, [orderIngredients])
+      if (orderIngredients) { 
+          setOrderAmount( getOrderAmount(orderIngredients) );
+      }
+  }, [orderIngredients])
+
+
 if (order === null) return <></>;
+
   let status = '';
   if (order === undefined ) return null;
   switch (order.status) {

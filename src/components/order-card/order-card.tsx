@@ -13,7 +13,6 @@ export const OrderCard = ({info, showStatus = false, base = '/feed/'}:{info: TOr
     const list: any = useSelector((store:any) => store.ingredients.list);
     const [orderIngredients, setOrderIngredients] = useState<ingredientType[]>([]);
     const [orderAmount, setOrderAmount] = useState<null | number>(null);
-    //console.log(info.status);
     useEffect(() => {
         if (list.length > 0) { 
             setOrderIngredients( getIngredientsFromOrder(list, info.ingredients) );

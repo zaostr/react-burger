@@ -27,7 +27,7 @@ export interface IRequestUser {
 export type TAuthActions = IAuthorizeUser | ILogoutUser | IRequestUser;
 
 export const authorizeUser: AppThunk = (form: TLoginForm) => async (dispatch: AppDispatch) => {
-    await loginRequest(form)
+    return await loginRequest(form)
         .then(data => {
             if ( data.success ) {
                 const authToken = data.accessToken.replace('Bearer ', '');
@@ -43,6 +43,10 @@ export const authorizeUser: AppThunk = (form: TLoginForm) => async (dispatch: Ap
                 return data.message;
             }
         })
+        .catch(err => {
+            logoutUser();
+            return err.message;
+        });
 }
 
 export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
@@ -51,7 +55,7 @@ export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
 
 
 export const registerUser: AppThunk = (form: TRegisterForm) => async (dispatch: AppDispatch) => {
-    await registerRequest(form)
+    return await registerRequest(form)
         .then(data => {
             if ( data.success ) {
                 const authToken = data.accessToken.replace('Bearer ', '');
