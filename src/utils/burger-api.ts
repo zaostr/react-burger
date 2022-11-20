@@ -57,7 +57,7 @@ export const getAccessToken = async () => {
             .then(data => {
                 const authToken = data.accessToken.replace('Bearer ', '');
                 setCookie('authToken', authToken, {path: '/', 'max-age': 1200});
-                setCookie('refreshToken', data.refreshToken, {path: '/', 'max-age': 12000});
+                setCookie('refreshToken', data.refreshToken, {path: '/'});
                 return authToken;
             })
         return token
@@ -284,3 +284,21 @@ export function HumanDatePrecise(timestamp: string) {
 	r += ", "+h+":"+m;
 	return r;
 };
+
+
+
+export const getIngredientsFromOrder = (list: Array<ingredientType> ,ingredients: Array<string>) => {
+    return [...ingredients].map((ingredientID, key) => {
+        return list.filter((ingredient:ingredientType) => ingredientID === ingredient._id)[0];
+    })
+}
+
+export const getOrderAmount = (ingredients: Array<any>) => {
+    return ingredients.reduce((prev:any,next:any) => {
+        if (next.type === 'bun') {
+            return prev + next.price * 2
+        } else {
+             return prev + next.price
+        }
+    },0)
+}

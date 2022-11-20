@@ -1,12 +1,17 @@
 import styles from './css/profile.module.css'
 import { EditDataForm } from '../components/user/edit-data-form/edit-data-form'
-import { NavLink, Route, Switch } from 'react-router-dom'
+import { NavLink, Route, Switch, useLocation } from 'react-router-dom'
 import { NotFound404 } from './not-found';
 import BurgerConstructorFooter from '../components/burger-constructor/burger-constructor-footer/burger-constructor-footer';
 import { UserOrdersFeed } from '../components/user-orders-feed/user-orders-feed';
+import { OrderDetailsPopup } from '../components/order-details-popup/order-details-popup';
+import { OrderDetailsPage } from './order-details-page';
 
 export const ProfilePage = () => {
     //const match = useRouteMatch();
+  const location = useLocation<Location & {background?: Location | undefined;}>();
+
+  const background = location.state && location.state?.background;
 
   return (
     <main className={`${styles.main}`}>
@@ -33,6 +38,9 @@ export const ProfilePage = () => {
                 <Route path={'/logout'} exact component={NotFound404} />
                 <Route path={'*'} exact component={NotFound404} />
             </Switch>
+          {background && (
+            <Route path="/profile/orders/:id" exact component={OrderDetailsPopup}/>
+          )}
         </div>
     </main>
   )

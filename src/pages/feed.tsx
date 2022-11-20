@@ -5,6 +5,7 @@ import { OrdersReady } from '../components/orders-ready/orders-ready';
 
 import {
   wsConnectionClosed,
+  WS_CONNECTION_CLOSED,
   WS_CONNECTION_START,
 } from '../services/actions/ws';
 
@@ -14,11 +15,16 @@ import { RootState } from '../services/types';
 
 export const FeedPage = () => {
   const dispatch = useDispatch();
-  const {total, totalDay, wsConnected} = useSelector((store: RootState) => {console.log(store); return store.feed});
+  const {total, totalDay, wsConnected} = useSelector((store: RootState) => store.feed);
+  
+  useEffect(() => {
+    return () => {
+      dispatch({type: WS_CONNECTION_CLOSED})
+    }
+  }, [])
   
   useEffect(() => {
     dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all'})
-    
   }, [wsConnected])
   
   return (

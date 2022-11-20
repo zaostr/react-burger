@@ -7,14 +7,19 @@ import { OrderCard } from '../order-card/order-card';
 import styles from './orders-feed.module.css';
 
 export const OrdersFeed = () => {
-  const list = useSelector((store:RootState) => store.feed.list);
+  const {list, success, fail} = useSelector((store: RootState) => store.feed);
   
-  if (list.length < 1) {
-    //return <Loader />;
+  if (fail === true) {
+    return (
+      <div className={`mt-30`}>
+          <h3 className='text text_type_main-medium'>При подключении произошла ошибка</h3>
+      </div>
+    )
   }
   return (
     <div className={`${styles.list}`}>
-        { list.map((order,key) => <OrderCard key={key} info={order} showStatus={false} />) }
+        { (list.length < 1) ? <h3 className='text text_type_main-medium'>Здесь пока ничего нет:/</h3> : null }
+        { list.map((order,key) => <OrderCard key={key} info={order} showStatus={false} base={'/feed/'} />) }
     </div>
   )
 }

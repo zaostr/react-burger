@@ -1,52 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Loader } from '../loader/loader';
-import { HumanDatePrecise } from '../../utils/burger-api'
+import { getIngredientsFromOrder, getOrderAmount, HumanDatePrecise } from '../../utils/burger-api'
 
 import styles from './order-card.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { TOrder } from '../../utils/types';
+import { ingredientType, TOrder } from '../../utils/types';
+import { Link, useLocation } from 'react-router-dom';
 
-export const OrderCard = ({info, showStatus = false}:{info: TOrder, showStatus: boolean}) => {
-    //const date = new Date(info.createdAt);
+export const OrderCard = ({info, showStatus = false, base = '/feed/'}:{info: TOrder, showStatus: boolean; base: string;}) => {
+    const location = useLocation();
     const list: any = useSelector((store:any) => store.ingredients.list);
-    const [orderIngredients, setOrderIngredients] = useState<any>([]);
-    const [orderAmount, setOrderAmount] = useState<any>(null);
-    console.log(info.status);
+    const [orderIngredients, setOrderIngredients] = useState<ingredientType[]>([]);
+    const [orderAmount, setOrderAmount] = useState<null | number>(null);
+    //console.log(info.status);
     useEffect(() => {
         if (list.length > 0) { 
-            setOrderIngredients( getIngredientsFromOrder(info.ingredients) );
+            setOrderIngredients( getIngredientsFromOrder(list, info.ingredients) );
         }
     }, [list])
 
     useEffect(() => {
-        console.log(orderIngredients);
         if (orderIngredients) { 
             setOrderAmount( getOrderAmount(orderIngredients) );
         }
     }, [orderIngredients])
 
-    const getIngredientsFromOrder = (ingredients: Array<any>) => {
-        return [...ingredients].map((ingredientID, key) => {
-            return list.filter((ingredient:any) => ingredientID === ingredient._id)[0];
-        })
-    }
 
 
-
-    const getOrderAmount = (ingredients: Array<any>) => {
-        return ingredients.reduce((prev:any,next:any) => {
-            if (next.type === 'bun') {
-                return prev + next.price * 2
-            } else {
-                 return prev + next.price
-            }
-        },0)
-    }
 
     
   return (
-    <div className={`${styles.card} p-6`}>
+    <Link 
+    to={{
+      pathname: `${base}${info._id}`,
+      state: { 
+        background: location,
+        from: location
+      }
+    }}
+    className={`${styles.card} p-6`}>
         <div className={`${styles.top}`}>
             <span className={`id text text_type_digits-default`}>#{info.number}</span>
             <span className={`time text text_type_main-default text_color_inactive`}>{ HumanDatePrecise(info.createdAt) }</span>
@@ -74,6 +67,6 @@ export const OrderCard = ({info, showStatus = false}:{info: TOrder, showStatus: 
                 <CurrencyIcon type={'primary'} />
             </div>
         </div>
-    </div>
+    </Link>
   )
 }

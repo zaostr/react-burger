@@ -12,7 +12,6 @@ export const socketMiddleware = (wsActions) => {
         const { wsInit, wsSendMessage, onOpen, onClose, onError, onFeed } = wsActions;
         //
         if (type === WS_CONNECTION_START) {
-          console.log(token);
           socket = new WebSocket(`${payload}`);
         }
         if (socket) {
@@ -21,6 +20,7 @@ export const socketMiddleware = (wsActions) => {
           };
   
           socket.onerror = event => {
+            console.log(event);
             dispatch({ type: onError, payload: event });
           };
           

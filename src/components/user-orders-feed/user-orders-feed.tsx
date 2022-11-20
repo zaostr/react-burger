@@ -10,10 +10,11 @@ import styles from './user-orders-feed.module.css';
 
 export const UserOrdersFeed = () => {
   const dispatch = useDispatch();
-  const wsConnected = useSelector((store: RootState) => store.feed.wsConnected);
+  const {wsConnected, success, fail} = useSelector((store: RootState) => store.feed);
   const connect = async () => {
     const token = await getAccessToken();
-    dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders?token='+token})
+    dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all'})
+    //dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders?token='+token})
   }
 
   useEffect(() => {
@@ -21,13 +22,18 @@ export const UserOrdersFeed = () => {
   }, [wsConnected])
   const list = useSelector((store:RootState) => store.feed.list);
   
-  if (list.length < 1) {
-    //return <Loader />;
-    return <div>Пусто</div>
+  if (fail === true) {
+    return (
+      <div className={`mt-30`}>
+          <h3 className='text text_type_main-medium'>При подключении произошла ошибка</h3>
+      </div>
+    )
   }
+ 
   return (
     <div className={`${styles.list} mt-30`}>
-        { list.map((order,key) => <OrderCard key={key} info={order} showStatus={true} />) }
+        { (list.length < 1) ? <h3 className='text text_type_main-medium'>Здесь пока ничего нет:/</h3> : null }
+        { list.map((order,key) => <OrderCard key={key} info={order} showStatus={true} base={'/profile/orders/'} />) }
     </div>
   )
 }
