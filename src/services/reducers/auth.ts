@@ -2,26 +2,25 @@ import {
     AUTH_SIGN_IN,
     AUTH_SIGN_OUT,
     AUTH_REQUEST
-    //AUTH_REGISTER,
-    //AUTH_GET_USER,
-    //AUTH_FORGOT_PASSWORD,
-    //AUTH_CHANGE_PASSWORD
 } from '../actions/auth';
+import { TAuthActions } from '../actions/auth';
 
-const authState = {
+export type TAuthState = {
+    isAuthorized: boolean;
+    user: boolean | {
+        name: string;
+        email: string;
+    }
+    request: boolean;
+};
+
+const authState: TAuthState = {
     isAuthorized: false,
     user: false,
     request: false
 }
-/*const authState = {
-    isAuthorized: true,
-    user: {
-        username: 'da',
-        role: 1
-    }
-}*/
 
-export const authReducer = (state = authState, action) => {
+export const authReducer = (state = authState, action: TAuthActions) => {
     switch(action.type) {
         case AUTH_REQUEST:
             return {
@@ -33,7 +32,7 @@ export const authReducer = (state = authState, action) => {
                 ...state,
                 user: {
                     ...action.payload,
-                    role: action.payload.role ? action.payload : 1
+                    role: action.payload?.role ? action.payload.role : 1
                 },
                 isAuthorized: true
             }

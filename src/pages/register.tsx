@@ -1,39 +1,10 @@
-import { useState, useEffect } from 'react'
-import { Link, Redirect, useLocation } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+
+import { Link } from 'react-router-dom'
 import { RegisterForm } from '../components/user/register-form/register-form'
-import { useSelector } from 'react-redux'
 
 import registerStyles from './css/login.module.css'
 
 export const RegisterPage = () => {
-    // @ts-ignore
-    const {isAuthorized} = useSelector(store => store.auth);
-    const { getUser } = useAuth();
-    const [shouldRedirect, setRedirect] = useState(isAuthorized);
-    const {state} = useLocation<Location & {from?: Location | string;}>();
-
-    const init = async () => {
-        await getUser();
-    };
-
-    /* eslint-disable */
-    useEffect(() => {
-        init();
-    }, []);
-    /* eslint-enable */
-
-    useEffect(() => {
-        setRedirect(isAuthorized);
-    }, [isAuthorized])
-
-    if ( shouldRedirect ) {
-        return (
-            <Redirect to={ state?.from || '/' } />
-        )
-    }
-
-
     return (
 		<main className={`${registerStyles.main} pl-5 pr-5`}>
 			<div className={`${registerStyles.wrapper}`}>

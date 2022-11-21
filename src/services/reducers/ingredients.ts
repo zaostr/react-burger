@@ -1,13 +1,23 @@
+import { ingredientType } from '../../utils/types'
 import {
     INGREDIENTS_SET_LIST,
     INGREDIENTS_GET_REQUEST,
     INGREDIENTS_REQUEST_FAILED,
     INGREDIENTS_REQUEST_SUCCESS,
     INGREDIENTS_SET_DETAILED,
-    INGREDIENTS_CLEAR_DETAILED
+    INGREDIENTS_CLEAR_DETAILED,
+    TIngredientActions
 } from '../actions/ingredients'
 
-const ingredientsState = {
+export type TIngredientsState = {
+    list: Array<ingredientType>;
+    ingredientsRequest: boolean;
+    failedRequest: boolean;
+    successRequest: boolean;
+    detailed: false | ingredientType;
+}
+
+const ingredientsState: TIngredientsState = {
     list: [],
     ingredientsRequest: false,
     failedRequest: false,
@@ -15,7 +25,7 @@ const ingredientsState = {
     detailed: false
 }
 
-export const ingredientsReducer = (state = ingredientsState, action) => {
+export const ingredientsReducer = (state = ingredientsState, action: TIngredientActions) => {
     switch(action.type) {
         case INGREDIENTS_GET_REQUEST:
             return {

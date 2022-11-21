@@ -1,48 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Link, Redirect, useLocation } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { LoginForm } from '../components/user/login-form/login-form'
 
 import loginStyles from './css/login.module.css'
-import { useSelector } from 'react-redux'
 
 export const LoginPage = () => {
-    // @ts-ignore
-    const {isAuthorized} = useSelector(store => store.auth);
-    const { getUser } = useAuth();
-    const [shouldRedirect, setRedirect] = useState(isAuthorized);
-    const {state} = useLocation<Location & {
-        from?: string;
-        action?: string;
-    }>();
-
-    const init = async () => {
-        await getUser();
-    };
-
-    /* eslint-disable */
-    useEffect(() => {
-        init();
-    }, []);
-    /* eslint-enable */
-
-    useEffect(() => {
-        setRedirect(isAuthorized);
-    }, [isAuthorized])
-
-    if ( shouldRedirect ) {
-        return (
-            <Redirect to={{
-                pathname: state?.from || '/',
-                state: {
-                    from: '/login',
-                    action: state?.action === 'loginForOrder' ? 'makeOrder' : false
-                } 
-            }} />
-        )
-    }
-
-
 
   return (
     <main className={`${loginStyles.main} pl-5 pr-5`}>
