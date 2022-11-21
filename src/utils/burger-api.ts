@@ -14,6 +14,10 @@ export function getIngredientsRequest() {
 export async function makeOrder(orderState: {
     list: ingredientType[]
 }) {
+    const token = await getAccessToken();
+    if (!token) {
+        return false;
+    }
     const requestBody = orderState.list.map(ingredient => ingredient._id);
     return await fetch(
         `${baseUrl}/orders`,
@@ -21,7 +25,8 @@ export async function makeOrder(orderState: {
             method: 'post',
             headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({ingredients: requestBody})
     })
