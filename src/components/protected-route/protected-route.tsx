@@ -45,7 +45,7 @@ export const ProtectedRoute = ({children, onlyAuth, ...rest} : {
     }, [user]);
 
     
-    if ( !isAuthorized && cookieState.access !== undefined && cookieState.refresh !== undefined ) {
+    if ( !isAuthorized && cookieState.refresh !== undefined ) {
         return null
     }
 

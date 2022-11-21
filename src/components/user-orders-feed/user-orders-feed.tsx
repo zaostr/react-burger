@@ -13,8 +13,8 @@ export const UserOrdersFeed = () => {
   const {wsConnected, success, fail} = useSelector((store: RootState) => store.feed);
   const connect = async () => {
     const token = await getAccessToken();
-    dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all'})
-    //dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders?token='+token})
+    //dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all'})
+    dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders?token='+token})
   }
 
   useEffect(() => {

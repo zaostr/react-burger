@@ -1,8 +1,6 @@
 .list {
     display: grid;
     grid-gap: 16px;
-    min-height: 550px;
-    height: 64vh;
     max-height: 756px;
     overflow-x: hidden;
     overflow-y: auto;
