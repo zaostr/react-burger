@@ -4,13 +4,13 @@ import './index.css';
 import App from './components/app/App';
 //import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux";
-import { compose, applyMiddleware } from "redux";
+/*import { compose, applyMiddleware } from "redux";
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from "redux-thunk";
-import rootReducer from './services/reducers';
+import rootReducer from './services/reducers';*/
 import { BrowserRouter as Router } from 'react-router-dom';
-
-
+import { store as storeF } from './services/store';
+/*
 const composeEnhancers =
 // @ts-ignore
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -23,14 +23,14 @@ const store = configureStore({
   reducer: rootReducer, 
   // @ts-ignore
   enhancer
-});
+});*/
 
 const root = ReactDOM.createRoot(
   // @ts-ignore
   document.getElementById('root')
 );
 root.render(
-    <Provider store={store}>
+    <Provider store={storeF}>
       <Router>
         <App />
       </Router>

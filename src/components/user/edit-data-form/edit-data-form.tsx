@@ -57,7 +57,7 @@ export const EditDataForm = () => {
     }
 
   return (
-    <form onSubmit={editUserData}>
+    <form onSubmit={editUserData} className={`pt-30`}>
         <div className='mb-6'>
             <Input
                 type='text'

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Redirect, useLocation } from 'react-router-dom';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useModalControls } from '../../../hooks/useModalControls';
@@ -28,9 +28,13 @@ const BurgerConstructorFooter = () => {
   const dispatch = useDispatch();
   const [requestErrorText, setRequestErrorText] = useState<boolean | string>(false);
   const [orderId, setOrderId] = useState(0);
+  const [orderProccess, setOrderProccess] = useState(false);
   const {state} = useLocation<{from: {}; action: {}}>();
   const modalControls = useModalControls({
-    closeCallback: () => setOrderId(0)
+    closeCallback: () => {
+      setOrderId(0);
+      dispatch({type: CART_ORDER_REQUEST, payload: false});
+    }
   });
 
   useEffect(() => {
@@ -51,9 +55,9 @@ const BurgerConstructorFooter = () => {
       modalControls.open();
       return false
     }
-    
 
-    dispatch({type: CART_ORDER_REQUEST, payload: true});
+    //dispatch({type: CART_ORDER_REQUEST, payload: true});
+    setOrderProccess(true);
     if (!isAuthorized) {
       return false
     }
@@ -63,6 +67,7 @@ const BurgerConstructorFooter = () => {
     makeOrder(cartState)
     .then(dataJson => {
       setTimeout(() => {
+        setOrderProccess(false);
         dispatch({type: CART_ORDER_SUCCESS});
         dispatch({type: CART_SAVE_ORDER, payload: dataJson.order});
         setOrderId(dataJson.order.number);
@@ -71,13 +76,14 @@ const BurgerConstructorFooter = () => {
       },2000)
     })
     .catch(err => {
+      setOrderProccess(false);
       dispatch({type: CART_ORDER_FAIL});
       setRequestErrorText(err.message)
     });
   }
 
 
-  if (!isAuthorized && cartState.orderRequest) {
+  if (!isAuthorized && orderProccess) {
     return (
       <Redirect to={{pathname: '/login', state: {from: '/', action: 'loginForOrder'}}} />
     )
@@ -94,7 +100,7 @@ const BurgerConstructorFooter = () => {
       </Button>
 
       <Modal {...modalControls}>
-        {(cartState.orderRequest) 
+        {(orderProccess) 
           ? <h2 className='text text_type_main-large pt-4 mb-5'>Ваш заказ формируется..</h2>
           : (
             (cartState.orderSuccess)

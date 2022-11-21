@@ -9,10 +9,10 @@ import IngredientCardStyles from './ingredients-card.module.css'
 import { ingredientType } from '../../../../utils/types';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+import { RootState } from '../../../../services/types';
 
 const IngredientCard = ({info}: {info: ingredientType}) => {
-  // @ts-ignore
-  const cartList = useSelector(store => store.cart.list);
+  const cartList = useSelector((store: RootState) => store.cart.list);
   const location = useLocation();
   const [counterState, setCounterState] = useState(0);
   

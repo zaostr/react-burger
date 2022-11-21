@@ -1,0 +1,9 @@
+.list {
+    display: grid;
+    grid-gap: 16px;
+    max-height: 756px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-bottom: 48px;
+    padding-right: 8px;
+}
