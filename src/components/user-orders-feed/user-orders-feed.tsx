@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { wsConnectionClosed, WS_CONNECTION_START } from '../../services/actions/ws';
+import { wsConnectionClosed, WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../../services/actions/ws';
 import { RootState } from '../../services/types';
 import { getAccessToken } from '../../utils/burger-api';
 import { Loader } from '../loader/loader';
@@ -16,6 +16,11 @@ export const UserOrdersFeed = () => {
     //dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all'})
     dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders?token='+token})
   }
+  useEffect(() => {
+    return () => {
+      dispatch({type: WS_CONNECTION_CLOSED});
+    }
+  }, [])
 
   useEffect(() => {
     connect();
