@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { Loader } from '../loader/loader';
 import { getIngredientsFromOrder, getOrderAmount, HumanDatePrecise } from '../../utils/burger-api'
 
 import styles from './order-card.module.css'
