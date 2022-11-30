@@ -3,8 +3,7 @@ import {
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
-    WS_GET_ORDERS,
-    TWsFeedActions
+    WS_GET_ORDERS
 } from '../actions/ws';
 
 
