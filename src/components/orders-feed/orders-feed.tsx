@@ -7,7 +7,7 @@ import { OrderCard } from '../order-card/order-card';
 import styles from './orders-feed.module.css';
 
 export const OrdersFeed = () => {
-  const {list, success, fail} = useSelector((store: RootState) => store.feed);
+  const {list, fail} = useSelector((store: RootState) => store.feed);
   
   if (fail === true) {
     return (

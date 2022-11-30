@@ -10,7 +10,7 @@ import styles from './user-orders-feed.module.css';
 
 export const UserOrdersFeed = () => {
   const dispatch = useDispatch();
-  const {wsConnected, success, fail} = useSelector((store: RootState) => store.feed);
+  const {wsConnected, fail} = useSelector((store: RootState) => store.feed);
   const connect = async () => {
     const token = await getAccessToken();
     //dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all'})
