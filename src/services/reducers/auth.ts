@@ -10,6 +10,7 @@ export type TAuthState = {
     user: boolean | {
         name: string;
         email: string;
+        role?: number;
     }
     request: boolean;
 };

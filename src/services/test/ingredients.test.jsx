@@ -1,5 +1,12 @@
 import { ingredientsReducer as reducer } from "../reducers/ingredients";
-import { TApplicationActions as types } from '../types'
+import {
+    INGREDIENTS_SET_LIST,
+    INGREDIENTS_GET_REQUEST,
+    INGREDIENTS_REQUEST_FAILED,
+    INGREDIENTS_REQUEST_SUCCESS,
+    INGREDIENTS_SET_DETAILED,
+    INGREDIENTS_CLEAR_DETAILED
+} from '../actions/ingredients'
 
 
 describe('ingredients reducer', () => {
@@ -21,7 +28,7 @@ describe('ingredients reducer', () => {
             successRequest: false,
             detailed: false
         }, {
-            type: types.INGREDIENTS_GET_REQUEST
+            type: INGREDIENTS_GET_REQUEST
         })).toEqual({
             list: [],
             ingredientsRequest: true,
@@ -56,7 +63,7 @@ describe('ingredients reducer', () => {
             successRequest: false,
             detailed: false
         }, {
-            type: types.INGREDIENTS_SET_LIST,
+            type: INGREDIENTS_SET_LIST,
             payload: exampleList
         })).toEqual({
             list: exampleList,
@@ -75,7 +82,7 @@ describe('ingredients reducer', () => {
             successRequest: false,
             detailed: false
         }, {
-            type: types.INGREDIENTS_REQUEST_FAILED
+            type: INGREDIENTS_REQUEST_FAILED
         })).toEqual({
             list: [],
             ingredientsRequest: true,
@@ -93,7 +100,7 @@ describe('ingredients reducer', () => {
             successRequest: true,
             detailed: false
         }, {
-            type: types.INGREDIENTS_REQUEST_SUCCESS
+            type: INGREDIENTS_REQUEST_SUCCESS
         })).toEqual({
             list: [],
             ingredientsRequest: true,
@@ -126,7 +133,7 @@ describe('ingredients reducer', () => {
             successRequest: false,
             detailed: false
         }, {
-            type: types.INGREDIENTS_SET_DETAILED,
+            type: INGREDIENTS_SET_DETAILED,
             payload: exampleDetailed
         })).toEqual({
             list: [],
@@ -160,7 +167,7 @@ describe('ingredients reducer', () => {
             successRequest: false,
             detailed: exampleDetailed
         }, {
-            type: types.INGREDIENTS_CLEAR_DETAILED
+            type: INGREDIENTS_CLEAR_DETAILED
         })).toEqual({
             list: [],
             ingredientsRequest: false,

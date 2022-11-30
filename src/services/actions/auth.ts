@@ -32,7 +32,7 @@ export const authorizeUser: AppThunk = (form: TLoginForm) => async (dispatch: Ap
             if ( data.success ) {
                 const authToken = data.accessToken.replace('Bearer ', '');
                 setCookie('authToken', authToken, {path: '/', 'max-age': 1200});
-                setCookie('refreshToken', data.refreshToken, {path: '/', 'max-age': 120000});
+                setCookie('refreshToken', data.refreshToken, {path: '/'});
                 dispatch({
                     type: AUTH_SIGN_IN,
                     payload: data.user
@@ -60,7 +60,7 @@ export const registerUser: AppThunk = (form: TRegisterForm) => async (dispatch: 
             if ( data.success ) {
                 const authToken = data.accessToken.replace('Bearer ', '');
                 setCookie('authToken', authToken, {path: '/', 'max-age': 1200});
-                setCookie('refreshToken', data.refreshToken, {path: '/', 'max-age': 120000});
+                setCookie('refreshToken', data.refreshToken, {path: '/'});
                 dispatch({
                     type: AUTH_SIGN_IN,
                     payload: data.user
