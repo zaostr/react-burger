@@ -300,10 +300,6 @@ export const getIngredientsFromOrder = (list: Array<ingredientType> ,ingredients
 
 export const getOrderAmount = (ingredients: Array<any>) => {
     return ingredients.reduce((prev:any,next:any) => {
-        if (next.type === 'bun') {
-            return prev + next.price * 2
-        } else {
-             return prev + next.price
-        }
-    },0)
+        return prev + next.price
+    }, 0)
 }

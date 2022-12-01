@@ -1,4 +1,4 @@
-import { cartReducer as reducer } from "../reducers/cart";
+import { cartReducer as reducer } from "../../services/reducers/cart";
 import {
     CART_INSERT_ITEM,
     CART_REMOVE_ITEM,
@@ -9,7 +9,7 @@ import {
     CART_ORDER_SUCCESS,
     CART_ORDER_FAIL,
     CART_SAVE_ORDER
-} from '../actions/cart'
+} from '../../services/actions/cart'
 
 
 describe('cart reducer', () => {
@@ -207,22 +207,20 @@ describe('cart reducer', () => {
             ingredient2
         ];
 
-        expect(reducer({
+        let state = {
             list: exampleList,
             total: 0,
             orderRequest: false,
             orderSuccess: false,
             orderFail: false,
             orders: []
-        }, {
+        };
+
+        expect(reducer(state, {
             type: CART_TOTAL
         })).toEqual({
-            list: exampleList,
-            total: 246,
-            orderRequest: false,
-            orderSuccess: false,
-            orderFail: false,
-            orders: []
+            ...state,
+            total: 369
         })
     })
 
@@ -296,7 +294,8 @@ describe('cart reducer', () => {
             orderFail: false,
             orders: []
         }, {
-            type: CART_ORDER_REQUEST
+            type: CART_ORDER_REQUEST,
+            payload: true
         })).toEqual({
             list: [],
             total: 0,

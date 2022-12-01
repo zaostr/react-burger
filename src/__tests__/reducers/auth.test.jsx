@@ -1,10 +1,9 @@
-import { authReducer as reducer } from "../reducers/auth";
+import { authReducer as reducer } from "../../services/reducers/auth";
 import {
     AUTH_SIGN_IN,
     AUTH_SIGN_OUT,
     AUTH_REQUEST
-} from '../actions/auth';
-
+} from '../../services/actions/auth';
 
 describe('auth reducer', () => {
     it('should return the initial state', () => {
@@ -21,7 +20,8 @@ describe('auth reducer', () => {
             user: false,
             request: false
         }, {
-            type: AUTH_REQUEST
+            type: AUTH_REQUEST,
+            payload: true
         })).toEqual({
             isAuthorized: false,
             user: false,

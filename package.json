@@ -5,6 +5,7 @@
   "homepage": "./",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^13.5.0",
     "@types/node": "^16.11.56",
     "@types/react": "^18.0.18",
@@ -61,6 +62,7 @@
     "eslint-plugin-cypress": "^2.12.1",
     "fetch-mock": "^9.11.0",
     "gh-pages": "^4.0.0",
+    "jest-watch-typeahead": "^0.6.5",
     "react-test-renderer": "^18.2.0",
     "redux-mock-store": "^1.5.4"
   }

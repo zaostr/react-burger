@@ -48,7 +48,7 @@ export const OrderCard = ({info, showStatus = false, base = '/feed/'}:{info: TOr
         </p>
         <div className={`${styles.bottom}`}>
             <div className={`${styles.ingredientCircles}`}>
-                { orderIngredients.reverse().map( (ingredient: any,key: any): any => {
+                { orderIngredients.map( (ingredient: any,key: any): any => {
                     if ( key > 5 ) return false;
                     return (
                     <div key={key} className={`${styles.ingredientCircle}`}>

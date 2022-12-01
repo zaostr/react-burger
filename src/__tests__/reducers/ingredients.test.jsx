@@ -1,4 +1,4 @@
-import { ingredientsReducer as reducer } from "../reducers/ingredients";
+import { ingredientsReducer as reducer } from "../../services/reducers/ingredients";
 import {
     INGREDIENTS_SET_LIST,
     INGREDIENTS_GET_REQUEST,
@@ -6,35 +6,28 @@ import {
     INGREDIENTS_REQUEST_SUCCESS,
     INGREDIENTS_SET_DETAILED,
     INGREDIENTS_CLEAR_DETAILED
-} from '../actions/ingredients'
+} from '../../services/actions/ingredients'
 
 
 describe('ingredients reducer', () => {
+    let initialState = {
+        list: [],
+        ingredientsRequest: false,
+        failedRequest: false,
+        successRequest: false,
+        detailed: false
+    };
+
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).toEqual({
-            list: [],
-            ingredientsRequest: false,
-            failedRequest: false,
-            successRequest: false,
-            detailed: false
-        })
+        expect(reducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle INGREDIENTS_REQUEST', () => {
-        expect(reducer({
-            list: [],
-            ingredientsRequest: false,
-            failedRequest: false,
-            successRequest: false,
-            detailed: false
-        }, {
+        expect(reducer(initialState, {
             type: INGREDIENTS_GET_REQUEST
         })).toEqual({
-            list: [],
+            ...initialState,
             ingredientsRequest: true,
-            failedRequest: false,
-            successRequest: false,
-            detailed: false
         })
     })
 
@@ -77,16 +70,16 @@ describe('ingredients reducer', () => {
     it('should handle INGREDIENTS_REQUEST_FAILED', () => {
         expect(reducer({
             list: [],
-            ingredientsRequest: false,
-            failedRequest: true,
+            ingredientsRequest: true,
+            failedRequest: false,
             successRequest: false,
             detailed: false
         }, {
             type: INGREDIENTS_REQUEST_FAILED
         })).toEqual({
             list: [],
-            ingredientsRequest: true,
-            failedRequest: false,
+            ingredientsRequest: false,
+            failedRequest: true,
             successRequest: false,
             detailed: false
         })
@@ -95,17 +88,17 @@ describe('ingredients reducer', () => {
     it('should handle INGREDIENTS_REQUEST_SUCCESS', () => {
         expect(reducer({
             list: [],
-            ingredientsRequest: false,
+            ingredientsRequest: true,
             failedRequest: false,
-            successRequest: true,
+            successRequest: false,
             detailed: false
         }, {
             type: INGREDIENTS_REQUEST_SUCCESS
         })).toEqual({
             list: [],
-            ingredientsRequest: true,
+            ingredientsRequest: false,
             failedRequest: false,
-            successRequest: false,
+            successRequest: true,
             detailed: false
         })
     })

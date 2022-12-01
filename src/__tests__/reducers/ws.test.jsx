@@ -1,10 +1,10 @@
-import { wsReducer as reducer } from "../reducers/ws";
+import { wsReducer as reducer } from "../../services/reducers/ws";
 import {
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_ORDERS
-} from '../actions/ws';
+} from '../../services/actions/ws';
 
 
 describe('websocket reducer', () => {

@@ -68,11 +68,14 @@ const BurgerConstructorFooter = () => {
     .then(dataJson => {
       setTimeout(() => {
         setOrderProccess(false);
-        dispatch({type: CART_ORDER_SUCCESS});
-        dispatch({type: CART_SAVE_ORDER, payload: dataJson.order});
-        setOrderId(dataJson.order.number);
-        // @ts-ignore
-        dispatch(cartClear());
+        //console.log(dataJson);
+        if (dataJson?.success === true) {
+          dispatch({type: CART_ORDER_SUCCESS});
+          dispatch({type: CART_SAVE_ORDER, payload: dataJson.order});
+          setOrderId(dataJson.order.number);
+          // @ts-ignore
+          dispatch(cartClear());
+        }
       },2000)
     })
     .catch(err => {

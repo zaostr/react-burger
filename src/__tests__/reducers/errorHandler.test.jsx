@@ -1,9 +1,9 @@
-import { errorHandlerReducer as reducer } from "../reducers/errorHandler";
+import { errorHandlerReducer as reducer } from "../../services/reducers/errorHandler";
 import {
     ERROR_INSERT,
     ERROR_REMOVE,
     ERROR_STATE
-} from '../actions/errorHandler'
+} from '../../services/actions/errorHandler'
 
 
 describe('auth reducer', () => {
