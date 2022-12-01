@@ -22,6 +22,7 @@ import { Location } from 'history';
 import { OrderDetailsPopup } from '../order-details-popup/order-details-popup';
 import { OrderDetailsPage } from '../../pages/order-details-page';
 import { UserOrderDetailsPopup } from '../user-order-details-popup/user-order-details-popup';
+import { LogoutPage } from '../../pages/logout-page';
 
 
 
@@ -62,6 +63,9 @@ function App() {
           <ProtectedRoute onlyAuth={false} path="/reset-password" exact>
             <ResetPasswordPage />
           </ProtectedRoute>
+          <ProtectedRoute onlyAuth={true} path="/logout" exact>
+            <LogoutPage />
+          </ProtectedRoute>
           <Route path="/ingredients/:id" exact>
             <IngredientDetailsPage />
           </Route>
@@ -71,7 +75,6 @@ function App() {
           <Route path="/feed/:id" exact>
             <OrderDetailsPage />
           </Route>
-          
           <Route path="*" exact>
             <NotFound404 />
           </Route>

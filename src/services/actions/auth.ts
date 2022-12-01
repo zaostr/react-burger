@@ -1,5 +1,5 @@
 import { loginRequest, registerRequest } from "../../utils/burger-api";
-import { setCookie } from "../../utils/data";
+import { deleteCookie, setCookie } from "../../utils/data";
 import { TLoginForm, TRegisterForm } from "../../utils/types";
 import { AppDispatch, AppThunk } from "../types";
 
@@ -51,6 +51,9 @@ export const authorizeUser: AppThunk = (form: TLoginForm) => async (dispatch: Ap
 
 export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
     dispatch({type: AUTH_SIGN_OUT});
+    deleteCookie('authToken');
+    deleteCookie('refreshToken');
+    return true;
 }
 
 

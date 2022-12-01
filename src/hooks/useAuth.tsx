@@ -50,7 +50,7 @@ export const useAuth = () => {
     const signIn = (form): boolean | string => dispatch(authorizeUser(form));
 
     // @ts-ignore
-    const signOut = (): boolean | string => dispatch(logoutUser());
+    const signOut = (): boolean => dispatch(logoutUser());
 
     // @ts-ignore
     const register = (form): true | string => dispatch(registerUser(form));

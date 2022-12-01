@@ -1,5 +1,5 @@
 import { baseUrl } from "./constants";
-import { getCookie, setCookie } from './data';
+import { deleteCookie, getCookie, setCookie } from './data';
 import { ingredientType, TEditForm, TLoginForm, TRegisterForm } from "./types";
 
 
