@@ -7,7 +7,6 @@ import { makeOrder } from '../../../utils/burger-api';
 
 import BurgerConstructorTotal from '../burger-constructor-total/burger-constructor-total'
 import { OrderDetails } from '../../order-details/order-details';
-import { useDispatch, useSelector } from 'react-redux';
 import { 
   CART_ORDER_REQUEST,
   CART_ORDER_SUCCESS,
@@ -17,15 +16,14 @@ import {
 } from '../../../services/actions/cart';
 
 import constructorFooter from './burger-constructor-footer.module.css'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 
 
 
 const BurgerConstructorFooter = () => {
-  // @ts-ignore
-  const cartState = useSelector(store => store.cart);
-  // @ts-ignore
-  const isAuthorized = useSelector(store => store.auth.isAuthorized);
-  const dispatch = useDispatch();
+  const cartState = useAppSelector(store => store.cart);
+  const isAuthorized = useAppSelector(store => store.auth.isAuthorized);
+  const dispatch = useAppDispatch();
   const [requestErrorText, setRequestErrorText] = useState<boolean | string>(false);
   const [orderId, setOrderId] = useState(0);
   const [orderProccess, setOrderProccess] = useState(false);
@@ -50,13 +48,12 @@ const BurgerConstructorFooter = () => {
       return false
     }
 
-    if (cartState.list.filter((x: {type: string}) => x.type === 'bun').length === 0) {
+    if (cartState.list.filter(x => x.type === 'bun').length === 0) {
       setRequestErrorText('Не выбрана булка');
       modalControls.open();
       return false
     }
 
-    //dispatch({type: CART_ORDER_REQUEST, payload: true});
     setOrderProccess(true);
     if (!isAuthorized) {
       return false
@@ -68,12 +65,10 @@ const BurgerConstructorFooter = () => {
     .then(dataJson => {
       setTimeout(() => {
         setOrderProccess(false);
-        //console.log(dataJson);
         if (dataJson?.success === true) {
           dispatch({type: CART_ORDER_SUCCESS});
           dispatch({type: CART_SAVE_ORDER, payload: dataJson.order});
           setOrderId(dataJson.order.number);
-          // @ts-ignore
           dispatch(cartClear());
         }
       },2000)

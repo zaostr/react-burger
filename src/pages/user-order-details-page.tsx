@@ -3,15 +3,20 @@ import {  useParams } from 'react-router-dom';
 import { OrderFullDetails } from '../components/order-full-details/order-full-details'
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/actions/ws';
+import { getAccessToken } from '../utils/burger-api';
 import { TOrder } from '../utils/types';
 
 import styles from './css/order-details-page.module.css'
 
-export const OrderDetailsPage = () => {
+export const UserOrderDetailsPage = () => {
     const dispatch = useAppDispatch();
     const params: {id: string | undefined;} = useParams();
     const {wsConnected, list} = useAppSelector(store => store.feed);
     const [selectedOrder, setSelectedOrder] = useState<TOrder| null>(null);
+    const connect = async () => {
+      const token = await getAccessToken();
+      dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders?token='+token})
+    }
     
     useEffect(() => {
       return () => {
@@ -20,7 +25,7 @@ export const OrderDetailsPage = () => {
     }, [])
     
     useEffect(() => {
-      dispatch({type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all'})
+      connect();
     }, [wsConnected]);
     
     useEffect(() => {

@@ -1,27 +1,27 @@
-import { WS_CONNECTION_START } from "../services/actions/ws";
+import { TWsFeedActions } from "../services/actions/ws";
 
-export const socketMiddleware = (wsActions) => {
-    return store => {
-      let socket = null;
+export const socketMiddleware = (wsActions: any) => {
+    return (store: { dispatch: any; }) => {
+      let socket: null | WebSocket = null;
   
-      return next => async (action) => {
+      return (next: (arg0: TWsFeedActions) => void) => async (action: any) => {
         const { dispatch } = store;
         const { type, payload } = action;
         const { wsSendMessage, onOpen, onClose, onError, onFeed } = wsActions;
         //
-        if (type === WS_CONNECTION_START) {
+        if (type === wsActions.wsInit) {
           socket = new WebSocket(`${payload}`);
         }
-        if (socket) {
-          socket.onopen = event => {
+        if (socket !== null) {
+          socket.onopen = (event) => {
             dispatch({ type: onOpen, payload: event });
           };
   
-          socket.onerror = event => {
+          socket.onerror = (event) => {
             dispatch({ type: onError, payload: event });
           };
           
-          socket.onmessage = event => {
+          socket.onmessage = (event) => {
             const { data } = event;
             const parsedData = JSON.parse(data);
             const { success, ...restParsedData } = parsedData;
@@ -29,7 +29,7 @@ export const socketMiddleware = (wsActions) => {
             dispatch({ type: onFeed, payload: restParsedData });
           };
   
-          socket.onclose = event => {
+          socket.onclose = (event) => {
             dispatch({ type: onClose, payload: event });
           };
   

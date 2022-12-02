@@ -1,18 +1,16 @@
 import { useState, useRef, SyntheticEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
-//import styles from './edit-data-form.module.css'
 import { editUserDataRequest } from '../../../utils/burger-api'
 import { AUTH_SIGN_IN } from '../../../services/actions/auth'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 
 export const EditDataForm = () => {
-    // @ts-ignore
-    const user = useSelector(store => store.auth.user);
-    const dispatch = useDispatch();
+    const user = useAppSelector(store => store.auth.user);
+    const dispatch = useAppDispatch();
     const [editFormState, setEditFormState] = useState({
-        name: user.name,
-        email: user.email,
+        name: user !== false ? user.name : '',
+        email: user !== false ? user.email : '',
         password: ''
     });
     const [editInputState, setEditInputState] = useState({
@@ -28,8 +26,8 @@ export const EditDataForm = () => {
     const resetEditedValues = (e: SyntheticEvent) => {
         e.preventDefault();
         setEditFormState({
-            name: user.name,
-            email: user.email,
+            name: user !== false ? user.name : '',
+            email: user !== false ? user.email : '',
             password: ''
         })
     }
@@ -54,6 +52,10 @@ export const EditDataForm = () => {
                 setEditResult(data.message);
             }
         }).catch(err => setEditResult(err.message));
+    }
+
+    if ( user === false ) {
+        return null
     }
 
   return (

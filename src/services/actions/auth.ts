@@ -1,6 +1,6 @@
 import { loginRequest, registerRequest } from "../../utils/burger-api";
 import { deleteCookie, setCookie } from "../../utils/data";
-import { TLoginForm, TRegisterForm } from "../../utils/types";
+import { TLoginForm, TRegisterForm, TUserData } from "../../utils/types";
 import { AppDispatch, AppThunk } from "../types";
 
 export const AUTH_SIGN_IN:'AUTH_SIGN_IN' = 'AUTH_SIGN_IN';
@@ -12,10 +12,14 @@ export const AUTH_REQUEST:'AUTH_REQUEST' = 'AUTH_REQUEST';
 //export const AUTH_CHANGE_PASSWORD:'AUTH_CHANGE_PASSWORD' = 'AUTH_CHANGE_PASSWORD';
 //export const AUTH_SET_AUTHORIZED = 'AUTH_SET_AUTHORIZED';
 
-export interface IAuthorizeUser {
+export interface IUserData {
+    readonly type: typeof AUTH_SIGN_IN;
+    readonly payload: TUserData;
+}
+/*export interface IAuthorizeUser {
     readonly type: typeof AUTH_SIGN_IN;
     readonly payload: TLoginForm;
-}
+}*/
 export interface ILogoutUser {
     readonly type: typeof AUTH_SIGN_OUT;
 }
@@ -24,11 +28,11 @@ export interface IRequestUser {
     readonly payload: boolean;
 }
 
-export type TAuthActions = IAuthorizeUser | ILogoutUser | IRequestUser;
+export type TAuthActions = ILogoutUser | IRequestUser | IUserData;
 
-export const authorizeUser: AppThunk = (form: TLoginForm) => async (dispatch: AppDispatch) => {
+export const authorizeUser = (form: TLoginForm) => async (dispatch: AppDispatch) => {
     return await loginRequest(form)
-        .then(data => {
+        .then((data): boolean | string => {
             if ( data.success ) {
                 const authToken = data.accessToken.replace('Bearer ', '');
                 setCookie('authToken', authToken, {path: '/', 'max-age': 1200});
@@ -49,7 +53,7 @@ export const authorizeUser: AppThunk = (form: TLoginForm) => async (dispatch: Ap
         });
 }
 
-export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
+export const logoutUser = () => (dispatch: AppDispatch) => {
     dispatch({type: AUTH_SIGN_OUT});
     deleteCookie('authToken');
     deleteCookie('refreshToken');
@@ -57,9 +61,9 @@ export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
 }
 
 
-export const registerUser: AppThunk = (form: TRegisterForm) => async (dispatch: AppDispatch) => {
+export const registerUser = (form: TRegisterForm) => async (dispatch: AppDispatch) => {
     return await registerRequest(form)
-        .then(data => {
+        .then((data): boolean | string => {
             if ( data.success ) {
                 const authToken = data.accessToken.replace('Bearer ', '');
                 setCookie('authToken', authToken, {path: '/', 'max-age': 1200});

@@ -3,12 +3,14 @@ import { Redirect } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 export const LogoutPage = () => {
-    const [result, setResult] = useState(false);
+    const [result, setResult] = useState<boolean>(false);
     const {signOut} = useAuth();
-
-    useEffect(() => {
-        const logout = signOut();
+    const logoutResult = async () => {
+        const logout = await signOut();
         setResult(logout);
+    }
+    useEffect(() => {
+        logoutResult();
     }, []);
 
     if (result) {

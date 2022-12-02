@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
 import { getIngredientsFromOrder, getOrderAmount, HumanDatePrecise } from '../../utils/burger-api'
 
 import styles from './order-card.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientType, TOrder } from '../../utils/types';
 import { Link, useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux';
 
 export const OrderCard = ({info, showStatus = false, base = '/feed/'}:{info: TOrder, showStatus: boolean; base: string;}) => {
     const location = useLocation();
-    const list: any = useSelector((store:any) => store.ingredients.list);
+    const list = useAppSelector(store => store.ingredients.list);
     const [orderIngredients, setOrderIngredients] = useState<ingredientType[]>([]);
     const [orderAmount, setOrderAmount] = useState<null | number>(null);
     useEffect(() => {
@@ -48,7 +48,7 @@ export const OrderCard = ({info, showStatus = false, base = '/feed/'}:{info: TOr
         </p>
         <div className={`${styles.bottom}`}>
             <div className={`${styles.ingredientCircles}`}>
-                { orderIngredients.map( (ingredient: any,key: any): any => {
+                { orderIngredients.map( (ingredient, key) => {
                     if ( key > 5 ) return false;
                     return (
                     <div key={key} className={`${styles.ingredientCircle}`}>

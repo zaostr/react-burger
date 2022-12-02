@@ -2,13 +2,13 @@ import React from 'react'
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import constructorTotal from './burger-constructor-total.module.css'
-import { useSelector } from 'react-redux';
+
+import { useAppSelector } from '../../../hooks/redux';
 
 
 
 const BurgerConstructorTotal = () => {
-  // @ts-ignore
-  const total = useSelector(store => store.cart.total);
+  const total = useAppSelector(store => store.cart.total);
 
 
   return (

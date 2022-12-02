@@ -59,10 +59,14 @@ export type modalHookType = {
     children?: React.ReactNode;
 }
 
+export type TUserData = {
+    email: string;
+    name: string;
+    role?: number;
+}
 export type TLoginForm = {
     email: string;
     password: string;
-    role?: number;
 }
 
 export type TRegisterForm = {

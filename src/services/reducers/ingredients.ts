@@ -10,14 +10,14 @@ import {
 } from '../actions/ingredients'
 
 export type TIngredientsState = {
-    list: Array<ingredientType>;
+    list: ingredientType[];
     ingredientsRequest: boolean;
     failedRequest: boolean;
     successRequest: boolean;
     detailed: false | ingredientType;
 }
 
-const ingredientsState: TIngredientsState = {
+export const ingredientsState: TIngredientsState = {
     list: [],
     ingredientsRequest: false,
     failedRequest: false,
@@ -25,7 +25,7 @@ const ingredientsState: TIngredientsState = {
     detailed: false
 }
 
-export const ingredientsReducer = (state = ingredientsState, action: TIngredientActions) => {
+export const ingredientsReducer = (state = ingredientsState, action: TIngredientActions): TIngredientsState => {
     switch(action.type) {
         case INGREDIENTS_GET_REQUEST:
             return {

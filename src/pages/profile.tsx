@@ -4,15 +4,14 @@ import { NavLink, Route, Switch, useLocation } from 'react-router-dom'
 import { NotFound404 } from './not-found';
 import { UserOrdersFeed } from '../components/user-orders-feed/user-orders-feed';
 import { OrderDetailsPopup } from '../components/order-details-popup/order-details-popup';
-import { LogoutPage } from './logout-page';
 import { useEffect, useState } from 'react';
 
 export const ProfilePage = () => {
+  
   const location = useLocation<Location & {background?: Location | undefined;}>();
   const [description, setDescription] = useState('В этом разделе вы можете изменить свои персональные данные');
   
   useEffect(() => {
-    console.log(location);
     switch(location.pathname) {
         case '/profile':
             return setDescription('В этом разделе вы можете изменить свои персональные данные');

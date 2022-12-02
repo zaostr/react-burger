@@ -1,13 +1,11 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/redux';
 import { RootState } from '../../services/types';
-import { Loader } from '../loader/loader';
 import { OrderCard } from '../order-card/order-card';
 
 import styles from './orders-feed.module.css';
 
 export const OrdersFeed = () => {
-  const {list, fail} = useSelector((store: RootState) => store.feed);
+  const {list, fail} = useAppSelector(store => store.feed);
   
   if (fail === true) {
     return (
@@ -19,7 +17,7 @@ export const OrdersFeed = () => {
   return (
     <div className={`${styles.list}`}>
         { (list.length < 1) ? <h3 className='text text_type_main-medium'>Здесь пока ничего нет:/</h3> : null }
-        { list.map((order,key) => <OrderCard key={key} info={order} showStatus={false} base={'/feed/'} />) }
+        { list.map((order) => <OrderCard key={order._id} info={order} showStatus={false} base={'/feed/'} />) }
     </div>
   )
 }

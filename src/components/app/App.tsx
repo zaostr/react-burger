@@ -16,25 +16,25 @@ import {
   HomePage,
   FeedPage
 } from '../../pages';
-import { useDispatch } from 'react-redux';
 import { IngredientDetailsPopup } from '../ingredient-details-popup/ingredient-details-popup';
 import { Location } from 'history';
 import { OrderDetailsPopup } from '../order-details-popup/order-details-popup';
 import { OrderDetailsPage } from '../../pages/order-details-page';
 import { UserOrderDetailsPopup } from '../user-order-details-popup/user-order-details-popup';
 import { LogoutPage } from '../../pages/logout-page';
+import { UserOrderDetailsPage } from '../../pages/user-order-details-page';
+import { useAppDispatch } from '../../hooks/redux';
 
 
 
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch()
   const location = useLocation<Location & {background?: Location | undefined;}>();
 
   const background = location.state && location.state?.background;
 
   useEffect(() => {
-    // @ts-ignore
     dispatch( getIngredients() );
   }, [dispatch]);
 
@@ -52,7 +52,7 @@ function App() {
             <RegisterPage />
           </ProtectedRoute>
           <ProtectedRoute onlyAuth={true} path='/profile/orders/:id' exact>
-            <OrderDetailsPage />
+            <UserOrderDetailsPage />
           </ProtectedRoute>
           <ProtectedRoute onlyAuth={true} path="/profile*" exact>
             <ProfilePage />
@@ -63,9 +63,12 @@ function App() {
           <ProtectedRoute onlyAuth={false} path="/reset-password" exact>
             <ResetPasswordPage />
           </ProtectedRoute>
-          <ProtectedRoute onlyAuth={true} path="/logout" exact>
+          {/* <ProtectedRoute onlyAuth={true} path="/logout" exact>
             <LogoutPage />
-          </ProtectedRoute>
+          </ProtectedRoute> */}
+          <Route path="/logout" exact>
+            <LogoutPage />
+          </Route>
           <Route path="/ingredients/:id" exact>
             <IngredientDetailsPage />
           </Route>

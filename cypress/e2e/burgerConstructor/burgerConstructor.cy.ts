@@ -1,81 +1,41 @@
 /// <reference types="cypress"/>
 
-import { wait } from "@testing-library/user-event/dist/utils";
+import { baseUrl, testBaseUrl } from '../../../src/utils/constants';
 
 describe('burger constructor test', () => {
   before(() => {
-    cy.visit('http://localhost:3000/');
+    cy.visit(testBaseUrl);
     cy.get('main').should('contain', 'Соберите бургер');
     cy.wait(2000);
-
-    /*cy.intercept(
-        'https://norma.nomoreparties.space/api/auth/login',
-        {fixture: 'userResponse.json'}
-    );
-    cy.intercept({
-      url: 'https://norma.nomoreparties.space/api/auth/login',
-      method: 'POST',
-    }).as('search')*/
   });
-  
-  /*it('should login', () => {
-    cy.get('input[name=email]').type('alex.zaostr@ya.ru').should('have.value', 'alex.zaostr@ya.ru');
-
-    cy.get('input[name=password]').type('Zaostr').should('have.value', 'Zaostr');
-    
-    cy.get('.loginForm').submit();
-    cy.get('main').should('contain', 'Соберите бургер');
-  })*/
   
   it('should open ingredient details', () => {
     cy.get('#IngredientsListSectionWrapper a').first().click();
+    cy.get('[class*=modal_modalBox__]').as('modalBox');
+    cy.get('[class*=modal_modalClsoeButton__]').as('modalClsoeButton');
 
-    cy.get('[class*=modal_modalBox__]').contains('Детали ингредиента');
+    cy.get('@modalBox').contains('Детали ингредиента');
     
-    cy.get('[class*=modal_modalClsoeButton__]').click();
+    cy.get('@modalClsoeButton').click();
 
     cy.get('#IngredientsListSectionWrapper a').last().click();
 
-    cy.get('[class*=modal_modalBox__]').contains('Детали ингредиента');
+    cy.get('@modalBox').contains('Детали ингредиента');
     
-    cy.get('[class*=modal_modalClsoeButton__]').click();
+    cy.get('@modalClsoeButton').click();
   })
   
-  /*it('should add bun', () => {
-    const dataTransfer = new DataTransfer();
-    cy.get('#IngredientsListSectionWrapper a').first().trigger('dragstart', {
-      dataTransfer
-    })
-
-    cy.get('[class*=constructor-element_constructor-element_pos_top').trigger('drop');
-  })*/
-
-  /*it('should add other ingredients', () => {
-    const dataTransfer = new DataTransfer();
-    cy.get('#IngredientsListSectionWrapper a:nth-child(5)').trigger('dragstart', {
-      dataTransfer
-    })
-
-    cy.get('[class*=burger-constructor-elements_EmptyList__').trigger('drop');
-
-
-    cy.get('#IngredientsListSectionWrapper a:nth-child(4)').first().trigger('dragstart', {
-      dataTransfer
-    })
-
-    cy.get('[class*=burger-constructor-elements_EmptyList__').trigger('drop');
-  })*/
 
   it('should process order', () => {
     /* Login */
-    cy.visit('http://localhost:3000/login');
+    cy.visit(testBaseUrl+'/login');
 
     cy.get('input[name=email]').type('alex.zaostr@ya.ru').should('have.value', 'alex.zaostr@ya.ru');
 
     cy.get('input[name=password]').type('pass').should('have.value', 'pass');
     
     cy.intercept({
-      url: 'https://norma.nomoreparties.space/api/auth/login',
+      url: baseUrl+'/auth/login',
       method: 'POST',
     }, {
       statusCode: 200,
@@ -120,7 +80,7 @@ describe('burger constructor test', () => {
 
     /* Proccessing the order */
     cy.intercept({
-      url: 'https://norma.nomoreparties.space/api/orders',
+      url: baseUrl+'/orders',
       method: 'POST',
     }, {
       statusCode: 200,
@@ -190,18 +150,20 @@ describe('burger constructor test', () => {
     }).as('orderMock');
 
     cy.get('[class*=burger-constructor-footer_burgerConstructorFooter__] button').click();
+    cy.get('[class*=modal_modalBox__]').as('modalBox');
+    cy.get('[class*=modal_modalClsoeButton__]').as('modalClsoeButton');
     
-    cy.get('[class*=modal_modalBox__]').contains('Ваш заказ формируется');
+    cy.get('@modalBox').contains('Ваш заказ формируется');
 
     cy.wait('@orderMock');
 
-    cy.get('[class*=modal_modalBox__]').contains('31734');
+    cy.get('@modalBox').contains('31734');
 
-    cy.get('[class*=modal_modalBox__]').contains('идентификатор заказа');
+    cy.get('@modalBox').contains('идентификатор заказа');
     
-    cy.get('[class*=modal_modalBox__]').contains('Ваш заказ начали готовить');
+    cy.get('@modalBox').contains('Ваш заказ начали готовить');
     
-    cy.get('[class*=modal_modalClsoeButton__]').click();
+    cy.get('@modalClsoeButton').click();
     /* Proccessing the order */
   })
 })

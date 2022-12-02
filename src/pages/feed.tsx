@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { OrdersFeed } from '../components/orders-feed/orders-feed';
 import { OrdersInWork } from '../components/orders-in-work/orders-in-work';
 import { OrdersReady } from '../components/orders-ready/orders-ready';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
 import {
   wsConnectionClosed,
@@ -9,13 +10,11 @@ import {
   WS_CONNECTION_START,
 } from '../services/actions/ws';
 
-import styles from './css/feed.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../services/types';
+import styles from './css/feed.module.css';;
 
 export const FeedPage = () => {
-  const dispatch = useDispatch();
-  const {total, totalDay, wsConnected} = useSelector((store: RootState) => store.feed);
+  const dispatch = useAppDispatch();
+  const {total, totalDay, wsConnected} = useAppSelector(store => store.feed);
   
   useEffect(() => {
     return () => {

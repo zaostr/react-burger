@@ -1,4 +1,4 @@
-import { authReducer as reducer } from "../../services/reducers/auth";
+import { authReducer as reducer, authState as initialState } from "../../services/reducers/auth";
 import {
     AUTH_SIGN_IN,
     AUTH_SIGN_OUT,
@@ -7,24 +7,15 @@ import {
 
 describe('auth reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).toEqual({
-            isAuthorized: false,
-            user: false,
-            request: false
-        })
+        expect(reducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle AUTH_REQUEST', () => {
-        expect(reducer({
-            isAuthorized: false,
-            user: false,
-            request: false
-        }, {
+        expect(reducer(initialState, {
             type: AUTH_REQUEST,
             payload: true
         })).toEqual({
-            isAuthorized: false,
-            user: false,
+            ...initialState,
             request: true
         })
     })
@@ -35,14 +26,12 @@ describe('auth reducer', () => {
             email: 'sasha.zao@mail.ru'
         };
 
-        expect(reducer({
-            isAuthorized: false,
-            user: false,
-            request: false
-        }, {
+        expect(reducer(
+            initialState, {
             type: AUTH_SIGN_IN,
             payload: exampleUser
         })).toEqual({
+            ...initialState,
             isAuthorized: true,
             user: {
                 ...exampleUser,
@@ -60,9 +49,9 @@ describe('auth reducer', () => {
         };
 
         expect(reducer({
+            ...initialState,
             isAuthorized: true,
-            user: exampleUserState,
-            request: false
+            user: exampleUserState
         }, {
             type: AUTH_SIGN_OUT
         })).toEqual({

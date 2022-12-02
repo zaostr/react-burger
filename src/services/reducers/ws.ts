@@ -16,7 +16,7 @@ export type TFeedState = {
     totalDay: number;
 };
   
-const initialState: TFeedState = {
+export const initialWsState: TFeedState = {
     wsConnected: false,
     fail: false,
     request: false,
@@ -25,7 +25,7 @@ const initialState: TFeedState = {
     totalDay: 0
 };
   
-export const wsReducer = (state = initialState, action: TWsFeedActions) => {
+export const wsReducer = (state = initialWsState, action: TWsFeedActions) => {
     switch (action.type) {
     case WS_CONNECTION_SUCCESS:
         return {
@@ -41,7 +41,7 @@ export const wsReducer = (state = initialState, action: TWsFeedActions) => {
         };
 
     case WS_CONNECTION_CLOSED:
-        return initialState;
+        return initialWsState;
 
     case WS_GET_ORDERS:
         return {
