@@ -1,5 +1,5 @@
 import { baseUrl } from "./constants";
-import { getCookie, setCookie } from './data';
+import { deleteCookie, getCookie, setCookie } from './data';
 import { ingredientType, TEditForm, TLoginForm, TRegisterForm } from "./types";
 
 
@@ -290,20 +290,18 @@ export function HumanDatePrecise(timestamp: string) {
 	return r;
 };
 
+export const getIngredientCount = ( ingredients: Array<ingredientType>, ingredient: ingredientType ): number => {
+    return ingredients.filter(item => item === ingredient).length || 0;
+}
 
-
-export const getIngredientsFromOrder = (list: Array<ingredientType> ,ingredients: Array<string>) => {
-    return [...ingredients].map((ingredientID, key) => {
-        return list.filter((ingredient:ingredientType) => ingredientID === ingredient._id)[0];
+export const getIngredientsFromOrder = (list: Array<ingredientType>, ingredients: Array<string>) => {
+    return [...ingredients].map(ingredientID => {
+        return list.filter(ingredient => ingredientID === ingredient._id)[0];
     })
 }
 
-export const getOrderAmount = (ingredients: Array<any>) => {
-    return ingredients.reduce((prev:any,next:any) => {
-        if (next.type === 'bun') {
-            return prev + next.price * 2
-        } else {
-             return prev + next.price
-        }
-    },0)
+export const getOrderAmount = (ingredients: Array<ingredientType>) => {
+    return ingredients.reduce((prev,next) => {
+        return prev + next.price
+    }, 0)
 }

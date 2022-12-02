@@ -30,10 +30,12 @@
 .ConstructorEmptyTopElement,
 .ConstructorEmptyBottomElement {
     composes: ConstructorElement;
-    composes: constructor-element_pos_top from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
     composes: contentCenter;
     height: 80px;
     border: dashed 2px #888;
+}
+.ConstructorEmptyTopElement {
+    composes: constructor-element_pos_top from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';
 }
 .ConstructorEmptyBottomElement {
     composes: constructor-element_pos_bottom from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/constructor-element.css';

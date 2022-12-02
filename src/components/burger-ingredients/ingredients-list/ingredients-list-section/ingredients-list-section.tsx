@@ -33,7 +33,7 @@ export const IngredientsListSection = ({type, ingredients} : {
         <p className="text text_type_main-medium m-0">{sectionTitle}</p>
         <div className='p-6 pb-10'>
           <div className={IngredientsListStyles.grid}>
-          { ingredients.map((igredient,key) => <IngredientCard key={key} info={igredient} />) }
+          { ingredients.map(igredient => <IngredientCard key={igredient._id} info={igredient} />) }
           </div>
         </div>
       </div>

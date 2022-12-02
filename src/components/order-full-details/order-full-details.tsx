@@ -1,28 +1,32 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import {useState, useEffect} from 'react'
-import { useSelector } from 'react-redux'
-import { getIngredientsFromOrder, getOrderAmount, HumanDatePrecise } from '../../utils/burger-api'
+import { useAppSelector } from '../../hooks/redux'
+import { getIngredientCount, getIngredientsFromOrder, getOrderAmount, HumanDatePrecise } from '../../utils/burger-api'
 import { ingredientType, TOrder } from '../../utils/types'
 import styles from './order-full-details.module.css'
 
 export const OrderFullDetails = ({order}: {order: TOrder | null}) => {
-  const list: any = useSelector((store:any) => store.ingredients.list);
+  const list = useAppSelector(store => store.ingredients.list);
   const [orderIngredients, setOrderIngredients] = useState<ingredientType[]>([]);
+  const [uniqueOrderIngredients, setUniqueOrderIngredients] = useState<ingredientType[]>();
   const [orderAmount, setOrderAmount] = useState<null | number>(null);
   useEffect(() => {
       if (list.length > 0 && order !== null) { 
           setOrderIngredients( getIngredientsFromOrder(list, order.ingredients) );
+          setUniqueOrderIngredients( getIngredientsFromOrder(list, order.ingredients).filter((v, i, a) => a.indexOf(v) === i) );
       }
   }, [list])
 
   useEffect(() => {
       if (orderIngredients) { 
           setOrderAmount( getOrderAmount(orderIngredients) );
+          setUniqueOrderIngredients( orderIngredients.filter((v, i, a) => a.indexOf(v) === i) );
       }
   }, [orderIngredients])
 
 
 if (order === null) return <></>;
+if (uniqueOrderIngredients === undefined) return <></>;
 
   let status = '';
   if (order === undefined ) return null;
@@ -47,9 +51,9 @@ if (order === null) return <></>;
         <div>
           <p className='text text_type_main-medium mb-6'>Состав:</p>
           <div className={`${styles.ingredientsWrapper} mb-10`}>
-            { orderIngredients.reverse().map( (ingredient: ingredientType,key: number): any => {
+            { uniqueOrderIngredients.reverse().map( (ingredient, key: number) => {
                 return (
-                <div key={key} className={`${styles.ingredientBlock}`}>
+                <div key={ingredient._id} className={`${styles.ingredientBlock}`}>
                   <div className={`${styles.ingredientCircle}`}>
                       <div 
                           className={`${styles.ingredientCircleBackground} ${(orderIngredients.length > 6 && key === 0) ? styles.ingredientCircleOverlay : null}`} 
@@ -58,7 +62,11 @@ if (order === null) return <></>;
                   </div>
                   <div className='text text_type_main-default'>{ ingredient.name }</div>
                   <div>
-                    <span className='text text_type_digits-default mr-2'>{ ingredient.price }</span>
+                    <span></span>
+                    <span className='text text_type_digits-default mr-2'>
+                      { (getIngredientCount(orderIngredients, ingredient) > 1) ? (getIngredientCount(orderIngredients, ingredient)+' X ') : null }
+                      { ingredient.price }
+                      </span>
                     <CurrencyIcon type='primary' />
                   </div>
                 </div>

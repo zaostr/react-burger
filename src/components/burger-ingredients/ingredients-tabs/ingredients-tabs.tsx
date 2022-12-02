@@ -29,15 +29,12 @@ export const IngredientsTabs = ({currentTab, setCurrentTab}: {
     return (
       <div className='mb-10'>
         <div className={IngredientsTabsStyles.wrap}>
-          { /*@ts-ignore*/ }
           <Tab value="bun" active={currentTab === 'bun'} onClick={()=>handleScrollToSection('IngredientsListSectionWrapper', 'bun')}>
               Булки
           </Tab>
-          { /*@ts-ignore*/ }
           <Tab value="sauce" active={currentTab === 'sauce'} onClick={()=>handleScrollToSection('IngredientsListSectionWrapper', 'sauce')}>
               Соусы
           </Tab>
-          { /*@ts-ignore*/ }
           <Tab value="main" active={currentTab === 'main'} onClick={()=>handleScrollToSection('IngredientsListSectionWrapper', 'main')}>
               Начинки
           </Tab>

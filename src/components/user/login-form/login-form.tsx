@@ -20,6 +20,7 @@ export const LoginForm = () => {
         async (e: SyntheticEvent) => {
           e.preventDefault();
           const loginResult = await signIn(form);
+          console.log(loginResult);
           setLoginError(loginResult);
         },
         [form, signIn]

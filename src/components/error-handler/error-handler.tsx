@@ -1,13 +1,12 @@
 import { Modal } from '../modal/modal';
 
 import { useModalControls } from '../../hooks/useModalControls';
-import { useDispatch, useSelector } from 'react-redux';
 import { ERROR_STATE } from '../../services/actions/errorHandler'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 export const ErrorHandler = () => {
-  // @ts-ignore
-  const ErrorHandler = useSelector(store => store.errorHandler);
-  const dispatch = useDispatch();
+  const ErrorHandler = useAppSelector(store => store.errorHandler);
+  const dispatch = useAppDispatch();
   
   const modalControls = useModalControls({
     isOpen:true,

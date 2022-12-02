@@ -1,25 +1,21 @@
 import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { setDetailedIngredient } from '../../services/actions/ingredients';
 import { Loader } from '../loader/loader';
-//import { getIngredientsRequest } from '../../utils/burger-api';
 
 import detailsStyles from './ingredient-details.module.css'
 
-import { ingredientType } from '../../utils/types';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 export const IngredientDetails = () => {
-    // @ts-ignore
-    const {detailed, list, ingredientsRequest} = useSelector(store => store.ingredients);
+    const {detailed, list, ingredientsRequest} = useAppSelector(store => store.ingredients);
     const params: {id: string | undefined;} = useParams();
-    const dispatch = useDispatch();
-    const [detailedIngedient, setDetailedIngedientState] = useState<ingredientType>(detailed);
+    const dispatch = useAppDispatch();
+    const [detailedIngedient, setDetailedIngedientState] = useState(detailed);
 
     useEffect(() => {
-        setDetailedIngedientState(list.filter((ingredient: ingredientType) => ingredient._id === params?.id)[0]);
+        setDetailedIngedientState(list.filter((ingredient) => ingredient._id === params?.id)[0]);
         if (detailed === false) {
-            // @ts-ignore
             dispatch(setDetailedIngredient(detailedIngedient));
         }
     }, [detailed, list, detailedIngedient, dispatch, params?.id]);

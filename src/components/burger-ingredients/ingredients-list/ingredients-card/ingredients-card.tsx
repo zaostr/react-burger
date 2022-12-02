@@ -7,18 +7,17 @@ import { useDrag } from 'react-dnd/dist/hooks';
 import IngredientCardStyles from './ingredients-card.module.css'
 
 import { ingredientType } from '../../../../utils/types';
-import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { RootState } from '../../../../services/types';
+import { useAppSelector } from '../../../../hooks/redux';
 
 const IngredientCard = ({info}: {info: ingredientType}) => {
-  const cartList = useSelector((store: RootState) => store.cart.list);
+  const cartList = useAppSelector(store => store.cart.list);
   const location = useLocation();
   const [counterState, setCounterState] = useState(0);
   
   /* eslint-disable */
   useEffect(() => {
-    setCounterState( cartList.filter((x:ingredientType) => x._id === info._id).length );
+    setCounterState( cartList.filter(x => x._id === info._id).length );
   },[JSON.stringify(cartList)])
   /* eslint-enable */
 
@@ -66,8 +65,3 @@ const IngredientCard = ({info}: {info: ingredientType}) => {
 }
 
 export default IngredientCard
-
-/*
-IngredientCard.propTypes = {
-  info: ingredientType.isRequired
-}*/
