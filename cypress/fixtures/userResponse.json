@@ -1,0 +1,12 @@
+{
+    "statusCode": 200,
+    "body": {
+      "success": true,
+      "accessToken": "testtoken",
+      "refreshToken": "testtoken",
+      "user": {
+        "email": "alex.zaostr@ya.ru",
+        "name": "Alex"
+      }
+    }
+}

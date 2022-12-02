@@ -4,16 +4,15 @@ import { BurgerConstructorElement } from './burger-constructor-element/burger-co
 
 import BurgerConstructorElementsStyles from './burger-constructor-elements.module.css'
 
-import { useDispatch, useSelector } from 'react-redux';
 import { cartInsertItem } from '../../../services/actions/cart'
 import { useDrop } from 'react-dnd';
 import { ingredientType } from '../../../utils/types';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 
 const BurgerConstructorElements = () => {
   const [selectedBun, setSelectedBun] = useState<ingredientType | null>(null);
-  const dispatch = useDispatch();
-  // @ts-ignore
-  const cartList = useSelector(store => store.cart.list);
+  const dispatch = useAppDispatch();
+  const cartList = useAppSelector(store => store.cart.list);
 
   const [{ isBunTopAreaHover, canDropBunTop }, dropBunTop] = useDrop({
     accept: 'bun-item',
@@ -22,7 +21,6 @@ const BurgerConstructorElements = () => {
       canDropBunTop: monitor.canDrop()
     }),
     drop(item) {
-      // @ts-ignore
       dispatch(cartInsertItem(item));
     }
   })
@@ -33,7 +31,6 @@ const BurgerConstructorElements = () => {
       canDropBunBottom: monitor.canDrop()
     }),
     drop(item) {
-      // @ts-ignore
       dispatch(cartInsertItem(item));
     }
   })
@@ -45,7 +42,6 @@ const BurgerConstructorElements = () => {
       canDropIngredient: monitor.canDrop()
     }),
     drop(item) {
-      // @ts-ignore
       dispatch(cartInsertItem(item));
     }
   })
@@ -97,7 +93,7 @@ const BurgerConstructorElements = () => {
       <div 
         ref={dropIngredient} 
         className={`
-        ${(cartList.filter((x: ingredientType) => x.type !== 'bun').length === 0 || canDropIngredient) 
+        ${(cartList.filter(x => x.type !== 'bun').length === 0 || canDropIngredient) 
           ? BurgerConstructorElementsStyles.ListWrapperWithOverlay 
           : BurgerConstructorElementsStyles.ListWrapper
         }`}>
@@ -114,7 +110,7 @@ const BurgerConstructorElements = () => {
             }`}>Выберите начинку</div>
         </div>
         <div className={BurgerConstructorElementsStyles.List}>
-          { cartList.map((ingredient: ingredientType, key: number) => (
+          { cartList.map((ingredient, key) => (
             (ingredient.type !== 'bun')
             && (
                 <BurgerConstructorElement 

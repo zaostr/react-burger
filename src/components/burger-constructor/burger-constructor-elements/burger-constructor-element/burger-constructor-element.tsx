@@ -6,9 +6,9 @@ import { cartSortList } from '../../../../services/actions/cart'
 import BurgerConstructorElementStyles from './burger-constructor-element.module.css'
 
 import { ingredientType } from '../../../../utils/types';
-import { useDispatch } from 'react-redux';
 import { cartRemoveItem } from '../../../../services/actions/cart'
 import { useDrop, useDrag, XYCoord } from 'react-dnd';
+import { useAppDispatch } from '../../../../hooks/redux';
 
 
 
@@ -26,7 +26,7 @@ export const BurgerConstructorElement = ({ ingredient, index }: {
     index: number;
 }) => {
     const refCartItem = useRef<HTMLDivElement>(null);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [{ opacity }, drag] = useDrag<DragItem, undefined, CollectedProps>({
         type: 'cart-item',
@@ -73,7 +73,6 @@ export const BurgerConstructorElement = ({ ingredient, index }: {
             return
         }
 
-        // @ts-ignore
         dispatch( cartSortList(dragIndex, hoverIndex, item) );
 
         item.cartIndex = hoverIndex;
@@ -84,7 +83,6 @@ export const BurgerConstructorElement = ({ ingredient, index }: {
     drag(drop(refCartItem));
 
     function removeConstructorElement(index: number): void {
-        // @ts-ignore
         dispatch(cartRemoveItem(index))
     }
 
@@ -101,10 +99,3 @@ export const BurgerConstructorElement = ({ ingredient, index }: {
         </div>
     )
 }
-
-/*
-BurgerConstructorElement.propTypes = {
-    ingredient: ingredientType.isRequired,
-    index: PropTypes.number
-}
-*/

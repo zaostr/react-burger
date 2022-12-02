@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import {
     authorizeUser,
     registerUser,
@@ -7,10 +6,12 @@ import {
     logoutUser
 } from '../services/actions/auth'
 import { getUserRequest } from "../utils/burger-api";
+import { TLoginForm, TRegisterForm } from '../utils/types';
+import { useAppDispatch } from "./redux";
 
 
 export const useAuth = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const getUser = async () => {
         dispatch({
@@ -31,7 +32,6 @@ export const useAuth = () => {
                     });
                     return user;
                 } else {
-                    // @ts-ignore
                     dispatch(logoutUser());
                     return false;
                 }
@@ -41,19 +41,24 @@ export const useAuth = () => {
                     type: AUTH_REQUEST,
                     payload: false
                 })
-                // @ts-ignore
                 dispatch(logoutUser());
             });
     }
 
-    // @ts-ignore
-    const signIn = (form): boolean | string => dispatch(authorizeUser(form));
+    const signIn = async (form: TLoginForm) => {
+        const dispResult = await dispatch(authorizeUser(form));
+        return (typeof dispResult === 'string') ? String(dispResult) : true;
+    };
 
-    // @ts-ignore
-    const signOut = (): boolean | string => dispatch(logoutUser());
+    const signOut = async () => {
+        const dispResult = dispatch(logoutUser());
+        return (typeof dispResult === 'string') ? false : true;
+    };
 
-    // @ts-ignore
-    const register = (form): true | string => dispatch(registerUser(form));
+    const register = async (form: TRegisterForm) => {
+        const dispResult = dispatch(registerUser(form));
+        return (typeof dispResult === 'string') ? String(dispResult) : true;
+    };
 
     return {
         getUser,

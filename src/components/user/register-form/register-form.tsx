@@ -21,7 +21,7 @@ export const RegisterForm = () => {
     const userRegister = async (e: SyntheticEvent) => {
         e.preventDefault();
         setRegistrationError('');
-        const registerResult: true | string = await register(form);
+        const registerResult = await register(form);
         if (registerResult !== true) {
             setRegistrationError(registerResult);
         }

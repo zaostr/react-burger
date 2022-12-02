@@ -1,18 +1,16 @@
 import { useState } from 'react'
 import {IngredientsTabs} from './ingredients-tabs/ingredients-tabs'
 import {IngredientsList} from './ingredients-list/ingredients-list'
-import { useSelector } from 'react-redux'
 
 //import burgerIngredientsStyles from './burger-ingredients.module.css'
 import { Loader } from '../loader/loader'
+import { useAppSelector } from '../../hooks/redux'
 
 
 
 export const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun');
-  // @ts-ignore
-  const {list, ingredientsRequest} = useSelector(store => store.ingredients);
-
+  const {list, ingredientsRequest} = useAppSelector(store => store.ingredients);
 
   return (
     <>

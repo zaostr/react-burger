@@ -14,15 +14,15 @@ import {
 
 
 export type TCartState = {
-    list: Array<ingredientType>;
+    list: ingredientType[];
     total: number;
     orderRequest: boolean;
     orderSuccess: boolean;
     orderFail: boolean;
-    orders: Array<TOrder>
+    orders: TOrder[]
 }
 
-const cartState: TCartState = {
+export const cartState: TCartState = {
     list: [],
     total: 0,
     orderRequest: false,

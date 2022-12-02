@@ -12,7 +12,7 @@ export type TErrorHandlerState = {
     status: boolean;
 }
 
-const errorHandlerState: TErrorHandlerState = {
+export const errorHandlerState: TErrorHandlerState = {
     message: '',
     code: 0,
     status: false

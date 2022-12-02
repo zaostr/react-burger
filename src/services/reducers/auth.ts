@@ -7,20 +7,21 @@ import { TAuthActions } from '../actions/auth';
 
 export type TAuthState = {
     isAuthorized: boolean;
-    user: boolean | {
+    user: false | {
         name: string;
         email: string;
+        role?: number;
     }
     request: boolean;
 };
 
-const authState: TAuthState = {
+export const authState: TAuthState = {
     isAuthorized: false,
     user: false,
     request: false
 }
 
-export const authReducer = (state = authState, action: TAuthActions) => {
+export const authReducer = (state = authState, action: TAuthActions): TAuthState => {
     switch(action.type) {
         case AUTH_REQUEST:
             return {
@@ -31,7 +32,8 @@ export const authReducer = (state = authState, action: TAuthActions) => {
             return {
                 ...state,
                 user: {
-                    ...action.payload,
+                    email: action.payload?.email,
+                    name: action.payload?.name,
                     role: action.payload?.role ? action.payload.role : 1
                 },
                 isAuthorized: true

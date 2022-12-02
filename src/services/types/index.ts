@@ -6,7 +6,7 @@ import { TCartActions } from '../actions/cart';
 import { TIngredientActions } from '../actions/ingredients';
 import { TErrorActions } from '../actions/errorHandler';
 
-type TApplicationActions = TAuthActions | TCartActions | TErrorActions | TIngredientActions;
+export type TApplicationActions = TAuthActions | TCartActions | TErrorActions | TIngredientActions;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ActionCreator<
