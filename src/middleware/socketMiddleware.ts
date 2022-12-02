@@ -1,13 +1,15 @@
-import { TWsFeedActions } from "../services/actions/ws";
+import { Middleware, MiddlewareAPI } from "redux";
+import { TwsActions } from "../services/store";
+import { AppDispatch, RootState } from "../services/types";
 
-export const socketMiddleware = (wsActions: any) => {
-    return (store: { dispatch: any; }) => {
+export const socketMiddleware = (wsActions: TwsActions): Middleware => {
+    return (store: MiddlewareAPI<AppDispatch, RootState>) => {
       let socket: null | WebSocket = null;
   
-      return (next: (arg0: TWsFeedActions) => void) => async (action: any) => {
+      return next => async (action: any) => {
         const { dispatch } = store;
         const { type, payload } = action;
-        const { wsSendMessage, onOpen, onClose, onError, onFeed } = wsActions;
+        const { onOpen, onClose, onError, onFeed } = wsActions;
         //
         if (type === wsActions.wsInit) {
           socket = new WebSocket(`${payload}`);
@@ -33,10 +35,10 @@ export const socketMiddleware = (wsActions: any) => {
             dispatch({ type: onClose, payload: event });
           };
   
-          if (type === wsSendMessage) {
+          /*if (type === wsSendMessage) {
             const message = { ...payload };
             socket.send(JSON.stringify(message));
-          }
+          }*/
         }
   
         next(action);
